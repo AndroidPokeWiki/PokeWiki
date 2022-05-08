@@ -9,14 +9,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="51ac95f4-7ffe-4832-8ea8-dd4c3e5daa09" name="Default Changelist" comment="add use kotlin">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pokewiki/login/LoginActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pokewiki/login/LoginActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
-    </list>
-    <list id="0c693e88-f5b8-41e5-a365-9cd7244af51d" name="DefaultChangelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="51ac95f4-7ffe-4832-8ea8-dd4c3e5daa09" name="Default Changelist" comment="add \n">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pokewiki/login/LoginActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pokewiki/login/LoginActivity.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +51,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="http.proxy" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -153,7 +148,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="51ac95f4-7ffe-4832-8ea8-dd4c3e5daa09" name="Default Changelist" comment="" />
-      <changelist id="0c693e88-f5b8-41e5-a365-9cd7244af51d" name="DefaultChangelist" comment="" />
+      <changelist id="" name="DefaultChangelist" comment="" />
       <created>1651911611301</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -166,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651913898271</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add \n">
+      <created>1652016821287</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652016821287</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -183,6 +185,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add use kotlin" />
-    <option name="LAST_COMMIT_MESSAGE" value="add use kotlin" />
+    <MESSAGE value="add \n" />
+    <option name="LAST_COMMIT_MESSAGE" value="add \n" />
   </component>
 </project>
