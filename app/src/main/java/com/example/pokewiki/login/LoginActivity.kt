@@ -8,6 +8,5 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.login_activity)
         super.onCreate(savedInstanceState)
-        // abcdefg
     }
 }
