@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "PokeWiki"
 include ':app'
+include ':mvi-core'

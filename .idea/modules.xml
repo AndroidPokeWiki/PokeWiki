@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/PokeWiki.iml" filepath="$PROJECT_DIR$/.idea/modules/PokeWiki.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PokeWiki.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PokeWiki.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mvi-core/PokeWiki.mvi-core.iml" filepath="$PROJECT_DIR$/.idea/modules/mvi-core/PokeWiki.mvi-core.iml" />
     </modules>
   </component>
 </project>
