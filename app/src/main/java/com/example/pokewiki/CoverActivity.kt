@@ -17,6 +17,7 @@ class CoverActivity : AppCompatActivity() {
         Thread{
             Thread.sleep( 3000)
             startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }.start()
     }
 }
