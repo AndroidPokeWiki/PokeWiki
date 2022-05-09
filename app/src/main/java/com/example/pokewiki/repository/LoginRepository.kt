@@ -18,7 +18,8 @@ class LoginRepository {
         val result = try {
             ServerApi.create().getAuth(email, password)
         } catch (e: Exception) {
-            return NetworkState.Error(e)
+            e.printStackTrace()
+            return NetworkState.Error("未知错误，请联系管理员")
         }
         result.let {
             when (it.status) {
