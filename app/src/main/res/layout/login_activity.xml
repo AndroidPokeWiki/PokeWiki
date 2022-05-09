@@ -82,15 +82,18 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
+    <TextView
         android:id="@+id/login_register_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
         android:fontFamily="sans-serif-black"
-        android:foreground="@null"
         android:paddingTop="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:text="@string/login_register"
+        android:clickable="true"
+        android:focusable="true"
         android:textColor="#90766F6F"
         android:textSize="14sp"
 

@@ -1,5 +1,8 @@
 package com.example.pokewiki.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -20,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mEmailEt: EditText
     private lateinit var mPasswordEt: EditText
     private lateinit var mLoginBtn: CardView
-    private lateinit var mRegisterBtn: Button
+    private lateinit var mRegisterBtn: TextView
     private lateinit var mErrorText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,9 +63,29 @@ class LoginActivity : AppCompatActivity() {
             }
             states.observeState(this, LoginViewState::error, LoginViewState::errorText)
             { e, text ->
-                if (e)
+                if (e) {
                     mErrorText.visibility = View.VISIBLE
-                else
+
+                    //错误提示抖动动画
+                    AnimatorSet().apply {
+
+                        val xDuration = 100L
+                        val xOffset = 10f
+
+                        playSequentially(
+                            ObjectAnimator.ofFloat(mErrorText, "translationX", -xOffset)
+                                .setDuration((xDuration / 2)),
+                            ObjectAnimator.ofFloat(mErrorText, "translationX", -xOffset, xOffset)
+                                .apply {
+                                    duration = xDuration
+                                    repeatMode = ValueAnimator.REVERSE
+                                    repeatCount = 2
+                                },
+                            ObjectAnimator.ofFloat(mErrorText, "translationX", 0f)
+                                .setDuration((xDuration / 2))
+                        )
+                    }.start()
+                } else
                     mErrorText.visibility = View.GONE
                 mErrorText.text = text
             }
