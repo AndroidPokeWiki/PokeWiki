@@ -1,13 +1,19 @@
 package com.example.pokewiki.login
 
-data class LoginViewState(val email: String = "", val password: String = "") {
+data class LoginViewState(
+    val email: String = "",
+    val password: String = "",
+    val error: Boolean = false
+) {
     val canLogin: Boolean = email.isNotBlank() && password.isNotBlank()
+    val errorText: String = if (!error) "" else "邮箱及密码不能为空"
 }
 
 sealed class LoginViewAction {
     object ClickLogin : LoginViewAction()
-    data class UpdateUsername(val username: String): LoginViewAction()
-    data class UpdatePassword(val password: String): LoginViewAction()
+    data class UpdateUsername(val email: String) : LoginViewAction()
+    data class UpdatePassword(val password: String) : LoginViewAction()
+    data class ChangeErrorState(val error: Boolean) : LoginViewAction()
 }
 
 sealed class LoginViewEvent {

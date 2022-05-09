@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:showPaths="true">
 
     <ImageView
         android:id="@+id/login_pikachu"
@@ -45,6 +47,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:hint="@string/login_email_hint"
+            android:inputType="textEmailAddress"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:textSize="16sp" />
@@ -72,6 +75,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:hint="@string/login_password_hint"
+            android:inputType="textPassword"
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:textSize="16sp" />
@@ -84,6 +88,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:fontFamily="sans-serif-black"
+        android:foreground="@null"
         android:paddingTop="10dp"
         android:text="@string/login_register"
         android:textColor="#90766F6F"
@@ -121,9 +126,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="92dp"
-        android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
 
         app:cardBackgroundColor="@color/poke_ball_red"
         app:cardCornerRadius="10dp"
@@ -138,12 +143,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
             android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
             android:text="@string/login"
             android:textColor="#90FEFAFA"
             android:textSize="14sp" />
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/login_error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/poke_ball_red"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/login_btn"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="@+id/login_btn"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

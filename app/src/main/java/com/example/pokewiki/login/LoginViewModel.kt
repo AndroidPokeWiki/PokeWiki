@@ -20,10 +20,15 @@ class LoginViewModel : ViewModel() {
 
     fun dispatch(viewAction: LoginViewAction) {
         when (viewAction) {
-            is LoginViewAction.UpdateUsername -> updateEmail(viewAction.username)
+            is LoginViewAction.UpdateUsername -> updateEmail(viewAction.email)
             is LoginViewAction.UpdatePassword -> updatePassword(viewAction.password)
+            is LoginViewAction.ChangeErrorState -> updateErrorState(viewAction.error)
             is LoginViewAction.ClickLogin -> login()
         }
+    }
+
+    private fun updateErrorState(error: Boolean) {
+        _viewState.setState { copy(error = error) }
     }
 
     private fun updateEmail(email: String) {
@@ -44,7 +49,10 @@ class LoginViewModel : ViewModel() {
             }.onEach {
                 _viewEvent.setEvent(LoginViewEvent.DismissLoadingDialog, LoginViewEvent.TransIntent)
             }.catch {
-                _viewEvent.setEvent(LoginViewEvent.DismissLoadingDialog)
+                _viewEvent.setEvent(
+                    LoginViewEvent.DismissLoadingDialog,
+                    LoginViewEvent.ShowToast(it.message ?: "")
+                )
             }.flowOn(Dispatchers.IO).collect()
         }
     }
@@ -53,7 +61,7 @@ class LoginViewModel : ViewModel() {
         val email = _viewState.value.email
         val password = _viewState.value.password
 
-        when(val result = repository.getAuth(email, password)){
+        when (val result = repository.getAuth(email, password)) {
             is NetworkState.Success -> TODO("获取成功处理")
             is NetworkState.Error -> throw Exception(result.msg)
         }
