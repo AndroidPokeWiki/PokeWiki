@@ -3,9 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/andriodproject/PokeWiki/app/src/main/res/drawable/ic_launcher_background.xml" value="0.171875" />
-        <entry key="..\:/andriodproject/PokeWiki/app/src/main/res/layout/login_activity.xml" value="0.25" />
-        <entry key="..\:/andriodproject/PokeWiki/app/src/main/res/layout/register_activity.xml" value="0.33" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/activity_main.xml" value="0.3578125" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/cover_activity.xml" value="0.33" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/login_activity.xml" value="0.33" />
       </map>
     </option>
   </component>
