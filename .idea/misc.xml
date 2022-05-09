@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/login_activity.xml" value="0.36614583333333334" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/register_activity.xml" value="0.3515625" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/activity_main.xml" value="0.3578125" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/cover_activity.xml" value="0.33" />
-        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/login_activity.xml" value="0.33" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/login_activity.xml" value="0.3578125" />
       </map>
     </option>
   </component>

@@ -1,12 +1,10 @@
-package com.example.pokewiki.login
+package com.example.pokewiki.register
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -14,22 +12,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.widget.addTextChangedListener
 import com.example.pokewiki.R
-import com.example.pokewiki.register.RegisterActivity
 import com.example.pokewiki.utils.ToastUtils
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
 
-class LoginActivity : AppCompatActivity() {
-    private val viewModel by viewModels<LoginViewModel>()
+/**
+ * created by DWF on 2022/5/9.
+ */
+class RegisterActivity : AppCompatActivity(){
+    private val viewModel by viewModels<RegisterViewModel>()
 
     private lateinit var mEmailEt: EditText
     private lateinit var mPasswordEt: EditText
-    private lateinit var mLoginBtn: CardView
-    private lateinit var mRegisterBtn: TextView
+    private lateinit var mConfirmEt: EditText
+    private lateinit var mRegisterBtn: CardView
     private lateinit var mErrorText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setContentView(R.layout.login_activity)
+        setContentView(R.layout.register_activity)
         super.onCreate(savedInstanceState)
 
         initView()
@@ -38,37 +38,36 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        mEmailEt = findViewById(R.id.login_email_input)
+        mEmailEt = findViewById(R.id.register_email_input)
         mEmailEt.addTextChangedListener {
-            viewModel.dispatch(LoginViewAction.UpdateUsername(it.toString()))
-            viewModel.dispatch(LoginViewAction.ChangeErrorState(false))
+            viewModel.dispatch(RegisterViewAction.UpdateUsername(it.toString()))
+            viewModel.dispatch(RegisterViewAction.ChangeErrorState(false))
         }
-        mPasswordEt = findViewById(R.id.login_password_input)
+        mPasswordEt = findViewById(R.id.register_password_input)
         mPasswordEt.addTextChangedListener {
-            viewModel.dispatch(LoginViewAction.UpdatePassword(it.toString()))
-            viewModel.dispatch(LoginViewAction.ChangeErrorState(false))
+            viewModel.dispatch(RegisterViewAction.UpdatePassword(it.toString()))
+            viewModel.dispatch(RegisterViewAction.ChangeErrorState(false))
         }
-        mLoginBtn = findViewById(R.id.login_btn)
-        mRegisterBtn = findViewById(R.id.login_register_btn)
-        mRegisterBtn.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
-            finish()
+        mConfirmEt = findViewById(R.id.register_password_confirm_input)
+        mConfirmEt.addTextChangedListener {
+            viewModel.dispatch(RegisterViewAction.UpdateConfirm(it.toString()))
+            viewModel.dispatch(RegisterViewAction.ChangeErrorState(false))
         }
-        mErrorText = findViewById(R.id.login_error_text)
-
+        mRegisterBtn = findViewById(R.id.register_btn)
+        mErrorText = findViewById(R.id.register_error_text)
     }
 
     private fun initViewModel() {
         viewModel.viewState.let { states ->
-            states.observeState(this, LoginViewState::canLogin) {
-                if (it)
-                    mLoginBtn.setOnClickListener { viewModel.dispatch(LoginViewAction.ClickLogin) }
+            states.observeState(this, RegisterViewState::canRegister) {
+                if (it == RegisterViewState.SUCCESS)
+                    mRegisterBtn.setOnClickListener { viewModel.dispatch(RegisterViewAction.ClickRegister) }
                 else
-                    mLoginBtn.setOnClickListener {
-                        viewModel.dispatch(LoginViewAction.ChangeErrorState(true))
+                    mRegisterBtn.setOnClickListener {
+                        viewModel.dispatch(RegisterViewAction.ChangeErrorState(true))
                     }
             }
-            states.observeState(this, LoginViewState::error, LoginViewState::errorText)
+            states.observeState(this, RegisterViewState::error, RegisterViewState::errorText)
             { e, text ->
                 if (e) {
                     mErrorText.visibility = View.VISIBLE
@@ -102,8 +101,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initViewEvent() {
         viewModel.viewEvent.observeEvent(this) {
             when (it) {
-                is LoginViewEvent.ShowToast -> ToastUtils.getInstance(this)?.showLongToast(it.msg)
-
+                is RegisterViewEvent.ShowToast -> ToastUtils.getInstance(this)?.showLongToast(it.msg)
             }
         }
     }
