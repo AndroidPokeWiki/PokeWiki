@@ -9,4 +9,33 @@
     <color name="white">#FFFFFFFF</color>
     <color name="register_blue">#6DBDF6</color>
     <color name="poke_ball_red">#E95656</color>
+    <color name="generation_1">#CF4376</color>
+    <color name="generation_2">#E5C94A</color>
+    <color name="generation_3">#0EBE2D</color>
+    <color name="generation_4">#2995CF</color>
+    <color name="generation_5">#F0A39B</color>
+    <color name="generation_6">#D6D6D8</color>
+    <color name="generation_7">#5AC8FA</color>
+    <color name="generation_8">#AC379E</color>
+    <color name="Fly">#6699FF</color>
+    <color name="Fire">#FF4422</color>
+    <color name="SuperPower">#FF5599</color>
+    <color name="Insect">#AAB722</color>
+    <color name="Stone">#BBAA66</color>
+    <color name="Ghost">#6666BB</color>
+    <color name="Dragon">#7766EE</color>
+    <color name="Ice">#77DDFF</color>
+    <color name="Fight">#BB5544</color>
+    <color name="Evil">#735544</color>
+    <color name="Iron">#AAAABB</color>
+    <color name="Ground">#DDBB55</color>
+    <color name="Demon">#E1AAE1</color>
+    <color name="Grass">#77CC55</color>
+    <color name="Poison">#AF50C1</color>
+    <color name="Water">#3399FF</color>
+    <color name="General">#BBBBAA</color>
+    <color name="Electric">#FFCC33</color>
+    <color name="Special">#2266CC</color>
+
+
 </resources>
