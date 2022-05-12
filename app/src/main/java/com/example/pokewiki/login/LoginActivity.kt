@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.widget.addTextChangedListener
 import com.example.pokewiki.R
 import com.example.pokewiki.main.MainActivity
+import com.example.pokewiki.register.RegisterActivity
 import com.example.pokewiki.utils.ToastUtils
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
