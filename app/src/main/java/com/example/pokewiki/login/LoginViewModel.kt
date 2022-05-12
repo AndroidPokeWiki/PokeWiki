@@ -62,7 +62,7 @@ class LoginViewModel : ViewModel() {
         val password = _viewState.value.password
 
         when (val result = repository.getAuth(email, password)) {
-            is NetworkState.Success -> TODO("获取成功处理")
+            is NetworkState.Success -> _viewEvent.setEvent(LoginViewEvent.TransIntent)
             is NetworkState.Error -> throw Exception(result.msg)
         }
     }

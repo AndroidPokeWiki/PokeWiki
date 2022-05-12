@@ -3,9 +3,9 @@ package com.example.pokewiki.login
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.widget.addTextChangedListener
 import com.example.pokewiki.R
+import com.example.pokewiki.main.MainActivity
 import com.example.pokewiki.utils.ToastUtils
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
@@ -96,6 +97,10 @@ class LoginActivity : AppCompatActivity() {
         viewModel.viewEvent.observeEvent(this) {
             when (it) {
                 is LoginViewEvent.ShowToast -> ToastUtils.getInstance(this)?.showLongToast(it.msg)
+                is LoginViewEvent.TransIntent -> {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
             }
         }
     }

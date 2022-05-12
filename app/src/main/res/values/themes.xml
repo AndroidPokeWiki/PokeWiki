@@ -13,4 +13,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+<!--    <dimen name="design_bottom_navigation_text_size" tools:override="true">0.1sp</dimen>-->
+<!--    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">0.1sp</dimen>-->
+<!--    <dimen name="design_bottom_navigation_height" tools:override="true">48dp</dimen>-->
+<!--    <dimen name="design_bottom_navigation_margin" tools:override="true">12dp</dimen>-->
 </resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_main_title_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.ruffian.library.widget.RView
+        android:id="@+id/search_expand_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="-10dp"
+        android:layout_marginTop="-10dp"
+        android:layout_marginEnd="-10dp"
+
+        app:background_normal="@color/poke_ball_red"
+        app:corner_radius_bottom_left="16dp"
+        app:corner_radius_bottom_right="16dp"
+        app:shadow_radius="10dp" />
+
+    <ImageView
+        android:id="@+id/search_expand_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.ruffian.library.widget.RTextView
+        android:id="@+id/search_expand_search"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="19dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+
+        app:background_normal="@color/white"
+        app:corner_radius="100dp"
+        app:icon_normal_right="@drawable/search_pokeball"
+        app:layout_constraintEnd_toEndOf="@id/search_expand_icon"
+        app:layout_constraintHeight_percent="0.23"
+        app:layout_constraintStart_toStartOf="@id/search_expand_icon"
+        app:layout_constraintTop_toBottomOf="@id/search_expand_icon"
+        app:layout_constraintWidth_percent="0.74" />
+
+    <View
+        android:id="@+id/search_expand_mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
