@@ -23,6 +23,13 @@ interface ServerApi {
         @Field("password") password: String
     ): ResponseData<UserBean>
 
+    @POST("reg")
+    @FormUrlEncoded
+    suspend fun register(
+            @Field("email") email: String,
+            @Field("password") password: String
+    ): ResponseData<UserBean>
+
     companion object {
         /**
          * 获取接口实例用于调用对接方法

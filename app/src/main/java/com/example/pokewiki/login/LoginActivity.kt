@@ -6,6 +6,7 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -49,6 +50,10 @@ class LoginActivity : AppCompatActivity() {
         }
         mLoginBtn = findViewById(R.id.login_btn)
         mRegisterBtn = findViewById(R.id.login_register_btn)
+        mRegisterBtn.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+            finish()
+        }
         mErrorText = findViewById(R.id.login_error_text)
     }
 
