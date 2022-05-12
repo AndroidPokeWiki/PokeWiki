@@ -28,7 +28,7 @@
         <activity
             android:name=".register.RegisterActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".main.MainActivity"/>
     </application>
-    <activity android:name=".main.MainActivity"/>
 
 </manifest>

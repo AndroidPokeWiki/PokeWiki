@@ -14,8 +14,9 @@
         <!-- Customize your theme here. -->
     </style>
 
-<!--    <dimen name="design_bottom_navigation_text_size" tools:override="true">0.1sp</dimen>-->
-<!--    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">0.1sp</dimen>-->
-<!--    <dimen name="design_bottom_navigation_height" tools:override="true">48dp</dimen>-->
-<!--    <dimen name="design_bottom_navigation_margin" tools:override="true">12dp</dimen>-->
+    <style name="modifiedDialog" parent="Theme.AppCompat.Dialog">
+        <!--去除5.0以后两侧留白问题-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

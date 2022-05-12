@@ -50,5 +50,6 @@
     <View
         android:id="@+id/search_expand_mask"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

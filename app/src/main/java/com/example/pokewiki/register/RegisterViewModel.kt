@@ -7,6 +7,7 @@ import com.example.pokewiki.login.LoginViewEvent
 import com.example.pokewiki.login.LoginViewState
 import com.example.pokewiki.repository.RegisterRepository
 import com.example.pokewiki.utils.NetworkState
+import com.example.pokewiki.utils.md5
 import com.zj.mvi.core.SharedFlowEvents
 import com.zj.mvi.core.setEvent
 import com.zj.mvi.core.setState
@@ -54,12 +55,12 @@ class RegisterViewModel : ViewModel() {
     private fun register() {
         viewModelScope.launch {
             flow {
-                loginLogic()
+                registerLogic()
                 emit("注册成功")
             }.onStart {
                 _viewEvent.setEvent(RegisterViewEvent.ShowLoadingDialog)
             }.onEach {
-                _viewEvent.setEvent(RegisterViewEvent.DismissLoadingDialog, RegisterViewEvent.TransIntent)
+                _viewEvent.setEvent(RegisterViewEvent.DismissLoadingDialog)
             }.catch {
                 _viewEvent.setEvent(
                         RegisterViewEvent.DismissLoadingDialog,
@@ -69,13 +70,12 @@ class RegisterViewModel : ViewModel() {
         }
     }
 
-    private suspend fun loginLogic() {
+    private suspend fun registerLogic() {
         val email = _viewState.value.email
         val password = _viewState.value.password
-        val confirm = _viewState.value.confirm
 
-        when (val result = repository.register(email, password)) {
-            is NetworkState.Success -> TODO("获取成功处理")
+        when (val result = repository.register(email, md5(password))) {
+            is NetworkState.Success -> _viewEvent.setEvent(RegisterViewEvent.TransIntent)
             is NetworkState.Error -> throw Exception(result.msg)
         }
     }

@@ -3,7 +3,9 @@ package com.example.pokewiki.register
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -12,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.widget.addTextChangedListener
 import com.example.pokewiki.R
+import com.example.pokewiki.login.LoginActivity
+import com.example.pokewiki.main.MainActivity
+import com.example.pokewiki.utils.LoadingDialogUtils
 import com.example.pokewiki.utils.ToastUtils
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
@@ -19,7 +24,7 @@ import com.zj.mvi.core.observeState
 /**
  * created by DWF on 2022/5/9.
  */
-class RegisterActivity : AppCompatActivity(){
+class RegisterActivity : AppCompatActivity() {
     private val viewModel by viewModels<RegisterViewModel>()
 
     private lateinit var mEmailEt: EditText
@@ -27,6 +32,8 @@ class RegisterActivity : AppCompatActivity(){
     private lateinit var mConfirmEt: EditText
     private lateinit var mRegisterBtn: CardView
     private lateinit var mErrorText: TextView
+
+    private lateinit var loading: LoadingDialogUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.register_activity)
@@ -38,6 +45,8 @@ class RegisterActivity : AppCompatActivity(){
     }
 
     private fun initView() {
+        loading = LoadingDialogUtils(this)
+
         mEmailEt = findViewById(R.id.register_email_input)
         mEmailEt.addTextChangedListener {
             viewModel.dispatch(RegisterViewAction.UpdateUsername(it.toString()))
@@ -79,16 +88,16 @@ class RegisterActivity : AppCompatActivity(){
                         val xOffset = 10f
 
                         playSequentially(
-                                ObjectAnimator.ofFloat(mErrorText, "translationX", -xOffset)
-                                        .setDuration((xDuration / 2)),
-                                ObjectAnimator.ofFloat(mErrorText, "translationX", -xOffset, xOffset)
-                                        .apply {
-                                            duration = xDuration
-                                            repeatMode = ValueAnimator.REVERSE
-                                            repeatCount = 2
-                                        },
-                                ObjectAnimator.ofFloat(mErrorText, "translationX", 0f)
-                                        .setDuration((xDuration / 2))
+                            ObjectAnimator.ofFloat(mErrorText, "translationX", -xOffset)
+                                .setDuration((xDuration / 2)),
+                            ObjectAnimator.ofFloat(mErrorText, "translationX", -xOffset, xOffset)
+                                .apply {
+                                    duration = xDuration
+                                    repeatMode = ValueAnimator.REVERSE
+                                    repeatCount = 2
+                                },
+                            ObjectAnimator.ofFloat(mErrorText, "translationX", 0f)
+                                .setDuration((xDuration / 2))
                         )
                     }.start()
                 } else
@@ -101,8 +110,25 @@ class RegisterActivity : AppCompatActivity(){
     private fun initViewEvent() {
         viewModel.viewEvent.observeEvent(this) {
             when (it) {
-                is RegisterViewEvent.ShowToast -> ToastUtils.getInstance(this)?.showLongToast(it.msg)
+                is RegisterViewEvent.ShowToast -> ToastUtils.getInstance(this)
+                    ?.showLongToast(it.msg)
+                is RegisterViewEvent.TransIntent -> {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+                is RegisterViewEvent.ShowLoadingDialog -> loading =
+                    LoadingDialogUtils.show(this, "正在注册...")
+                is RegisterViewEvent.DismissLoadingDialog -> loading.dismiss()
             }
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            startActivity(Intent(this, LoginActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }

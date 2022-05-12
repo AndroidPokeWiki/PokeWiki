@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokewiki.repository.LoginRepository
 import com.example.pokewiki.utils.NetworkState
+import com.example.pokewiki.utils.md5
 import com.zj.mvi.core.SharedFlowEvents
 import com.zj.mvi.core.setEvent
 import com.zj.mvi.core.setState
@@ -47,7 +48,7 @@ class LoginViewModel : ViewModel() {
             }.onStart {
                 _viewEvent.setEvent(LoginViewEvent.ShowLoadingDialog)
             }.onEach {
-                _viewEvent.setEvent(LoginViewEvent.DismissLoadingDialog, LoginViewEvent.TransIntent)
+                _viewEvent.setEvent(LoginViewEvent.DismissLoadingDialog)
             }.catch {
                 _viewEvent.setEvent(
                     LoginViewEvent.DismissLoadingDialog,
@@ -61,7 +62,7 @@ class LoginViewModel : ViewModel() {
         val email = _viewState.value.email
         val password = _viewState.value.password
 
-        when (val result = repository.getAuth(email, password)) {
+        when (val result = repository.getAuth(email, md5(password))) {
             is NetworkState.Success -> _viewEvent.setEvent(LoginViewEvent.TransIntent)
             is NetworkState.Error -> throw Exception(result.msg)
         }

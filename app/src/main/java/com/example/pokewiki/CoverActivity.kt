@@ -17,6 +17,7 @@ class CoverActivity : AppCompatActivity() {
         Thread{
             Thread.sleep( 3000)
             startActivity(Intent(this, LoginActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }.start()
     }

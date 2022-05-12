@@ -6,16 +6,19 @@
     <item
         android:id="@+id/main_community"
         android:icon="@drawable/community"
+        android:orderInCategory="0"
         android:title="" />
 
     <item
         android:id="@+id/main_search"
         android:checked="true"
+        android:orderInCategory="1"
         android:title="" />
 
     <item
         android:id="@+id/main_my"
         android:icon="@drawable/my"
+        android:orderInCategory="2"
         android:title="" />
 
 </menu>

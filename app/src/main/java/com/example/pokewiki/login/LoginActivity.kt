@@ -6,7 +6,6 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -16,6 +15,7 @@ import androidx.core.widget.addTextChangedListener
 import com.example.pokewiki.R
 import com.example.pokewiki.main.MainActivity
 import com.example.pokewiki.register.RegisterActivity
+import com.example.pokewiki.utils.LoadingDialogUtils
 import com.example.pokewiki.utils.ToastUtils
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
@@ -29,6 +29,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mRegisterBtn: TextView
     private lateinit var mErrorText: TextView
 
+    private lateinit var loading: LoadingDialogUtils
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.login_activity)
         super.onCreate(savedInstanceState)
@@ -39,6 +41,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        loading = LoadingDialogUtils(this)
+
         mEmailEt = findViewById(R.id.login_email_input)
         mEmailEt.addTextChangedListener {
             viewModel.dispatch(LoginViewAction.UpdateUsername(it.toString()))
@@ -53,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
         mRegisterBtn = findViewById(R.id.login_register_btn)
         mRegisterBtn.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }
         mErrorText = findViewById(R.id.login_error_text)
@@ -107,6 +112,9 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
+                is LoginViewEvent.ShowLoadingDialog -> loading =
+                    LoadingDialogUtils.show(this, "正在登录...")
+                is LoginViewEvent.DismissLoadingDialog -> loading.dismiss()
             }
         }
     }
