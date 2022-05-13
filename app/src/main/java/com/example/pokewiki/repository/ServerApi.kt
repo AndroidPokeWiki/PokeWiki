@@ -1,5 +1,6 @@
 package com.example.pokewiki.repository
 
+import com.example.pokewiki.bean.PokemonSearchBean
 import com.example.pokewiki.bean.UserBean
 import com.example.pokewiki.interceptor.LoggingInterceptor
 import com.example.pokewiki.utils.ResponseData
@@ -29,6 +30,12 @@ interface ServerApi {
             @Field("email") email: String,
             @Field("password") password: String
     ): ResponseData<UserBean>
+
+    @POST("selectAllPokeIntro")
+    @FormUrlEncoded
+    suspend fun getAllWithPage(
+        @Field("page") page: Int
+    ): ResponseData<ArrayList<PokemonSearchBean>>
 
     companion object {
         /**

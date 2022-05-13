@@ -39,10 +39,31 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_main_item_container"
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/search_main_refresh_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintWidth_percent="0.9"
+        app:srlPrimaryColor="#FFD591">
+
+        <com.scwang.smart.refresh.header.MaterialHeader
+            android:id="@+id/search_main_refresh_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/search_main_item_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.scwang.smart.refresh.footer.ClassicsFooter
+            android:id="@+id/search_main_refresh_footer"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

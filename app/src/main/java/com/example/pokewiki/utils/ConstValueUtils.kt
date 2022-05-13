@@ -4,6 +4,9 @@ import com.example.pokewiki.R
 
 const val SERVER_URL = "http://192.168.128.80:9457/"
 
+// 信号
+const val NO_MORE_DATA = "NO_MORE_DATA"
+
 object ColorDict{
     val color = HashMap<String, Int>()
     init {
