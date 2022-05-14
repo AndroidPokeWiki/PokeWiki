@@ -17,6 +17,7 @@ import com.example.pokewiki.utils.ColorDict
 import com.example.pokewiki.utils.dip2px
 import com.ruffian.library.widget.RTextView
 import com.ruffian.library.widget.helper.RBaseHelper
+import java.io.File
 
 
 class SearchMainAdapter(
@@ -44,9 +45,13 @@ class SearchMainAdapter(
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: SearchMainViewHolder, position: Int) {
         val item = itemList[position]
-        //模拟用户请求
-        Glide.with(context).load(item.img_url).diskCacheStrategy(DiskCacheStrategy.NONE)
-            .into(holder.itemImg)
+
+        if (item.img_url.isNotBlank()) {
+            Glide.with(context).load(item.img_url).diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(holder.itemImg)
+        }else{
+            Glide.with(context).load(File(item.img_path)).into(holder.itemImg)
+        }
         holder.itemName.text = item.pokemon_name
         holder.itemId.text = "#${item.pokemon_id}"
 
@@ -63,6 +68,7 @@ class SearchMainAdapter(
             if (color != null)
                 helper.backgroundColorNormal = context.getColor(color)
 
+            //设置边距
             val p = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT

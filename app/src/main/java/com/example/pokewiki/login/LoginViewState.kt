@@ -1,5 +1,7 @@
 package com.example.pokewiki.login
 
+import android.content.SharedPreferences
+
 data class LoginViewState(
     val email: String = "",
     val password: String = "",
@@ -10,7 +12,8 @@ data class LoginViewState(
 }
 
 sealed class LoginViewAction {
-    object ClickLogin : LoginViewAction()
+    data class CheckLoginInfo(val sp : SharedPreferences) : LoginViewAction()
+    data class ClickLogin(val sp : SharedPreferences) : LoginViewAction()
     data class UpdateUsername(val email: String) : LoginViewAction()
     data class UpdatePassword(val password: String) : LoginViewAction()
     data class ChangeErrorState(val error: Boolean) : LoginViewAction()

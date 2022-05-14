@@ -6,11 +6,11 @@ import com.example.pokewiki.interceptor.LoggingInterceptor
 import com.example.pokewiki.utils.ResponseData
 import com.example.pokewiki.utils.SERVER_URL
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 /**
  * 用于连接后台API的接口类，使用create函数获取实例调用对接方法
@@ -36,6 +36,10 @@ interface ServerApi {
     suspend fun getAllWithPage(
         @Field("page") page: Int
     ): ResponseData<ArrayList<PokemonSearchBean>>
+
+    @Streaming
+    @GET
+    suspend fun downloadFromUrl(@Url url: String): Response<ResponseBody>
 
     companion object {
         /**

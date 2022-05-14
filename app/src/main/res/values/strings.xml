@@ -8,4 +8,6 @@
     <string name="register_email_hint">请输入注册邮箱</string>
     <string name="register_password_hint">请输入登陆密码</string>
     <string name="register_password_confirm_hint">请确认登陆密码</string>
+    <string name="cancel">取消</string>
+    <string name="certain">确认</string>
 </resources>

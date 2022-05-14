@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/hint_dialog_style.xml" value="0.235" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/loading_dialog_style.xml" value="0.235" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/activity_main.xml" value="0.3578125" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/attr_item.xml" value="0.2937152629328773" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/community_main_fragment.xml" value="0.2937152629328773" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/cover_activity.xml" value="0.33" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/hint_dialog.xml" value="0.2899957788096243" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/loading_dialog.xml" value="0.2899957788096243" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/login_activity.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/main_container.xml" value="0.33" />

@@ -16,6 +16,7 @@ import com.example.pokewiki.R
 import com.example.pokewiki.main.MainActivity
 import com.example.pokewiki.register.RegisterActivity
 import com.example.pokewiki.utils.LoadingDialogUtils
+import com.example.pokewiki.utils.SHARED_NAME
 import com.example.pokewiki.utils.ToastUtils
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
@@ -64,10 +65,21 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
+        // 检查是否留存用户信息，自动登录
+        viewModel.dispatch(
+            LoginViewAction.CheckLoginInfo(getSharedPreferences(SHARED_NAME, MODE_PRIVATE))
+        )
+
         viewModel.viewState.let { states ->
             states.observeState(this, LoginViewState::canLogin) {
                 if (it)
-                    mLoginBtn.setOnClickListener { viewModel.dispatch(LoginViewAction.ClickLogin) }
+                    mLoginBtn.setOnClickListener {
+                        viewModel.dispatch(
+                            LoginViewAction.ClickLogin(
+                                getSharedPreferences(SHARED_NAME, MODE_PRIVATE)
+                            )
+                        )
+                    }
                 else
                     mLoginBtn.setOnClickListener {
                         viewModel.dispatch(LoginViewAction.ChangeErrorState(true))

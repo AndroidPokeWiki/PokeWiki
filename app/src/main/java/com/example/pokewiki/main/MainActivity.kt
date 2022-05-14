@@ -1,8 +1,11 @@
 package com.example.pokewiki.main
 
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pokewiki.R
@@ -10,6 +13,7 @@ import com.example.pokewiki.adapter.MainPageAdapter
 import com.example.pokewiki.main.community.CommunityFragment
 import com.example.pokewiki.main.homeSearch.HomeSearchFragment
 import com.example.pokewiki.main.profile.ProfileFragment
+import com.example.pokewiki.utils.GET_PERMISSION_FLAG
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -51,5 +55,22 @@ class MainActivity : AppCompatActivity() {
             true
         }
         mBottomNaviBar.menu.getItem(1).isChecked = true
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == GET_PERMISSION_FLAG) {
+            if (!(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                Toast.makeText(
+                    this, "拒绝了相关权限，无法自动缓存，请尝试重新授权",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            (fragmentList[1] as HomeSearchFragment).countDown.countDown()
+        }
     }
 }
