@@ -40,6 +40,14 @@ object ColorDict {
         color["钢"] = R.color.steel_grey
         color["地面"] = R.color.ground_yellow
         color["妖精"] = R.color.fairy_pink
+        color["第一世代"] = R.color.generation_1
+        color["第二世代"] = R.color.generation_2
+        color["第三世代"] = R.color.generation_3
+        color["第四世代"] = R.color.generation_4
+        color["第五世代"] = R.color.generation_5
+        color["第六世代"] = R.color.generation_6
+        color["第七世代"] = R.color.generation_7
+        color["第八世代"] = R.color.generation_8
     }
 }
 

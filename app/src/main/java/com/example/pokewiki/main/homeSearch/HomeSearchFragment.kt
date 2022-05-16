@@ -1,6 +1,7 @@
 package com.example.pokewiki.main.homeSearch
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokewiki.R
 import com.example.pokewiki.adapter.SearchMainAdapter
 import com.example.pokewiki.bean.PokemonSearchBean
+import com.example.pokewiki.searching.SearchingActivity
 import com.example.pokewiki.utils.*
 import com.google.android.material.appbar.AppBarLayout
 import com.ruffian.library.widget.RTextView
@@ -71,7 +73,7 @@ class HomeSearchFragment : Fragment(R.layout.search_main_fragment) {
         askAutoSave(view)
 
         // 避免阻塞主线程
-        Thread{
+        Thread {
             // 第一次先等待用户授权再进行初始化
             if (!sp.getBoolean(FIRST_ASK_AUTO_SAVE, false))
                 countDown.await()
@@ -172,6 +174,13 @@ class HomeSearchFragment : Fragment(R.layout.search_main_fragment) {
                 )
             }
         })
+
+        mExSearchBtn.setOnClickListener {
+            startActivity(Intent(context, SearchingActivity::class.java))
+        }
+        mClSearchBtn.setOnClickListener {
+            startActivity(Intent(context, SearchingActivity::class.java))
+        }
     }
 
     private fun initViewModel() {
