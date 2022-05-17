@@ -1,6 +1,7 @@
 package com.example.pokewiki.utils
 
 import com.example.pokewiki.R
+import com.example.pokewiki.bean.PokemonDetailBean
 import com.example.pokewiki.bean.UserBean
 
 // 服务器地址
@@ -55,4 +56,5 @@ object ColorDict {
 object AppContext {
     var userData: UserBean = UserBean()
     var autoSave: Boolean = false
+    var pokeDetail : PokemonDetailBean = PokemonDetailBean()
 }

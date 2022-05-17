@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +23,7 @@ class SearchingActivity : AppCompatActivity() {
     lateinit var mAttrTagContainer: FlowLayout
     lateinit var mGenContainer: FlowLayout
     lateinit var mInput: EditText
+    lateinit var mBackBtn: ImageButton
 
     private val typeArray =
         arrayOf(
@@ -45,6 +47,8 @@ class SearchingActivity : AppCompatActivity() {
         mAttrTagContainer = findViewById(R.id.search_tag_attr_container)
         mGenContainer = findViewById(R.id.search_tag_generation_container)
         mInput = findViewById(R.id.search_tag_input)
+        mBackBtn = findViewById(R.id.search_tag_back_btn)
+        mBackBtn.setOnClickListener { finish() }
 
         initTag()
     }

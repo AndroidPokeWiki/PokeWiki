@@ -1,7 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/pokemon_detail_back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:padding="10dp"
+        android:src="@drawable/black_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/pokemon_detail_love_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@null"
+        android:padding="10dp"
+        android:src="@drawable/pokemon_love"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/pokemon_detail_pokemon_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="11dp"
+        android:src="@drawable/pokemon_detail_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_detail_back_btn" />
+
+    <ImageView
+        android:id="@+id/pokemon_detail_pokemon_img"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="11dp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_pokemon_bg"
+        app:layout_constraintEnd_toEndOf="@id/pokemon_detail_pokemon_bg"
+        app:layout_constraintStart_toStartOf="@id/pokemon_detail_pokemon_bg"
+        app:layout_constraintTop_toTopOf="@id/pokemon_detail_pokemon_bg" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="10dp"
+        app:cardBackgroundColor="#F8F8F8"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75"
+        app:layout_constraintWidth_percent="0.84"
+        tools:layout_editor_absoluteX="6dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.ruffian.library.widget.RTextView
+                android:id="@+id/pokemon_detail_id_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38dp"
+                android:layout_marginEnd="18dp"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+
+                app:border_color_normal="#6a6a6a"
+                app:border_width_normal="1dp"
+                app:corner_radius="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/pokemon_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_id_tag" />
+
+            <com.example.pokewiki.custom_view.FlowLayout
+                android:id="@+id/pokemon_detail_attr_container"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_name" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/pokemon_detail_pager_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/pokemon_detail_line"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_attr_container" />
+
+            <View
+                android:id="@+id/pokemon_detail_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DADADA"
+                app:layout_constraintBottom_toTopOf="@id/pokemon_detail_nav_bar" />
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/pokemon_detail_nav_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:labelVisibilityMode="labeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:menu="@menu/pokemon_detail_menu" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

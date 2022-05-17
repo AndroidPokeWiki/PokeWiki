@@ -13,4 +13,7 @@
     <string name="search_record">搜索记录:</string>
     <string name="attr">属性:</string>
     <string name="generation">世代:</string>
+    <string name="info">信息</string>
+    <string name="state">状态</string>
+    <string name="move">招式</string>
 </resources>

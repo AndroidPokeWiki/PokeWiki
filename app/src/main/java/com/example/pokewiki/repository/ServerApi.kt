@@ -1,5 +1,6 @@
 package com.example.pokewiki.repository
 
+import com.example.pokewiki.bean.PokemonDetailBean
 import com.example.pokewiki.bean.PokemonSearchBean
 import com.example.pokewiki.bean.UserBean
 import com.example.pokewiki.interceptor.LoggingInterceptor
@@ -27,8 +28,8 @@ interface ServerApi {
     @POST("reg")
     @FormUrlEncoded
     suspend fun register(
-            @Field("email") email: String,
-            @Field("password") password: String
+        @Field("email") email: String,
+        @Field("password") password: String
     ): ResponseData<UserBean>
 
     @POST("selectAllPokeIntro")
@@ -40,6 +41,20 @@ interface ServerApi {
     @Streaming
     @GET
     suspend fun downloadFromUrl(@Url url: String): Response<ResponseBody>
+
+    @POST("getPokemonDetails")
+    @FormUrlEncoded
+    suspend fun getPokemonDetail(
+        @Field("poke_id") poke_id: Int,
+        @Field("userId") user_id : String
+    ): ResponseData<PokemonDetailBean>
+
+    @POST("getPokemonDetails")
+    @FormUrlEncoded
+    suspend fun getPokemonDetail(
+        @Field("poke_id") poke_id: String,
+        @Field("userId") user_id : String
+    ): ResponseData<PokemonDetailBean>
 
     companion object {
         /**

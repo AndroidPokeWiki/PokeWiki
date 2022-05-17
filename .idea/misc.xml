@@ -13,7 +13,7 @@
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/loading_dialog.xml" value="0.2899957788096243" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/login_activity.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/main_container.xml" value="0.33" />
-        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detail_container.xml" value="0.2937152629328773" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detail_container.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/profile_fragment.xml" value="0.2937152629328773" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/search_main_activity.xml" value="0.3578125" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/search_main_close_bar.xml" value="0.2937152629328773" />
@@ -25,6 +25,7 @@
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/search_main_title_expanded.xml" value="0.2899957788096243" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/search_tag_fragment.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/menu/main_menu.xml" value="0.2937152629328773" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/menu/pokemon_detail_menu.xml" value="0.2937152629328773" />
       </map>
     </option>
   </component>
