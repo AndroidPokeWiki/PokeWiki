@@ -18,4 +18,7 @@
     <string name="move">招式</string>
     <string name="class_text">类别</string>
     <string name="habitat">栖息地</string>
+    <string name="character">特性</string>
+    <string name="hide_character">隐藏特性</string>
+    <string name="shape">形状</string>
 </resources>

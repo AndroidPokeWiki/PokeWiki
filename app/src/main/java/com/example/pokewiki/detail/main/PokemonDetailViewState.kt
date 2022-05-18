@@ -1,5 +1,7 @@
 package com.example.pokewiki.detail.main
 
+import com.example.pokewiki.bean.PokemonDetailBean
+
 
 data class PokemonDetailViewState(
     val id: String = "",
@@ -13,6 +15,7 @@ data class PokemonDetailViewState(
 sealed class PokemonDetailViewAction{
     object SwitchLikeState : PokemonDetailViewAction()
     data class GetInitData<T>(val id: T) : PokemonDetailViewAction()
+    object RefreshData: PokemonDetailViewAction()
 }
 
 

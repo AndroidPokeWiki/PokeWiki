@@ -24,6 +24,20 @@ class PokemonDetailViewModel : ViewModel() {
     fun dispatch(viewAction: PokemonDetailViewAction) {
         when (viewAction) {
             is PokemonDetailViewAction.GetInitData<*> -> getInitData(viewAction.id)
+            is PokemonDetailViewAction.RefreshData -> refreshData()
+        }
+    }
+
+    private fun refreshData(){
+        _viewState.setState {
+            copy(
+                id = "#${AppContext.pokeDetail.pokemon_id}",
+                img = AppContext.pokeDetail.img_url,
+                name = AppContext.pokeDetail.pokemon_name,
+                color = AppContext.pokeDetail.pokemon_color,
+                attrs =AppContext.pokeDetail.pokemon_type,
+                is_like = AppContext.pokeDetail.is_star != 0
+            )
         }
     }
 
@@ -67,7 +81,6 @@ class PokemonDetailViewModel : ViewModel() {
                         is_like = result.data.is_star != 0
                     )
                 }
-                Log.e("TAG", "getInitDataLogic: ${viewState.value}")
             }
             is NetworkState.Error -> throw Exception(result.msg)
         }

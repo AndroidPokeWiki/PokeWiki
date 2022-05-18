@@ -36,12 +36,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:elevation="11dp"
+        android:layout_marginBottom="-60dp"
         android:src="@drawable/pokemon_detail_bg"
         app:layout_constraintWidth_percent="0.44"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pokemon_detail_back_btn" />
+        app:layout_constraintBottom_toTopOf="@id/pokemon_detail_card" />
 
     <ImageView
         android:id="@+id/pokemon_detail_pokemon_img"
@@ -54,6 +55,7 @@
         app:layout_constraintTop_toTopOf="@id/pokemon_detail_pokemon_bg" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/pokemon_detail_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:elevation="10dp"
@@ -96,12 +98,12 @@
                 android:id="@+id/pokemon_detail_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="70dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_id_tag" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:id="@+id/pokemon_detail_attr_container"

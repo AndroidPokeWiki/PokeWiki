@@ -91,7 +91,6 @@ class PokemonDetailActivity : AppCompatActivity() {
             }
             state.observeState(this, PokemonDetailViewState::id) {
                 mIdTag.text = it
-                Log.e("TAG", "initViewModel: refreshing")
                 // 刷新fragment的数据
                 if (it != "")
                     infoFragment.refreshData()
@@ -158,23 +157,7 @@ class PokemonDetailActivity : AppCompatActivity() {
     }
 
     // 刷新主框架
-    @SuppressLint("UseCompatLoadingForDrawables")
     fun refresh() {
-        mNameTv.text = AppContext.pokeDetail.pokemon_name
-        mIdTag.text = AppContext.pokeDetail.pokemon_id
-        Glide.with(this).load(AppContext.pokeDetail.img_url).into(mPokeImV)
-        ColorDict.color[AppContext.pokeDetail.pokemon_color]?.let { color ->
-            mBg.setBackgroundColor(resources.getColor(color, theme))
-            StatusBarCompat.setStatusBarColor(this, resources.getColor(color, theme))
-        }
-        if (AppContext.pokeDetail.is_star == 0)
-            mLikeBtn.setImageDrawable(resources.getDrawable(R.drawable.pokemon_love, theme))
-        else
-            mLikeBtn.setImageDrawable(resources.getDrawable(R.drawable.pokemon_love_select, theme))
-
-        if (mAttrContainer.size > 0) mAttrContainer.removeAllViews()
-        for (attr in AppContext.pokeDetail.pokemon_type) {
-            mAttrContainer.addView(layout2View(attr))
-        }
+        viewModel.dispatch(PokemonDetailViewAction.RefreshData)
     }
 }

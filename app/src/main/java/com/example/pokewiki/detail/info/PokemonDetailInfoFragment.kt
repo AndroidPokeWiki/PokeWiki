@@ -27,6 +27,11 @@ class PokemonDetailInfoFragment : Fragment() {
     private lateinit var mEvolutionContainer: LinearLayout
     private lateinit var mClassTv: TextView
     private lateinit var mHabitatTv: TextView
+    private lateinit var mIntroTv: TextView
+    private lateinit var mShapeTv: TextView
+    private lateinit var mLine1: View
+    private lateinit var mLine2: View
+    private lateinit var mCharContainer: LinearLayout
     private lateinit var loading: LoadingDialogUtils
 
     private var pokeIntro = AppContext.pokeDetail.poke_intro
@@ -55,8 +60,13 @@ class PokemonDetailInfoFragment : Fragment() {
         loading = LoadingDialogUtils(requireContext())
 
         mEvolutionContainer = view.findViewById(R.id.pokemon_detail_evu_container)
+        mCharContainer = view.findViewById(R.id.pokemon_detail_character_container)
         mClassTv = view.findViewById(R.id.pokemon_detail_class)
         mHabitatTv = view.findViewById(R.id.pokemon_detail_habitat)
+        mIntroTv = view.findViewById(R.id.pokemon_detail_intro)
+        mShapeTv = view.findViewById(R.id.pokemon_detail_shape)
+        mLine1 = view.findViewById(R.id.pokemon_detail_class_line1)
+        mLine2 = view.findViewById(R.id.pokemon_detail_class_line2)
     }
 
     private fun initViewModel() {
@@ -67,6 +77,11 @@ class PokemonDetailInfoFragment : Fragment() {
                     initEvo()
                     mClassTv.text = pokeIntro.genus
                     mHabitatTv.text = pokeIntro.habitat
+                    if (pokeIntro.intro_text.isNullOrBlank())
+                        mIntroTv.visibility = View.GONE
+                    else
+                        mIntroTv.text = pokeIntro.intro_text?.replace("\n", "")
+                    mShapeTv.text = pokeIntro.shape
 
                     val color =
                         ColorDict.color[AppContext.pokeDetail.pokemon_type[0]]?.let {
@@ -75,6 +90,9 @@ class PokemonDetailInfoFragment : Fragment() {
                     if (color != null) {
                         mClassTv.setTextColor(color)
                         mHabitatTv.setTextColor(color)
+                        mShapeTv.setTextColor(color)
+                        mLine1.setBackgroundColor(color)
+                        mLine2.setBackgroundColor(color)
                     }
 
                     (activity as PokemonDetailActivity).refresh()
@@ -97,17 +115,11 @@ class PokemonDetailInfoFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun initEvo() {
-        val idList: MutableList<Int> = ArrayList()
-        idList.add(R.id.evo_item1)
-        idList.add(R.id.evo_item2)
-        idList.add(R.id.evo_item3)
-
         val pokeEvo = pokeIntro.poke_evolution
         if (mEvolutionContainer.size > 0) mEvolutionContainer.removeAllViews()
         for (i in 0 until pokeEvo.size) {
             val view: View =
                 LayoutInflater.from(requireContext()).inflate(R.layout.pokemon_evolution_item, null)
-            view.id = idList[i]
 
             val pokeId = pokeEvo[i].id
             val imgUrl = pokeEvo[i].img_url
@@ -140,6 +152,55 @@ class PokemonDetailInfoFragment : Fragment() {
                 line.visibility = View.VISIBLE
 
             mEvolutionContainer.addView(view)
+        }
+
+        val pokeChar = pokeIntro.general_abilities
+        val pokeHideChar = pokeIntro.hidden_abilities
+        if (mCharContainer.size > 0) mCharContainer.removeAllViews()
+        for (chara in pokeChar) {
+            val view: View =
+                LayoutInflater.from(requireContext()).inflate(R.layout.character_item, null)
+
+            val charName: TextView = view.findViewById(R.id.pokemon_detail_character_item)
+            val line: View = view.findViewById(R.id.pokemon_detail_character_line)
+
+            charName.text = chara
+            val color =
+                ColorDict.color[AppContext.pokeDetail.pokemon_type[0]]?.let {
+                    resources.getColor(it, requireActivity().theme)
+                }
+            if (color != null) {
+                charName.setTextColor(color)
+                line.setBackgroundColor(color)
+            }
+
+            if (pokeHideChar.size == 0)
+                line.visibility = View.GONE
+
+            mCharContainer.addView(view)
+        }
+        for (hide in pokeHideChar) {
+            val view: View =
+                LayoutInflater.from(requireContext()).inflate(R.layout.character_item, null)
+
+            val charName: TextView = view.findViewById(R.id.pokemon_detail_character_item)
+            val line: View = view.findViewById(R.id.pokemon_detail_character_line)
+            val hideHint: TextView = view.findViewById(R.id.pokemon_detail_hide_character_text)
+
+            hideHint.text = resources.getText(R.string.hide_character)
+            charName.text = hide
+            val color =
+                ColorDict.color[AppContext.pokeDetail.pokemon_type[0]]?.let {
+                    resources.getColor(it, requireActivity().theme)
+                }
+            if (color != null) {
+                charName.setTextColor(color)
+                line.setBackgroundColor(color)
+            }
+            if (hide == pokeHideChar.last())
+                line.visibility = View.GONE
+
+            mCharContainer.addView(view)
         }
     }
 
