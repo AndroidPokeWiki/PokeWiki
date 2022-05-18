@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pokewiki.login.LoginActivity
+import qiu.niorgai.StatusBarCompat
 
 class CoverActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.cover_activity)
         super.onCreate(savedInstanceState)
 
+        StatusBarCompat.translucentStatusBar(this)
         initAction()
     }
 

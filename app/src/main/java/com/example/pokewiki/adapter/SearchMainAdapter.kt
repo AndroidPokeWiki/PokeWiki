@@ -2,6 +2,7 @@ package com.example.pokewiki.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +14,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.pokewiki.R
 import com.example.pokewiki.bean.PokemonSearchBean
+import com.example.pokewiki.detail.main.PokemonDetailActivity
 import com.example.pokewiki.utils.ColorDict
 import com.example.pokewiki.utils.dip2px
 import com.ruffian.library.widget.RTextView
+import com.ruffian.library.widget.RView
 import com.ruffian.library.widget.helper.RBaseHelper
 import java.io.File
 
@@ -32,6 +35,7 @@ class SearchMainAdapter(
         val itemId: RTextView = itemView.findViewById(R.id.search_main_item_id)
         val itemAttrContainer: LinearLayout =
             itemView.findViewById(R.id.search_main_item_attr_container)
+        val itemBtn: RView = itemView.findViewById(R.id.search_main_item_btn)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchMainViewHolder {
@@ -49,7 +53,7 @@ class SearchMainAdapter(
         if (item.img_url.isNotBlank()) {
             Glide.with(context).load(item.img_url).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(holder.itemImg)
-        }else{
+        } else {
             Glide.with(context).load(File(item.img_path)).into(holder.itemImg)
         }
         holder.itemName.text = item.pokemon_name
@@ -83,6 +87,13 @@ class SearchMainAdapter(
             holder.itemAttrContainer.removeAllViews()
         for (v in viewList)
             holder.itemAttrContainer.addView(v)
+
+        holder.itemBtn.setOnClickListener {
+            context.startActivity(
+                Intent(context, PokemonDetailActivity::class.java)
+                    .putExtra("id", item.pokemon_id)
+            )
+        }
     }
 
     override fun getItemCount(): Int {

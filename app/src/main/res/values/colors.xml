@@ -36,6 +36,15 @@
     <color name="general_gray">#BBBBAA</color>
     <color name="electric_yellow">#FFCC33</color>
     <color name="spacial_blue">#2266CC</color>
-
+    <color name="pokemon_black">#3E3E3E</color>
+    <color name="pokemon_blue">#9f9fec</color>
+    <color name="pokemon_brown">#d87844</color>
+    <color name="pokemon_gray">#e7e7d8</color>
+    <color name="pokemon_green">#bdffa3</color>
+    <color name="pokemon_pink">#ff9cc4</color>
+    <color name="pokemon_purple">#a96ac8</color>
+    <color name="pokemon_red">#ff927d</color>
+    <color name="pokemon_white">#F8F8F8</color>
+    <color name="pokemon_yellow">#fae078</color>
 
 </resources>

@@ -49,6 +49,16 @@ object ColorDict {
         color["第六世代"] = R.color.generation_6
         color["第七世代"] = R.color.generation_7
         color["第八世代"] = R.color.generation_8
+        color["black"] = R.color.pokemon_black
+        color["blue"] = R.color.pokemon_blue
+        color["brown"] = R.color.pokemon_brown
+        color["gray"] = R.color.pokemon_gray
+        color["green"] = R.color.pokemon_green
+        color["pink"] = R.color.pokemon_pink
+        color["purple"] = R.color.pokemon_purple
+        color["red"] = R.color.pokemon_red
+        color["white"] = R.color.pokemon_white
+        color["yellow"] = R.color.pokemon_yellow
     }
 }
 

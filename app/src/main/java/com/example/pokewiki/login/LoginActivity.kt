@@ -20,6 +20,7 @@ import com.example.pokewiki.utils.SHARED_NAME
 import com.example.pokewiki.utils.ToastUtils
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
+import qiu.niorgai.StatusBarCompat
 
 class LoginActivity : AppCompatActivity() {
     private val viewModel by viewModels<LoginViewModel>()
@@ -36,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.login_activity)
         super.onCreate(savedInstanceState)
 
+        StatusBarCompat.translucentStatusBar(this)
         initView()
         initViewModel()
         initViewEvent()

@@ -5,17 +5,17 @@ import android.os.Bundle
 import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pokewiki.R
-import com.example.pokewiki.adapter.MainPageAdapter
+import com.example.pokewiki.adapter.PageAdapter
 import com.example.pokewiki.main.community.CommunityFragment
 import com.example.pokewiki.main.homeSearch.HomeSearchFragment
 import com.example.pokewiki.main.profile.ProfileFragment
 import com.example.pokewiki.utils.GET_PERMISSION_FLAG
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import qiu.niorgai.StatusBarCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_container)
+
+        StatusBarCompat.translucentStatusBar(this)
         initView()
     }
 
@@ -39,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         fragmentList.add(CommunityFragment())
         fragmentList.add(HomeSearchFragment())
         fragmentList.add(ProfileFragment())
-        val adapter = MainPageAdapter(supportFragmentManager, lifecycle, fragmentList)
+        val adapter = PageAdapter(supportFragmentManager, lifecycle, fragmentList)
         mMainContainer.adapter = adapter
         mMainContainer.currentItem = 1
 

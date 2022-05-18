@@ -63,6 +63,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/search_main_item_img" />
 
+        <com.ruffian.library.widget.RView
+            android:id="@+id/search_main_item_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            app:ripple="true"
+            app:ripple_color="#DADADA"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

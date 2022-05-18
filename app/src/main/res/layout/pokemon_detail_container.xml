@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pokemon_detail_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,10 +33,12 @@
 
     <ImageView
         android:id="@+id/pokemon_detail_pokemon_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:elevation="11dp"
         android:src="@drawable/pokemon_detail_bg"
+        app:layout_constraintWidth_percent="0.44"
+        app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pokemon_detail_back_btn" />
@@ -92,18 +96,19 @@
                 android:id="@+id/pokemon_detail_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="36dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pokemon_detail_id_tag" />
 
-            <com.example.pokewiki.custom_view.FlowLayout
+            <LinearLayout
                 android:id="@+id/pokemon_detail_attr_container"
-                android:layout_width="130dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/pokemon_detail_name" />
@@ -125,8 +130,10 @@
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/pokemon_detail_nav_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:background="@color/white"
+                android:clipChildren="false"
+                app:itemIconSize="27dp"
                 app:labelVisibilityMode="labeled"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:menu="@menu/pokemon_detail_menu" />

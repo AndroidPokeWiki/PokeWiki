@@ -27,6 +27,8 @@ class LoggingInterceptor : Interceptor {
                 response.request().url(), (t2 - t1) / 1e6, response.headers()
             )
         )
+        //拆包 正式运行须注释起来
+//        Log.e("TAG", "拆包！！: ${(response.body() as ResponseBody).string()}")
         return response
     }
 }

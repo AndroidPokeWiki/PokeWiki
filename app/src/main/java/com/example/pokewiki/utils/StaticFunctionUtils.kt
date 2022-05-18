@@ -1,9 +1,13 @@
 package com.example.pokewiki.utils
 
 import android.content.Context
-import android.text.TextUtils
+import android.graphics.Color
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+
 
 fun dip2px(context: Context, dpValue: Double): Int {
     val scale = context.resources.displayMetrics.density

@@ -16,4 +16,6 @@
     <string name="info">信息</string>
     <string name="state">状态</string>
     <string name="move">招式</string>
+    <string name="class_text">类别</string>
+    <string name="habitat">栖息地</string>
 </resources>

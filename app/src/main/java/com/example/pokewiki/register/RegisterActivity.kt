@@ -20,6 +20,7 @@ import com.example.pokewiki.utils.LoadingDialogUtils
 import com.example.pokewiki.utils.ToastUtils
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
+import qiu.niorgai.StatusBarCompat
 
 /**
  * created by DWF on 2022/5/9.
@@ -39,6 +40,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.register_activity)
         super.onCreate(savedInstanceState)
 
+        StatusBarCompat.translucentStatusBar(this)
         initView()
         initViewModel()
         initViewEvent()

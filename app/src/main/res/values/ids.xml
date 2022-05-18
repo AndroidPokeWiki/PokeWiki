@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="evo_item1" type="id"/>
+    <item name="evo_item2" type="id"/>
+    <item name="evo_item3" type="id"/>
+
+    <item name="chara_item1" type="id"/>
+    <item name="chara_item2" type="id"/>
+    <item name="chara_item3" type="id"/>
+    <item name="chara_item4" type="id"/>
+</resources>

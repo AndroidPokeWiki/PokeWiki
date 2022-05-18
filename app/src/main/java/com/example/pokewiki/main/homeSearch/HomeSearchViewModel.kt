@@ -46,7 +46,6 @@ class HomeSearchViewModel : ViewModel() {
             // 获取缓存
             val listData = sp.getString(POKEMON_LIST_CACHE, null)
             val page = sp.getInt(POKEMON_CACHE_PAGE, 0)
-            Log.e("TAG", "listData: $listData \n page: $page")
             // 缓存不为空
             if (!listData.isNullOrBlank()) {
                 viewModelScope.launch {
@@ -70,7 +69,6 @@ class HomeSearchViewModel : ViewModel() {
                 }
             } else {
                 loadingPage(sp)
-                Log.e("TAG", "getCache: in")
             }
         } else
             loadingPage(sp)

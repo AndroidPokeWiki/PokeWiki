@@ -1,6 +1,5 @@
-package com.example.pokewiki.detail.main
+package com.example.pokewiki.detail.info
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokewiki.repository.DetailRepository
@@ -14,60 +13,57 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class PokemonDetailViewModel : ViewModel() {
+class PokemonDetailInfoViewModel : ViewModel() {
     private val repository = DetailRepository.getInstance()
-    private val _viewState = MutableStateFlow(PokemonDetailViewState())
+    private val _viewState = MutableStateFlow(PokemonDetailInfoViewState())
     val viewState = _viewState.asStateFlow()
-    private val _viewEvent = SharedFlowEvents<PokemonDetailViewEvent>()
+    private val _viewEvent = SharedFlowEvents<PokemonDetailInfoViewEvent>()
     val viewEvent = _viewEvent.asSharedFlow()
 
-    fun dispatch(viewAction: PokemonDetailViewAction) {
+    fun dispatch(viewAction: PokemonDetailInfoViewAction) {
         when (viewAction) {
-            is PokemonDetailViewAction.GetInitData<*> -> getInitData(viewAction.id)
+            is PokemonDetailInfoViewAction.ChangeData<*> -> changeData(viewAction.id)
+            is PokemonDetailInfoViewAction.InitData -> initData()
         }
     }
 
-    private fun <T> getInitData(id: T) {
+    private fun initData() {
+        _viewState.setState { copy(pokemonInfo = AppContext.pokeDetail.poke_intro) }
+    }
+
+    private fun <T> changeData(id: T) {
         viewModelScope.launch {
             //延迟确保主线程监听事件
             delay(100)
 
             flow {
                 when (id) {
-                    is Int -> getInitDataLogic(id)
-                    is String -> getInitDataLogic(id.toInt())
+                    is Int -> changeDataLogic(id)
+                    is String -> changeDataLogic(id.toInt())
                     else -> throw Exception("传入宝可梦id错误, 请联系管理员")
                 }
                 emit("获取成功")
             }.onStart {
-                _viewEvent.setEvent(PokemonDetailViewEvent.ShowLoadingDialog)
+                _viewEvent.setEvent(PokemonDetailInfoViewEvent.ShowLoadingDialog)
             }.onEach {
-                _viewEvent.setEvent(PokemonDetailViewEvent.DismissLoadingDialog)
+                _viewEvent.setEvent(PokemonDetailInfoViewEvent.DismissLoadingDialog)
             }.catch { e ->
                 _viewEvent.setEvent(
-                    PokemonDetailViewEvent.DismissLoadingDialog,
-                    PokemonDetailViewEvent.ShowToast(e.message ?: "")
+                    PokemonDetailInfoViewEvent.DismissLoadingDialog,
+                    PokemonDetailInfoViewEvent.ShowToast(e.message ?: "")
                 )
             }.flowOn(Dispatchers.IO).collect()
         }
     }
 
-    private suspend fun getInitDataLogic(id: Int) {
+    private suspend fun changeDataLogic(id: Int) {
         val userId = AppContext.userData.userId
         when (val result = repository.getInitData(id, userId)) {
             is NetworkState.Success -> {
                 AppContext.pokeDetail = result.data
                 _viewState.setState {
-                    copy(
-                        id = "#${result.data.pokemon_id}",
-                        img = result.data.img_url,
-                        name = result.data.pokemon_name,
-                        color = result.data.pokemon_color,
-                        attrs = result.data.pokemon_type,
-                        is_like = result.data.is_star != 0
-                    )
+                    copy(pokemonInfo = result.data.poke_intro)
                 }
-                Log.e("TAG", "getInitDataLogic: ${viewState.value}")
             }
             is NetworkState.Error -> throw Exception(result.msg)
         }

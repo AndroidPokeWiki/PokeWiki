@@ -1,5 +1,6 @@
 package com.example.pokewiki.searching
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.example.pokewiki.custom_view.FlowLayout
 import com.example.pokewiki.utils.ColorDict
 import com.example.pokewiki.utils.dip2px
 import com.ruffian.library.widget.RTextView
+import qiu.niorgai.StatusBarCompat
 
 class SearchingActivity : AppCompatActivity() {
 
@@ -38,6 +40,7 @@ class SearchingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_tag_activity)
 
+        StatusBarCompat.setStatusBarColor(this, resources.getColor(R.color.poke_ball_red, theme))
         initView()
     }
 

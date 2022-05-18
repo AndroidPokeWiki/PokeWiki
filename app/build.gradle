@@ -62,4 +62,9 @@ dependencies {
     implementation 'io.github.scwang90:refresh-layout-kernel:2.0.5'
     implementation 'io.github.scwang90:refresh-header-material:2.0.5'
     implementation 'io.github.scwang90:refresh-footer-classics:2.0.5'
+    //沉浸状态栏
+    implementation ('com.github.niorgai:StatusBarCompat:2.3.3', {
+        exclude group: 'androidx.appcompat:appcompat'
+        exclude group: 'com.google.android.material:material'
+    })
 }
