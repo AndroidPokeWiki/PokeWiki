@@ -119,6 +119,7 @@
                 android:id="@+id/pokemon_detail_pager_container"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toTopOf="@id/pokemon_detail_line"
                 app:layout_constraintTop_toBottomOf="@id/pokemon_detail_attr_container" />
 

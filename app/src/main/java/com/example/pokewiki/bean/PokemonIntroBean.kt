@@ -6,7 +6,7 @@ data class PokemonIntroBean(
     val general_abilities: ArrayList<String> = ArrayList(),
     val hidden_abilities: ArrayList<String> = ArrayList(),
     val genus: String = "",
-    val habitat: String = "",
+    val habitat: String? = "",
     val shape: String = ""
 )
 

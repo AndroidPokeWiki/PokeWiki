@@ -21,4 +21,11 @@
     <string name="character">特性</string>
     <string name="hide_character">隐藏特性</string>
     <string name="shape">形状</string>
+    <string name="HP">HP</string>
+    <string name="zero">0</string>
+    <string name="ATK">ATK</string>
+    <string name="DEF">DEF</string>
+    <string name="SATK">SATK</string>
+    <string name="SDEF">SDEF</string>
+    <string name="SPD">SPD</string>
 </resources>

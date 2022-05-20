@@ -46,5 +46,10 @@
     <color name="pokemon_red">#ff927d</color>
     <color name="pokemon_white">#F8F8F8</color>
     <color name="pokemon_yellow">#fae078</color>
-
+    <color name="hp_green">#8AC654</color>
+    <color name="atk_yellow">#F8D03C</color>
+    <color name="def_orange">#D98837</color>
+    <color name="satk_blue">#59C3D0</color>
+    <color name="sdef_blue">#5890CD</color>
+    <color name="spd_purple">#A456D0</color>
 </resources>

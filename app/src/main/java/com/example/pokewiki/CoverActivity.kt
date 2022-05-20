@@ -1,6 +1,7 @@
 package com.example.pokewiki
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pokewiki.login.LoginActivity
@@ -12,6 +13,7 @@ class CoverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         StatusBarCompat.translucentStatusBar(this)
+        window.navigationBarColor = Color.BLACK
         initAction()
     }
 

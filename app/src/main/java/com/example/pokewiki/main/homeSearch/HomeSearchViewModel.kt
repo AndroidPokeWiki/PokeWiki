@@ -56,20 +56,24 @@ class HomeSearchViewModel : ViewModel() {
                         val list = Gson().fromJson<ArrayList<PokemonSearchBean>>(
                             listData, object : TypeToken<ArrayList<PokemonSearchBean>>() {}.type
                         )
+                        // 列表为空
                         if (list.isEmpty())
                             loadingPage(sp)
-                        else{
+                        else {
+                            //清除缓存避免重复
+                            changeData.clear()
+
                             changeData.addAll(list)
                             _viewState.setState { copy(pokemonList = list, page = page) }
                         }
                     } catch (e: JsonParseException) {
                         Log.e("ERROR!", "getCache: 无法解析存储json\n json:${listData}")
+                        // 加载两页数据避免数组越界报错
                         loadingPage(sp)
                     }
                 }
-            } else {
+            } else
                 loadingPage(sp)
-            }
         } else
             loadingPage(sp)
     }
@@ -139,7 +143,8 @@ class HomeSearchViewModel : ViewModel() {
                     if (AppContext.autoSave) {
                         _viewEvent.setEvent(HomeSearchViewEvent.WriteToStorage)
                     }
-                    pokemonList.addAll(result.data)
+                    // 将最新的页面数据添加
+                    pokemonList.addAll(pageData)
                     _viewState.setState { copy(pokemonList = pokemonList, page = page + 1) }
                 }
                 is NetworkState.Error -> throw Exception(result.msg)
@@ -209,12 +214,16 @@ class HomeSearchViewModel : ViewModel() {
     private suspend fun writeToStorageLogic(dest: File, item: PokemonSearchBean) {
         when (val result = repository.getImageFromUrl(item.img_url)) {
             is NetworkState.Success -> {
-                val sink = Okio.sink(dest)
-                val bufferedSink = Okio.buffer(sink)
-                bufferedSink.writeAll(result.data.source())
-                bufferedSink.close()
-                //切换储存方式
-                changeData.add(item.copy(img_url = "", img_path = dest.path))
+                flow{
+                    val sink = Okio.sink(dest)
+                    val bufferedSink = Okio.buffer(sink)
+                    bufferedSink.writeAll(result.data.source())
+                    bufferedSink.close()
+
+                    //切换储存方式
+                    changeData.add(item.copy(img_url = "", img_path = dest.path))
+                    emit("下载完成")
+                }.flowOn(Dispatchers.IO).collect()
             }
             is NetworkState.Error -> throw(Exception(result.msg))
         }

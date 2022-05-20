@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:paddingBottom="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pokemon_detail_state_hp_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_atk_container"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_hp_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/HP"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/pokemon_detail_state_hp_bar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.skydoves.progressview.ProgressView
+                    android:id="@+id/pokemon_detail_state_hp_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_state_hp_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_state_hp_text"
+                    app:layout_constraintWidth_percent="0.71"
+                    app:progressView_autoAnimate="true"
+                    app:progressView_colorBackground="#EFEFEF"
+                    app:progressView_colorProgress="@color/hp_green"
+                    app:progressView_max="255"
+                    app:progressView_min="0"
+                    app:progressView_progressFromPrevious="true"
+                    app:progressView_radius="100dp" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_hp_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/zero"
+                    android:textColor="#7E7E7E"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_hp_bar"
+                    app:layout_constraintEnd_toEndOf="@id/pokemon_detail_state_hp_bar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pokemon_detail_state_atk_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_def_container"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_state_hp_container">
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_atk_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ATK"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/pokemon_detail_state_atk_bar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.skydoves.progressview.ProgressView
+                    android:id="@+id/pokemon_detail_state_atk_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_state_atk_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_state_atk_text"
+                    app:layout_constraintWidth_percent="0.71"
+                    app:progressView_autoAnimate="true"
+                    app:progressView_colorBackground="#EFEFEF"
+                    app:progressView_colorProgress="@color/atk_yellow"
+                    app:progressView_max="255"
+                    app:progressView_min="0"
+                    app:progressView_progressFromPrevious="true"
+                    app:progressView_radius="100dp" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_atk_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/zero"
+                    android:textColor="#7E7E7E"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_atk_bar"
+                    app:layout_constraintEnd_toEndOf="@id/pokemon_detail_state_atk_bar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pokemon_detail_state_def_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_satk_container"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_state_atk_container">
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_def_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/DEF"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/pokemon_detail_state_def_bar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.skydoves.progressview.ProgressView
+                    android:id="@+id/pokemon_detail_state_def_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_state_def_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_state_def_text"
+                    app:layout_constraintWidth_percent="0.71"
+                    app:progressView_autoAnimate="true"
+                    app:progressView_colorBackground="#EFEFEF"
+                    app:progressView_colorProgress="@color/def_orange"
+                    app:progressView_max="255"
+                    app:progressView_min="0"
+                    app:progressView_progressFromPrevious="true"
+                    app:progressView_radius="100dp" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_def_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/zero"
+                    android:textColor="#7E7E7E"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_def_bar"
+                    app:layout_constraintEnd_toEndOf="@id/pokemon_detail_state_def_bar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pokemon_detail_state_satk_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_sdef_container"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_state_def_container">
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_satk_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/SATK"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/pokemon_detail_state_satk_bar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.skydoves.progressview.ProgressView
+                    android:id="@+id/pokemon_detail_state_satk_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_state_satk_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_state_satk_text"
+                    app:layout_constraintWidth_percent="0.71"
+                    app:progressView_autoAnimate="true"
+                    app:progressView_colorBackground="#EFEFEF"
+                    app:progressView_colorProgress="@color/satk_blue"
+                    app:progressView_max="255"
+                    app:progressView_min="0"
+                    app:progressView_progressFromPrevious="true"
+                    app:progressView_radius="100dp" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_satk_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/zero"
+                    android:textColor="#7E7E7E"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_satk_bar"
+                    app:layout_constraintEnd_toEndOf="@id/pokemon_detail_state_satk_bar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pokemon_detail_state_sdef_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_spd_container"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_state_satk_container">
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_sdef_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/SDEF"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/pokemon_detail_state_sdef_bar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.skydoves.progressview.ProgressView
+                    android:id="@+id/pokemon_detail_state_sdef_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_state_sdef_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_state_sdef_text"
+                    app:layout_constraintWidth_percent="0.71"
+                    app:progressView_autoAnimate="true"
+                    app:progressView_colorBackground="#EFEFEF"
+                    app:progressView_colorProgress="@color/sdef_blue"
+                    app:progressView_max="255"
+                    app:progressView_min="0"
+                    app:progressView_progressFromPrevious="true"
+                    app:progressView_radius="100dp" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_sdef_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/zero"
+                    android:textColor="#7E7E7E"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_sdef_bar"
+                    app:layout_constraintEnd_toEndOf="@id/pokemon_detail_state_sdef_bar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pokemon_detail_state_spd_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_state_sdef_container">
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_spd_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/SPD"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/pokemon_detail_state_spd_bar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.skydoves.progressview.ProgressView
+                    android:id="@+id/pokemon_detail_state_spd_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_state_spd_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_state_spd_text"
+                    app:layout_constraintWidth_percent="0.71"
+                    app:progressView_autoAnimate="true"
+                    app:progressView_colorBackground="#EFEFEF"
+                    app:progressView_colorProgress="@color/spd_purple"
+                    app:progressView_max="255"
+                    app:progressView_min="0"
+                    app:progressView_progressFromPrevious="true"
+                    app:progressView_radius="100dp" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_state_spd_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/zero"
+                    android:textColor="#7E7E7E"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toTopOf="@id/pokemon_detail_state_spd_bar"
+                    app:layout_constraintEnd_toEndOf="@id/pokemon_detail_state_spd_bar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

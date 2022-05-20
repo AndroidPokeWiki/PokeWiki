@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,6 +113,11 @@ class HomeSearchFragment : Fragment(R.layout.search_main_fragment) {
                     }
                     R.id.hint_cancel_btn -> {
                         countDown.countDown()
+                        AppContext.autoSave = false
+                        sp.edit()
+                            .putBoolean(AUTO_SAVE, false)
+                            .putBoolean(FIRST_ASK_AUTO_SAVE, true)
+                            .apply()
                         hint.dismiss()
                     }
                 }
@@ -188,6 +194,7 @@ class HomeSearchFragment : Fragment(R.layout.search_main_fragment) {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initViewModel() {
         viewModel.viewState.let { states ->
             states.observeState(
@@ -201,7 +208,8 @@ class HomeSearchFragment : Fragment(R.layout.search_main_fragment) {
 
                         syncList.clear()
                         syncList.addAll(list)
-                        (mContainer.adapter as SearchMainAdapter).notifyItemInserted(syncList.size - 1)
+                        val adapter = (mContainer.adapter as SearchMainAdapter)
+                        adapter.notifyItemRangeChanged(adapter.itemCount, syncList.size)
                     }
                     HomeSearchViewState.ERROR -> mRefreshLayout.finishLoadMore(false)
                     HomeSearchViewState.NO_MORE -> mRefreshLayout.finishLoadMoreWithNoMoreData()
@@ -218,10 +226,9 @@ class HomeSearchFragment : Fragment(R.layout.search_main_fragment) {
 
                         syncList.clear()
                         syncList.addAll(list)
-                        (mContainer.adapter as SearchMainAdapter).notifyItemMoved(
-                            list.size - 1,
-                            syncList.size - 1
-                        )
+                        val adapter = (mContainer.adapter as SearchMainAdapter)
+                        val num = adapter.itemCount - syncList.size
+                        adapter.notifyItemRangeChanged(list.size - 1, num)
                     }
                     HomeSearchViewState.ERROR -> mRefreshLayout.finishRefresh(false)
                 }

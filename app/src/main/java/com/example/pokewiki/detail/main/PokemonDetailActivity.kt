@@ -2,7 +2,6 @@ package com.example.pokewiki.detail.main
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,7 @@ import com.example.pokewiki.R
 import com.example.pokewiki.adapter.PageAdapter
 import com.example.pokewiki.bean.PokemonDetailBean
 import com.example.pokewiki.detail.info.PokemonDetailInfoFragment
+import com.example.pokewiki.detail.states.PokemonDetailStatesFragment
 import com.example.pokewiki.utils.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ruffian.library.widget.RTextView
@@ -45,6 +45,7 @@ class PokemonDetailActivity : AppCompatActivity() {
     private val fragmentList = ArrayList<Fragment>()
 
     private val infoFragment = PokemonDetailInfoFragment()
+    private val stateFragment = PokemonDetailStatesFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +77,26 @@ class PokemonDetailActivity : AppCompatActivity() {
         mNavBar.itemIconTintList = null
 
         fragmentList.add(infoFragment)
+        fragmentList.add(stateFragment)
         val adapter = PageAdapter(supportFragmentManager, lifecycle, fragmentList)
         mPageContainer.adapter = adapter
+
+        mPageContainer.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                mNavBar.menu.getItem(position).isChecked = true
+                // 重置状态页动画
+                stateFragment.clearData()
+                when (position) {
+                    1 -> stateFragment.refreshData()
+                }
+            }
+        })
+
+        mNavBar.setOnItemSelectedListener {
+            mPageContainer.currentItem = it.order
+            true
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -102,6 +121,7 @@ class PokemonDetailActivity : AppCompatActivity() {
                 ColorDict.color[it]?.let { color ->
                     mBg.setBackgroundColor(resources.getColor(color, theme))
                     StatusBarCompat.setStatusBarColor(this, resources.getColor(color, theme))
+                    window.navigationBarColor = resources.getColor(color, theme)
                 }
             }
             state.observeState(this, PokemonDetailViewState::is_like) {

@@ -67,4 +67,6 @@ dependencies {
         exclude group: 'androidx.appcompat:appcompat'
         exclude group: 'com.google.android.material:material'
     })
+    //动态进度条
+    implementation "com.github.skydoves:progressview:1.1.3"
 }

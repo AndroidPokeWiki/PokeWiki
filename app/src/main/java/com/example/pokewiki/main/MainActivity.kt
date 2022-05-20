@@ -3,7 +3,6 @@ package com.example.pokewiki.main
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2

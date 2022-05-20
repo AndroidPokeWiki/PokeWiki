@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,10 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.pokewiki.R
 import com.example.pokewiki.bean.PokemonIntroBean
 import com.example.pokewiki.detail.main.PokemonDetailActivity
-import com.example.pokewiki.utils.AppContext
-import com.example.pokewiki.utils.ColorDict
-import com.example.pokewiki.utils.LoadingDialogUtils
-import com.example.pokewiki.utils.ToastUtils
+import com.example.pokewiki.utils.*
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
 
@@ -28,6 +26,7 @@ class PokemonDetailInfoFragment : Fragment() {
     private lateinit var mClassTv: TextView
     private lateinit var mHabitatTv: TextView
     private lateinit var mIntroTv: TextView
+    private lateinit var mIntroCard: CardView
     private lateinit var mShapeTv: TextView
     private lateinit var mLine1: View
     private lateinit var mLine2: View
@@ -41,7 +40,7 @@ class PokemonDetailInfoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.pokemon_detail_info, container)
+        return inflater.inflate(R.layout.pokemon_detail_info_fragment, container)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,6 +63,7 @@ class PokemonDetailInfoFragment : Fragment() {
         mClassTv = view.findViewById(R.id.pokemon_detail_class)
         mHabitatTv = view.findViewById(R.id.pokemon_detail_habitat)
         mIntroTv = view.findViewById(R.id.pokemon_detail_intro)
+        mIntroCard = view.findViewById(R.id.pokemon_detail_intro_card)
         mShapeTv = view.findViewById(R.id.pokemon_detail_shape)
         mLine1 = view.findViewById(R.id.pokemon_detail_class_line1)
         mLine2 = view.findViewById(R.id.pokemon_detail_class_line2)
@@ -76,11 +76,12 @@ class PokemonDetailInfoFragment : Fragment() {
                     pokeIntro = it
                     initEvo()
                     mClassTv.text = pokeIntro.genus
-                    mHabitatTv.text = pokeIntro.habitat
-                    if (pokeIntro.intro_text.isNullOrBlank())
-                        mIntroTv.visibility = View.GONE
-                    else
+                    mHabitatTv.text = pokeIntro.habitat ?: "暂无"
+                    if (!pokeIntro.intro_text.isNullOrBlank()) {
+                        mIntroCard.visibility = View.VISIBLE
                         mIntroTv.text = pokeIntro.intro_text?.replace("\n", "")
+                    }
+
                     mShapeTv.text = pokeIntro.shape
 
                     val color =
@@ -165,15 +166,25 @@ class PokemonDetailInfoFragment : Fragment() {
             val line: View = view.findViewById(R.id.pokemon_detail_character_line)
 
             charName.text = chara
+            // 获取主题颜色
             val color =
                 ColorDict.color[AppContext.pokeDetail.pokemon_type[0]]?.let {
                     resources.getColor(it, requireActivity().theme)
                 }
+            // 设置主题颜色
             if (color != null) {
                 charName.setTextColor(color)
                 line.setBackgroundColor(color)
             }
-
+            // 非第一个组件设置后边距
+            val p = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            if (chara != pokeChar.first())
+                p.marginStart = dip2px(requireContext(), 30.0)
+            view.layoutParams = p
+            // 如果没有隐藏特性取消分割线显示
             if (pokeHideChar.size == 0)
                 line.visibility = View.GONE
 
@@ -197,8 +208,16 @@ class PokemonDetailInfoFragment : Fragment() {
                 charName.setTextColor(color)
                 line.setBackgroundColor(color)
             }
+            // 如果是最后一个组件取消分割线
             if (hide == pokeHideChar.last())
                 line.visibility = View.GONE
+            // 设置前边距
+            val p = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            p.marginStart = dip2px(requireContext(), 30.0)
+            view.layoutParams = p
 
             mCharContainer.addView(view)
         }
