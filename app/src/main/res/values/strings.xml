@@ -28,4 +28,8 @@
     <string name="SATK">SATK</string>
     <string name="SDEF">SDEF</string>
     <string name="SPD">SPD</string>
+    <string name="power">威力</string>
+    <string name="PP">PP</string>
+    <string name="accurate">命中</string>
+    <string name="level_move">可学会的招式</string>
 </resources>

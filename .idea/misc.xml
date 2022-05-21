@@ -16,8 +16,11 @@
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/main_container.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detail_container.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detail_info.xml" value="0.33" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detail_info_fragment.xml" value="0.2935897435897436" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detail_move_fragment.xml" value="0.2935897435897436" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detial_state_fragment.xml" value="0.2935897435897436" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_evolution_item.xml" value="0.33" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_move_item.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/profile_fragment.xml" value="0.2937152629328773" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/search_main_activity.xml" value="0.3578125" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/search_main_close_bar.xml" value="0.2937152629328773" />

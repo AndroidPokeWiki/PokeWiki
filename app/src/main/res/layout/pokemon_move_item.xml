@@ -1,6 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:paddingBottom="10dp">
+
+    <com.ruffian.library.widget.RView
+        android:id="@+id/pokemon_move_item_type_bg"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="-40dp"
+        app:background_normal="@color/general_gray"
+        app:corner_radius="100dp"
+        app:layout_constraintEnd_toEndOf="@id/pokemon_move_item_level"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pokemon_move_item_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_move_item_type_bg"
+        app:layout_constraintEnd_toEndOf="@id/pokemon_move_item_type_bg"
+        app:layout_constraintStart_toEndOf="@id/pokemon_move_item_level"
+        app:layout_constraintTop_toTopOf="@id/pokemon_move_item_type_bg" />
+
+    <com.ruffian.library.widget.RTextView
+        android:id="@+id/pokemon_move_item_level"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        app:background_normal="#57F478"
+        app:corner_radius="100dp"
+        app:layout_constraintStart_toStartOf="@id/pokemon_move_item_type_bg"
+        app:layout_constraintTop_toTopOf="@id/pokemon_move_item_type_bg" />
+
+    <TextView
+        android:id="@+id/pokemon_move_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/pokemon_move_item_type_bg"
+        app:layout_constraintStart_toStartOf="@id/pokemon_move_item_type_bg"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_move_item_type_bg" />
+
+    <com.ruffian.library.widget.RView
+        android:id="@+id/pokemon_move_item_power_bg"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        app:border_color_normal="@color/poke_ball_red"
+        app:border_width_normal="2dp"
+        app:corner_radius="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_move_item_name"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toStartOf="@id/pokemon_move_item_pp_bg"
+        app:layout_constraintStart_toEndOf="@id/pokemon_move_item_type_bg"
+        app:layout_constraintTop_toTopOf="@id/pokemon_move_item_type_bg" />
+
+    <com.ruffian.library.widget.RTextView
+        android:id="@+id/pokemon_move_item_power_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/power"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:background_normal="@color/poke_ball_red"
+        app:corner_radius_top_left="8dp"
+        app:corner_radius_top_right="8dp"
+        app:layout_constraintDimensionRatio="2"
+        app:layout_constraintEnd_toEndOf="@id/pokemon_move_item_power_bg"
+        app:layout_constraintStart_toStartOf="@id/pokemon_move_item_power_bg"
+        app:layout_constraintTop_toTopOf="@id/pokemon_move_item_power_bg" />
+
+    <TextView
+        android:id="@+id/pokemon_move_item_power_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_move_item_power_bg"
+        app:layout_constraintEnd_toEndOf="@id/pokemon_move_item_power_bg"
+        app:layout_constraintStart_toStartOf="@id/pokemon_move_item_power_bg"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_move_item_power_text" />
+
+    <com.ruffian.library.widget.RView
+        android:id="@+id/pokemon_move_item_pp_bg"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        app:border_color_normal="@color/electric_yellow"
+        app:border_width_normal="2dp"
+        app:corner_radius="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_move_item_name"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toStartOf="@id/pokemon_move_item_acu_bg"
+        app:layout_constraintStart_toEndOf="@id/pokemon_move_item_power_bg"
+        app:layout_constraintTop_toTopOf="@id/pokemon_move_item_type_bg" />
+
+    <com.ruffian.library.widget.RTextView
+        android:id="@+id/pokemon_move_item_pp_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/PP"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:background_normal="@color/electric_yellow"
+        app:corner_radius_top_left="8dp"
+        app:corner_radius_top_right="8dp"
+        app:layout_constraintDimensionRatio="2"
+        app:layout_constraintEnd_toEndOf="@id/pokemon_move_item_pp_bg"
+        app:layout_constraintStart_toStartOf="@id/pokemon_move_item_pp_bg"
+        app:layout_constraintTop_toTopOf="@id/pokemon_move_item_pp_bg" />
+
+    <TextView
+        android:id="@+id/pokemon_move_item_pp_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_move_item_pp_bg"
+        app:layout_constraintEnd_toEndOf="@id/pokemon_move_item_pp_bg"
+        app:layout_constraintStart_toStartOf="@id/pokemon_move_item_pp_bg"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_move_item_pp_text" />
+
+
+    <com.ruffian.library.widget.RView
+        android:id="@+id/pokemon_move_item_acu_bg"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        app:border_color_normal="@color/water_blue"
+        app:border_width_normal="2dp"
+        app:corner_radius="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_move_item_name"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toStartOf="@id/pokemon_move_item_class"
+        app:layout_constraintStart_toEndOf="@id/pokemon_move_item_pp_bg"
+        app:layout_constraintTop_toTopOf="@id/pokemon_move_item_type_bg" />
+
+    <com.ruffian.library.widget.RTextView
+        android:id="@+id/pokemon_move_item_acu_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/accurate"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:background_normal="@color/water_blue"
+        app:corner_radius_top_left="8dp"
+        app:corner_radius_top_right="8dp"
+        app:layout_constraintDimensionRatio="2"
+        app:layout_constraintEnd_toEndOf="@id/pokemon_move_item_acu_bg"
+        app:layout_constraintStart_toStartOf="@id/pokemon_move_item_acu_bg"
+        app:layout_constraintTop_toTopOf="@id/pokemon_move_item_acu_bg" />
+
+    <TextView
+        android:id="@+id/pokemon_move_item_acu_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_move_item_acu_bg"
+        app:layout_constraintEnd_toEndOf="@id/pokemon_move_item_acu_bg"
+        app:layout_constraintStart_toStartOf="@id/pokemon_move_item_acu_bg"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_move_item_acu_text" />
+
+    <com.ruffian.library.widget.RTextView
+        android:id="@+id/pokemon_move_item_class"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:background_normal="@color/poke_ball_red"
+        app:corner_radius="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_move_item_name"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pokemon_move_item_acu_bg"
+        app:layout_constraintTop_toTopOf="@id/pokemon_move_item_type_bg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

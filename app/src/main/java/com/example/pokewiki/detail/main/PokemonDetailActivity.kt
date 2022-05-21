@@ -20,6 +20,7 @@ import com.example.pokewiki.R
 import com.example.pokewiki.adapter.PageAdapter
 import com.example.pokewiki.bean.PokemonDetailBean
 import com.example.pokewiki.detail.info.PokemonDetailInfoFragment
+import com.example.pokewiki.detail.move.PokemonDetailMoveFragment
 import com.example.pokewiki.detail.states.PokemonDetailStatesFragment
 import com.example.pokewiki.utils.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -46,6 +47,7 @@ class PokemonDetailActivity : AppCompatActivity() {
 
     private val infoFragment = PokemonDetailInfoFragment()
     private val stateFragment = PokemonDetailStatesFragment()
+    private val moveFragment = PokemonDetailMoveFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +80,7 @@ class PokemonDetailActivity : AppCompatActivity() {
 
         fragmentList.add(infoFragment)
         fragmentList.add(stateFragment)
+        fragmentList.add(moveFragment)
         val adapter = PageAdapter(supportFragmentManager, lifecycle, fragmentList)
         mPageContainer.adapter = adapter
 
@@ -89,6 +92,7 @@ class PokemonDetailActivity : AppCompatActivity() {
                 stateFragment.clearData()
                 when (position) {
                     1 -> stateFragment.refreshData()
+                    2 -> moveFragment.refreshData()
                 }
             }
         })
