@@ -56,6 +56,24 @@ interface ServerApi {
         @Field("userId") user_id : String
     ): ResponseData<PokemonDetailBean>
 
+    @POST("searchPokeByName")
+    @FormUrlEncoded
+    suspend fun getPokemonByName(
+            @Field("pokemon_keyword") pokemon_keyword: String
+    ): ResponseData<ArrayList<PokemonSearchBean>>
+
+    @POST("searchByGeneration")
+    @FormUrlEncoded
+    suspend fun getPokemonByGen(
+            @Field("generation") pokemon_keyword: String
+    ): ResponseData<ArrayList<PokemonSearchBean>>
+
+    @POST("searchByType")
+    @FormUrlEncoded
+    suspend fun getPokemonByType(
+            @Field("type") pokemon_keyword: String
+    ): ResponseData<ArrayList<PokemonSearchBean>>
+
     companion object {
         /**
          * 获取接口实例用于调用对接方法
