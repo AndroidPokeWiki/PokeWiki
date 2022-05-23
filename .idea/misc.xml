@@ -3,11 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/search_tag_activity.xml" value="0.27447916666666666" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/hint_dialog_style.xml" value="0.235" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/loading_dialog_style.xml" value="0.235" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/switch_bg_normal.xml" value="0.2175" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/switch_bg_selected.xml" value="0.2175" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/switch_selector_bg.xml" value="0.2175" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/switch_selector_green.xml" value="0.2175" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/switch_white_circle_normal.xml" value="0.2175" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/switch_white_circle_selected.xml" value="0.2175" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/drawable/switch_white_circle_selector.xml" value="0.2175" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/activity_main.xml" value="0.3578125" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/attr_item.xml" value="0.2937152629328773" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/character_item.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/community_main_fragment.xml" value="0.2937152629328773" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/cover_activity.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/hint_dialog.xml" value="0.2899957788096243" />
@@ -15,7 +22,14 @@
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/login_activity.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/main_container.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detail_container.xml" value="0.33" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detail_info.xml" value="0.33" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detail_info_fragment.xml" value="0.2935897435897436" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detail_move_fragment.xml" value="0.2935897435897436" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_detial_state_fragment.xml" value="0.2935897435897436" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_evolution_item.xml" value="0.33" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/pokemon_move_item.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/profile_fragment.xml" value="0.2937152629328773" />
+        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/profile_main_fragment.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/search_main_activity.xml" value="0.3578125" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/search_main_close_bar.xml" value="0.2937152629328773" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/search_main_expand_bar.xml" value="0.2937152629328773" />
