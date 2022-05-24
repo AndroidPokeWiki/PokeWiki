@@ -25,17 +25,66 @@ class PokemonDetailViewModel : ViewModel() {
         when (viewAction) {
             is PokemonDetailViewAction.GetInitData<*> -> getInitData(viewAction.id)
             is PokemonDetailViewAction.RefreshData -> refreshData()
+            is PokemonDetailViewAction.SwitchLikeState -> switchLike()
+            is PokemonDetailViewAction.ResetError -> resetError()
         }
     }
 
-    private fun refreshData(){
+    private fun resetError() {
+        _viewState.setState { copy(likeError = false) }
+        val isLike = _viewState.value.is_like
+        _viewState.setState { copy(is_like = !isLike) }
+    }
+
+    private fun switchLike() {
+        val isLike = _viewState.value.is_like
+        viewModelScope.launch {
+            _viewState.setState { copy(is_like = !isLike) }
+            if (!isLike)
+                flow {
+                    likeLogic()
+                    emit("收藏成功")
+                }.catch {
+                    _viewState.setState { copy(likeError = true) }
+                    _viewEvent.setEvent(PokemonDetailViewEvent.ShowToast("收藏失败，请重试"))
+                }.flowOn(Dispatchers.IO).collect()
+            else
+                flow {
+                    unlikeLogic()
+                    emit("取消收藏成功")
+                }.catch {
+                    _viewState.setState { copy(likeError = true) }
+                    _viewEvent.setEvent(PokemonDetailViewEvent.ShowToast("取消收藏失败，请重试"))
+                }.flowOn(Dispatchers.IO).collect()
+        }
+    }
+
+    private suspend fun likeLogic() {
+        val userId = AppContext.userData.userId
+        val pokeId = AppContext.pokeDetail.pokemon_id
+        when (val result = repository.like(pokeId.toInt(), userId)) {
+            is NetworkState.Success -> {}
+            is NetworkState.Error -> throw Exception(result.msg)
+        }
+    }
+
+    private suspend fun unlikeLogic() {
+        val userId = AppContext.userData.userId
+        val pokeId = AppContext.pokeDetail.pokemon_id
+        when (val result = repository.unlike(pokeId.toInt(), userId)) {
+            is NetworkState.Success -> {}
+            is NetworkState.Error -> throw Exception(result.msg)
+        }
+    }
+
+    private fun refreshData() {
         _viewState.setState {
             copy(
                 id = "#${AppContext.pokeDetail.pokemon_id}",
                 img = AppContext.pokeDetail.img_url,
                 name = AppContext.pokeDetail.pokemon_name,
                 color = AppContext.pokeDetail.pokemon_color,
-                attrs =AppContext.pokeDetail.pokemon_type,
+                attrs = AppContext.pokeDetail.pokemon_type,
                 is_like = AppContext.pokeDetail.is_star != 0
             )
         }

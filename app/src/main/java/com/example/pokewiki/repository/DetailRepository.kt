@@ -26,11 +26,23 @@ class DetailRepository {
         }
     }
 
-    suspend fun getInitData(
-        pokemon_id: String,
+    suspend fun like(
+        pokemon_id: Int,
         user_id: String
-    ): NetworkState<PokemonDetailBean> {
-        val result = ServerApi.create().getPokemonDetail(pokemon_id, user_id)
+    ): NetworkState<Any> {
+        val result = ServerApi.create().like(user_id, pokemon_id)
+
+        return when (result.status) {
+            200 -> NetworkState.Success(result.data)
+            else -> NetworkState.Error(result.msg ?: "未知错误，请联系管理员")
+        }
+    }
+
+    suspend fun unlike(
+        pokemon_id: Int,
+        user_id: String
+    ): NetworkState<Any> {
+        val result = ServerApi.create().unlike(user_id, pokemon_id)
 
         return when (result.status) {
             200 -> NetworkState.Success(result.data)

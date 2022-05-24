@@ -46,32 +46,39 @@ interface ServerApi {
     @FormUrlEncoded
     suspend fun getPokemonDetail(
         @Field("poke_id") poke_id: Int,
-        @Field("userId") user_id : String
+        @Field("userId") user_id: String
     ): ResponseData<PokemonDetailBean>
 
-    @POST("getPokemonDetails")
+    @POST("addUserStar")
     @FormUrlEncoded
-    suspend fun getPokemonDetail(
-        @Field("poke_id") poke_id: String,
-        @Field("userId") user_id : String
-    ): ResponseData<PokemonDetailBean>
+    suspend fun like(
+        @Field("userId") user_id: String,
+        @Field("pokemon_id") poke_id: Int
+    ): ResponseData<Any>
+
+    @POST("cancelUserStar")
+    @FormUrlEncoded
+    suspend fun unlike(
+        @Field("userId") user_id: String,
+        @Field("pokemon_id") poke_id: Int
+    ): ResponseData<Any>
 
     @POST("searchPokeByName")
     @FormUrlEncoded
     suspend fun getPokemonByName(
-            @Field("pokemon_keyword") pokemon_keyword: String
+        @Field("pokemon_keyword") pokemon_keyword: String
     ): ResponseData<ArrayList<PokemonSearchBean>>
 
     @POST("searchByGeneration")
     @FormUrlEncoded
     suspend fun getPokemonByGen(
-            @Field("generation") pokemon_keyword: String
+        @Field("generation") pokemon_keyword: String
     ): ResponseData<ArrayList<PokemonSearchBean>>
 
     @POST("searchByType")
     @FormUrlEncoded
     suspend fun getPokemonByType(
-            @Field("type") pokemon_keyword: String
+        @Field("type") pokemon_keyword: String
     ): ResponseData<ArrayList<PokemonSearchBean>>
 
     companion object {

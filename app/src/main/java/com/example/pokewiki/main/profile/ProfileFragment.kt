@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.example.pokewiki.R
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ruffian.library.widget.RImageView
+import qiu.niorgai.StatusBarCompat
 
 class ProfileFragment : Fragment() {
 
@@ -33,6 +34,8 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        StatusBarCompat.translucentStatusBar(requireActivity())
+
         initView(view)
     }
 

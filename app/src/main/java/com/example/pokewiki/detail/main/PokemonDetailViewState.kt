@@ -1,7 +1,5 @@
 package com.example.pokewiki.detail.main
 
-import com.example.pokewiki.bean.PokemonDetailBean
-
 
 data class PokemonDetailViewState(
     val id: String = "",
@@ -9,17 +7,19 @@ data class PokemonDetailViewState(
     val name: String = "",
     val color: String = "",
     val attrs: ArrayList<String> = ArrayList(),
-    val is_like : Boolean = false
+    val is_like: Boolean = false,
+    val likeError: Boolean = false
 )
 
-sealed class PokemonDetailViewAction{
+sealed class PokemonDetailViewAction {
     object SwitchLikeState : PokemonDetailViewAction()
     data class GetInitData<T>(val id: T) : PokemonDetailViewAction()
-    object RefreshData: PokemonDetailViewAction()
+    object RefreshData : PokemonDetailViewAction()
+    object ResetError : PokemonDetailViewAction()
 }
 
 
-sealed class PokemonDetailViewEvent{
+sealed class PokemonDetailViewEvent {
     object ShowLoadingDialog : PokemonDetailViewEvent()
     object DismissLoadingDialog : PokemonDetailViewEvent()
     data class ShowToast(val msg: String) : PokemonDetailViewEvent()

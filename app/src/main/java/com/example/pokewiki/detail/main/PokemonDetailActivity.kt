@@ -84,6 +84,8 @@ class PokemonDetailActivity : AppCompatActivity() {
         val adapter = PageAdapter(supportFragmentManager, lifecycle, fragmentList)
         mPageContainer.adapter = adapter
 
+        mLikeBtn.setOnClickListener { viewModel.dispatch(PokemonDetailViewAction.SwitchLikeState) }
+
         mPageContainer.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -143,6 +145,10 @@ class PokemonDetailActivity : AppCompatActivity() {
                 for (attr in it) {
                     mAttrContainer.addView(layout2View(attr))
                 }
+            }
+            state.observeState(this, PokemonDetailViewState::likeError){
+                if (it)
+                    viewModel.dispatch(PokemonDetailViewAction.ResetError)
             }
         }
     }
