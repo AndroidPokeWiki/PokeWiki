@@ -11,7 +11,8 @@ import com.example.pokewiki.adapter.PageAdapter
 import com.example.pokewiki.main.community.CommunityFragment
 import com.example.pokewiki.main.homeSearch.HomeSearchFragment
 import com.example.pokewiki.main.profile.ProfileFragment
-import com.example.pokewiki.utils.GET_PERMISSION_FLAG
+import com.example.pokewiki.utils.PROFILE_GET_PERMISSION_FLAG
+import com.example.pokewiki.utils.SEARCH_GET_PERMISSION_FLAG
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import qiu.niorgai.StatusBarCompat
@@ -64,14 +65,25 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == GET_PERMISSION_FLAG) {
-            if (!(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                Toast.makeText(
-                    this, "拒绝了相关权限，无法自动缓存，请尝试重新授权",
-                    Toast.LENGTH_LONG
-                ).show()
+        when (requestCode) {
+            SEARCH_GET_PERMISSION_FLAG -> {
+                if (!(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Toast.makeText(
+                        this, "拒绝了相关权限，无法自动缓存，请尝试重新授权",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                (fragmentList[1] as HomeSearchFragment).countDown.countDown()
             }
-            (fragmentList[1] as HomeSearchFragment).countDown.countDown()
+            PROFILE_GET_PERMISSION_FLAG -> {
+                if (!(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Toast.makeText(
+                        this, "拒绝了相关权限，无法自动缓存，请尝试重新授权",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }else
+                    (fragmentList[2] as ProfileFragment).getPermission()
+            }
         }
     }
 }

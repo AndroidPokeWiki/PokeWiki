@@ -17,7 +17,8 @@ const val POKEMON_CACHE_PAGE = "POKEMON_CACHE_PAGE"
 const val AUTO_SAVE = "AUTO_SAVE"
 const val FIRST_ASK_AUTO_SAVE = "FIRST_ASK_AUTO_SAVE"
 
-const val GET_PERMISSION_FLAG = 1
+const val SEARCH_GET_PERMISSION_FLAG = 1
+const val PROFILE_GET_PERMISSION_FLAG = 2
 
 // 颜色字典
 object ColorDict {

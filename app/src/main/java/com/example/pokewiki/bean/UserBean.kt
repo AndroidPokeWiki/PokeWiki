@@ -12,7 +12,7 @@ package com.example.pokewiki.bean
 data class UserBean(
     val authId : Int = 1,
     val email: String = "",
-    val profile_photo: String = "",
+    val profile_photo: String? = null,
     val token: String = "",
     val userId : String = "",
     val username: String = ""

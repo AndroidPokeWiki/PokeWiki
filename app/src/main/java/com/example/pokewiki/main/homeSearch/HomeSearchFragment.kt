@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -109,7 +108,7 @@ class HomeSearchFragment : Fragment(R.layout.search_main_fragment) {
                         hint.dismiss()
 
                         //获取权限
-                        PermissionUtils.isGrantExternalRW(requireActivity(), GET_PERMISSION_FLAG)
+                        PermissionUtils.isGrantExternalRW(requireActivity(), SEARCH_GET_PERMISSION_FLAG)
                     }
                     R.id.hint_cancel_btn -> {
                         countDown.countDown()
