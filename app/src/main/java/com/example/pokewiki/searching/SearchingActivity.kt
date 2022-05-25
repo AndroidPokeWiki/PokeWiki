@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.size
 import com.example.pokewiki.R
-import com.example.pokewiki.custom_view.FlowLayout
+import com.example.pokewiki.customView.FlowLayout
 import com.example.pokewiki.utils.ColorDict
 import com.example.pokewiki.utils.dip2px
 import com.ruffian.library.widget.RTextView

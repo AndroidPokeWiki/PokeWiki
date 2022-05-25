@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/search_result_title_bg"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:elevation="10dp"
+        app:cardBackgroundColor="@color/poke_ball_red"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/search_result_back_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="10dp"
+                android:src="@drawable/white_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.ruffian.library.widget.RTextView
+                android:id="@+id/search_result_input_bg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="#8A8A8A"
+                android:textSize="16sp"
+
+                app:background_normal="@color/white"
+                app:corner_radius="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.6"
+                app:layout_constraintStart_toEndOf="@+id/search_result_back_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.78" />
+
+            <EditText
+                android:id="@+id/search_result_input"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@null"
+                android:imeOptions="actionSearch"
+                android:maxLength="10"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:textColor="#8A8A8A"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.6"
+                app:layout_constraintStart_toEndOf="@+id/search_result_back_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.78" />
+
+            <ImageButton
+                android:id="@+id/search_result_search_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="10dp"
+                android:src="@drawable/search_pokeball"
+                app:layout_constraintBottom_toBottomOf="@id/search_result_input"
+                app:layout_constraintEnd_toEndOf="@+id/search_result_input"
+                app:layout_constraintTop_toTopOf="@id/search_result_input" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_result_item_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_result_title_bg" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

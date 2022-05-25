@@ -109,7 +109,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/search_tag_history_text" />
 
-        <com.example.pokewiki.custom_view.FlowLayout
+        <com.example.pokewiki.customView.FlowLayout
             android:id="@+id/search_tag_history_tag_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_tag_history_container" />
 
-    <com.example.pokewiki.custom_view.FlowLayout
+    <com.example.pokewiki.customView.FlowLayout
         android:id="@+id/search_tag_attr_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_tag_attr_container" />
 
-    <com.example.pokewiki.custom_view.FlowLayout
+    <com.example.pokewiki.customView.FlowLayout
         android:id="@+id/search_tag_generation_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

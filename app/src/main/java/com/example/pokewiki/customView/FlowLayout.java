@@ -1,4 +1,4 @@
-package com.example.pokewiki.custom_view;
+package com.example.pokewiki.customView;
 
 import android.content.Context;
 import android.graphics.Rect;
