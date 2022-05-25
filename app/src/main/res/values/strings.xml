@@ -40,4 +40,14 @@
     <string name="auto_cache">自动缓存</string>
     <string name="cache_info">开启自动缓存后可离线查看信息</string>
     <string name="logout">退出登录</string>
+    <string name="UserInfo">个人信息编辑</string>
+    <string name="change_password">修改密码</string>
+    <string name="confirm">确认</string>
+    <string name="new_password">请输入新密码</string>
+    <string name="old_password">请输入旧密码</string>
+    <string name="suggestion_feedback">意见反馈</string>
+    <string name="add_feedback">请添加反馈内容......</string>
+    <string name="add_pic">添加图片</string>
+    <string name="mycollection">我的收藏</string>
+
 </resources>

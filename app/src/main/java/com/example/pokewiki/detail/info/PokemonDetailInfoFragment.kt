@@ -185,42 +185,43 @@ class PokemonDetailInfoFragment : Fragment() {
                 p.marginStart = dip2px(requireContext(), 30.0)
             view.layoutParams = p
             // 如果没有隐藏特性取消分割线显示
-            if (pokeHideChar.size == 0)
+            if (pokeHideChar == null)
                 line.visibility = View.GONE
 
             mCharContainer.addView(view)
         }
-        for (hide in pokeHideChar) {
-            val view: View =
-                LayoutInflater.from(requireContext()).inflate(R.layout.character_item, null)
+        if (pokeHideChar != null)
+            for (hide in pokeHideChar) {
+                val view: View =
+                    LayoutInflater.from(requireContext()).inflate(R.layout.character_item, null)
 
-            val charName: TextView = view.findViewById(R.id.pokemon_detail_character_item)
-            val line: View = view.findViewById(R.id.pokemon_detail_character_line)
-            val hideHint: TextView = view.findViewById(R.id.pokemon_detail_hide_character_text)
+                val charName: TextView = view.findViewById(R.id.pokemon_detail_character_item)
+                val line: View = view.findViewById(R.id.pokemon_detail_character_line)
+                val hideHint: TextView = view.findViewById(R.id.pokemon_detail_hide_character_text)
 
-            hideHint.text = resources.getText(R.string.hide_character)
-            charName.text = hide
-            val color =
-                ColorDict.color[AppContext.pokeDetail.pokemon_type[0]]?.let {
-                    resources.getColor(it, requireActivity().theme)
+                hideHint.text = resources.getText(R.string.hide_character)
+                charName.text = hide
+                val color =
+                    ColorDict.color[AppContext.pokeDetail.pokemon_type[0]]?.let {
+                        resources.getColor(it, requireActivity().theme)
+                    }
+                if (color != null) {
+                    charName.setTextColor(color)
+                    line.setBackgroundColor(color)
                 }
-            if (color != null) {
-                charName.setTextColor(color)
-                line.setBackgroundColor(color)
-            }
-            // 如果是最后一个组件取消分割线
-            if (hide == pokeHideChar.last())
-                line.visibility = View.GONE
-            // 设置前边距
-            val p = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            p.marginStart = dip2px(requireContext(), 30.0)
-            view.layoutParams = p
+                // 如果是最后一个组件取消分割线
+                if (hide == pokeHideChar.last())
+                    line.visibility = View.GONE
+                // 设置前边距
+                val p = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                p.marginStart = dip2px(requireContext(), 30.0)
+                view.layoutParams = p
 
-            mCharContainer.addView(view)
-        }
+                mCharContainer.addView(view)
+            }
     }
 
 

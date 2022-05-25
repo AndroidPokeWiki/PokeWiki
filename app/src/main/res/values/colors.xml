@@ -52,4 +52,5 @@
     <color name="satk_blue">#59C3D0</color>
     <color name="sdef_blue">#5890CD</color>
     <color name="spd_purple">#A456D0</color>
+    <color name="profile_edit_user_name">#4C4C4C</color>
 </resources>
