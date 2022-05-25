@@ -6,6 +6,7 @@
     android:layout_gravity="center">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/search_result_item_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="15dp"
@@ -51,13 +52,31 @@
                 android:id="@+id/search_result_item_type_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginTop="17dp"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/search_result_item_id"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/search_result_item_name" />
+
+            <com.ruffian.library.widget.RTextView
+                android:id="@+id/search_result_item_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/black"
+                android:textSize="11sp"
+
+                app:border_color_normal="#6a6a6a"
+                app:border_width_normal="1dp"
+                app:corner_radius="100dp"
+                app:layout_constraintBottom_toBottomOf="@+id/search_result_item_type_container"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/search_result_item_type_container"
+                app:layout_constraintTop_toTopOf="@+id/search_result_item_type_container" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
