@@ -10,18 +10,9 @@ import com.example.pokewiki.main.homeSearch.HomeSearchViewState
  */
 data class SearchResultViewState(
         val keyword: String = "",
-        val loadingState: Int = HomeSearchViewState.FINISH,
-        val refreshState: Int = HomeSearchViewState.FINISH,
         val result: ArrayList<PokemonSearchBean> = ArrayList(),
         val page: Int = 0
-){
-    companion object {
-        const val LOADING = 1
-        const val FINISH = 0
-        const val NO_MORE = -1
-        const val ERROR = -2
-    }
-}
+)
 
 sealed class SearchResultViewAction {
     data class UpdateKeyword(val keyword: String) : SearchResultViewAction()
@@ -34,6 +25,5 @@ sealed class SearchResultViewAction {
 sealed class SearchResultViewEvent {
     object ShowLoadingDialog : SearchResultViewEvent()
     object DismissLoadingDialog : SearchResultViewEvent()
-    object TransIntent : SearchResultViewEvent()
     data class ShowToast(val msg: String) : SearchResultViewEvent()
 }

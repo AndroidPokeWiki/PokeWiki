@@ -54,20 +54,23 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
 
         ArrayList<View> viewList = new ArrayList<>();
         for (String attr : mData.get(position).getPokemon_type()) {
-            View attrView = LayoutInflater.from(mContext).inflate(R.layout.search_result_item, null);
-            RTextView attrContent = attrView.findViewById(R.id.search_result_item_container);
+            View attrView = LayoutInflater.from(mContext).inflate(R.layout.attr_item, null);
+            RTextView attrContent = attrView.findViewById(R.id.attr_container);
             RBaseHelper helper = attrContent.getHelper();
             attrContent.setText(attr);
 
             int color = ColorDict.INSTANCE.getColor().get(attr);
-            helper.setBackgroundColorNormal(color);
+            helper.setBackgroundColorNormal(mContext.getColor(color));
 
             LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
-            p.setMarginStart(dip2px(mContext, 10.0));
-            attrView.setLayoutParams(p);
+
+            if (!attr.equals(mData.get(position).getPokemon_type().get(0))) {
+                p.setMarginStart(dip2px(mContext, 10.0));
+                attrView.setLayoutParams(p);
+            }
 
             viewList.add(attrView);
         }

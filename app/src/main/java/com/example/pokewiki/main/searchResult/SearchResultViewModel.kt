@@ -2,7 +2,6 @@ package com.example.pokewiki.main.searchResult
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pokewiki.adapter.SearchResultAdapter
 import com.example.pokewiki.bean.PokemonSearchBean
 import com.example.pokewiki.repository.SearchResultRepository
 import com.example.pokewiki.utils.AppContext
@@ -17,7 +16,7 @@ import kotlinx.coroutines.launch
 /**
  * created by DWF on 2022/5/25.
  */
-class SearchResultViewModel : ViewModel(){
+class SearchResultViewModel : ViewModel() {
 
     private val repository = SearchResultRepository.getInstance()
     private val _viewState = MutableStateFlow(SearchResultViewState())
@@ -50,26 +49,25 @@ class SearchResultViewModel : ViewModel(){
                 _viewEvent.setEvent(SearchResultViewEvent.DismissLoadingDialog)
             }.catch {
                 _viewEvent.setEvent(
-                        SearchResultViewEvent.DismissLoadingDialog,
-                        SearchResultViewEvent.ShowToast(it.message ?: "")
+                    SearchResultViewEvent.DismissLoadingDialog,
+                    SearchResultViewEvent.ShowToast(it.message ?: "")
                 )
             }.flowOn(Dispatchers.IO).collect()
         }
     }
 
     private suspend fun searchingLogic(keyword: String, type: String) {
-        var result: NetworkState<ArrayList<PokemonSearchBean>>? = null
-
-        when (type) {
-            "name" -> result = repository.searchByName(keyword)
-            "gen" -> result = repository.searchByGen(keyword)
-            "type" -> result = repository.searchByType(keyword)
+        val result: NetworkState<ArrayList<PokemonSearchBean>>? = when (type) {
+            "name" -> repository.searchByName(keyword)
+            "gen" -> repository.searchByGen(keyword)
+            "type" -> repository.searchByType(keyword)
+            else -> null
         }
 
         when (result) {
             is NetworkState.Success -> {
-                _viewEvent.setEvent(SearchResultViewEvent.TransIntent)
                 AppContext.searchData = result.data
+                _viewState.setState { copy(result = result.data) }
             }
             is NetworkState.Error -> throw Exception(result.msg)
         }

@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.size
+import androidx.core.widget.addTextChangedListener
 import com.example.pokewiki.R
 import com.example.pokewiki.customView.FlowLayout
 import com.example.pokewiki.main.searchResult.SearchResultActivity
@@ -29,13 +30,14 @@ class SearchingActivity : AppCompatActivity() {
     lateinit var mBackBtn: ImageButton
     lateinit var mSearchBth: ImageButton
 
+    private var keyword = ""
     private val typeArray =
-            arrayOf(
-                    "一般", "飞行", "火", "超能力", "水", "虫", "电", "岩石",
-                    "草", "幽灵", "冰", "龙", "格斗", "恶", "毒", "钢", "地面", "妖精"
-            )
+        arrayOf(
+            "一般", "飞行", "火", "超能力", "水", "虫", "电", "岩石",
+            "草", "幽灵", "冰", "龙", "格斗", "恶", "毒", "钢", "地面", "妖精"
+        )
     private val generationArray = arrayOf(
-            "第一世代", "第二世代", "第三世代", "第四世代", "第五世代", "第六世代", "第七世代", "第八世代"
+        "第一世代", "第二世代", "第三世代", "第四世代", "第五世代", "第六世代", "第七世代", "第八世代"
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,15 +54,17 @@ class SearchingActivity : AppCompatActivity() {
         mAttrTagContainer = findViewById(R.id.search_tag_attr_container)
         mGenContainer = findViewById(R.id.search_tag_generation_container)
         mInput = findViewById(R.id.search_tag_input)
+        mInput.addTextChangedListener { keyword = it.toString() }
         mBackBtn = findViewById(R.id.search_tag_back_btn)
         mBackBtn.setOnClickListener { finish() }
         mSearchBth = findViewById(R.id.search_tag_search_btn)
         mSearchBth.setOnClickListener {
-
+            val intent = Intent(this, SearchResultActivity::class.java)
+            intent.putExtra("type", "name").putExtra("keyword", keyword)
+            startActivity(intent)
+            finish()
         }
-
         initTag()
-
     }
 
     private fun initTag() {
@@ -84,11 +88,13 @@ class SearchingActivity : AppCompatActivity() {
                     val intent = Intent(this, SearchResultActivity::class.java)
                     intent.putExtra("type", "type").putExtra("keyword", content)
                     startActivity(intent)
+                    finish()
                 }
                 "gen" -> {
                     val intent = Intent(this, SearchResultActivity::class.java)
                     intent.putExtra("type", "gen").putExtra("keyword", content)
                     startActivity(intent)
+                    finish()
                 }
             }
         }
@@ -97,12 +103,12 @@ class SearchingActivity : AppCompatActivity() {
         helper.backgroundColorNormal = resources.getColor(ColorDict.color[content]!!, null)
 
         val p = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
         )
         p.setMargins(
-                0, 0,
-                dip2px(this, 10.0), dip2px(this, 10.0)
+            0, 0,
+            dip2px(this, 10.0), dip2px(this, 10.0)
         )
         attrView.layoutParams = p
 
