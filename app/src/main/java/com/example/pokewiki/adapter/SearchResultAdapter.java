@@ -2,6 +2,7 @@ package com.example.pokewiki.adapter;
 
 import static com.example.pokewiki.utils.StaticFunctionUtilsKt.dip2px;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -29,12 +30,10 @@ import java.util.List;
 
 public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder> {
 
-    private LayoutInflater mInflater;
     private Context mContext;
     private List<PokemonSearchBean> mData;
 
-    public SearchResultAdapter(LayoutInflater mInflater, Context mContext, List<PokemonSearchBean> mData) {
-        this.mInflater = mInflater;
+    public SearchResultAdapter(Context mContext, List<PokemonSearchBean> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -42,10 +41,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     @NonNull
     @Override
     public SearchResultViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.search_result_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.search_result_item, parent, false);
         return new SearchResultViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull SearchResultViewHolder holder, int position) {
         Glide.with(mContext).load(mData.get(position).getImg_url()).into(holder.image);

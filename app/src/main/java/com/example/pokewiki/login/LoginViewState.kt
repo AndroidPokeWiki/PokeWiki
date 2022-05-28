@@ -19,9 +19,9 @@ sealed class LoginViewAction {
     data class ChangeErrorState(val error: Boolean) : LoginViewAction()
 }
 
-sealed class LoginViewEvent {
-    object ShowLoadingDialog : LoginViewEvent()
-    object DismissLoadingDialog : LoginViewEvent()
-    object TransIntent : LoginViewEvent()
-    data class ShowToast(val msg: String) : LoginViewEvent()
+sealed class SearchResultViewEvent {
+    object ShowLoadingDialog : SearchResultViewEvent()
+    object DismissLoadingDialog : SearchResultViewEvent()
+    object TransIntent : SearchResultViewEvent()
+    data class ShowToast(val msg: String) : SearchResultViewEvent()
 }

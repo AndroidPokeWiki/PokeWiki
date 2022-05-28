@@ -1,10 +1,10 @@
-package com.example.pokewiki.searching
+package com.example.pokewiki.main.searchResult
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pokewiki.adapter.SearchResultAdapter
 import com.example.pokewiki.bean.PokemonSearchBean
-import com.example.pokewiki.repository.SearchingRepository
+import com.example.pokewiki.repository.SearchResultRepository
 import com.example.pokewiki.utils.AppContext
 import com.example.pokewiki.utils.NetworkState
 import com.zj.mvi.core.SharedFlowEvents
@@ -15,22 +15,22 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
- * created by DWF on 2022/5/21.
+ * created by DWF on 2022/5/25.
  */
-class SearchingViewModel : ViewModel() {
-    private val repository = SearchingRepository.getInstance()
-    private val _viewState = MutableStateFlow(SearchingViewState())
+class SearchResultViewModel : ViewModel(){
+
+    private val repository = SearchResultRepository.getInstance()
+    private val _viewState = MutableStateFlow(SearchResultViewState())
     val viewState = _viewState.asStateFlow()
-    private val _viewEvent = SharedFlowEvents<SearchingViewEvent>()
+    private val _viewEvent = SharedFlowEvents<SearchResultViewEvent>()
     val viewEvent = _viewEvent.asSharedFlow()
 
-
-    fun dispatch(viewAction: SearchingViewAction) {
+    fun dispatch(viewAction: SearchResultViewAction) {
         when (viewAction) {
-            is SearchingViewAction.UpdateKeyword -> updateKeyword(viewAction.keyword)
-            is SearchingViewAction.ClickSearching -> searching("name")
-            is SearchingViewAction.ClickSearchingGen -> searching("gen")
-            is SearchingViewAction.ClickSearchingType -> searching("type")
+            is SearchResultViewAction.UpdateKeyword -> updateKeyword(viewAction.keyword)
+            is SearchResultViewAction.ClickSearching -> searching("name")
+            is SearchResultViewAction.ClickSearchingGen -> searching("gen")
+            is SearchResultViewAction.ClickSearchingType -> searching("type")
         }
     }
 
@@ -45,13 +45,13 @@ class SearchingViewModel : ViewModel() {
                 searchingLogic(keyword, type)
                 emit("sb")
             }.onStart {
-                _viewEvent.setEvent(SearchingViewEvent.ShowLoadingDialog)
+                _viewEvent.setEvent(SearchResultViewEvent.ShowLoadingDialog)
             }.onEach {
-                _viewEvent.setEvent(SearchingViewEvent.DismissLoadingDialog)
+                _viewEvent.setEvent(SearchResultViewEvent.DismissLoadingDialog)
             }.catch {
                 _viewEvent.setEvent(
-                        SearchingViewEvent.DismissLoadingDialog,
-                        SearchingViewEvent.ShowToast(it.message ?: "")
+                        SearchResultViewEvent.DismissLoadingDialog,
+                        SearchResultViewEvent.ShowToast(it.message ?: "")
                 )
             }.flowOn(Dispatchers.IO).collect()
         }
@@ -68,7 +68,7 @@ class SearchingViewModel : ViewModel() {
 
         when (result) {
             is NetworkState.Success -> {
-                _viewEvent.setEvent(SearchingViewEvent.TransIntent)
+                _viewEvent.setEvent(SearchResultViewEvent.TransIntent)
                 AppContext.searchData = result.data
             }
             is NetworkState.Error -> throw Exception(result.msg)

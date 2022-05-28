@@ -121,14 +121,14 @@ class LoginActivity : AppCompatActivity() {
     private fun initViewEvent() {
         viewModel.viewEvent.observeEvent(this) {
             when (it) {
-                is LoginViewEvent.ShowToast -> ToastUtils.getInstance(this)?.showLongToast(it.msg)
-                is LoginViewEvent.TransIntent -> {
+                is SearchResultViewEvent.ShowToast -> ToastUtils.getInstance(this)?.showLongToast(it.msg)
+                is SearchResultViewEvent.TransIntent -> {
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
-                is LoginViewEvent.ShowLoadingDialog -> loading =
+                is SearchResultViewEvent.ShowLoadingDialog -> loading =
                     LoadingDialogUtils.show(this, "正在登录...")
-                is LoginViewEvent.DismissLoadingDialog -> loading.dismiss()
+                is SearchResultViewEvent.DismissLoadingDialog -> loading.dismiss()
             }
         }
     }

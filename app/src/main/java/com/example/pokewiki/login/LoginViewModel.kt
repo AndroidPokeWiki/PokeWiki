@@ -25,7 +25,7 @@ class LoginViewModel : ViewModel() {
     private val repository = LoginRepository.getInstance()
     private val _viewState = MutableStateFlow(LoginViewState())
     val viewState = _viewState.asStateFlow()
-    private val _viewEvent = SharedFlowEvents<LoginViewEvent>()
+    private val _viewEvent = SharedFlowEvents<SearchResultViewEvent>()
     val viewEvent = _viewEvent.asSharedFlow()
 
     fun dispatch(viewAction: LoginViewAction) {
@@ -49,7 +49,7 @@ class LoginViewModel : ViewModel() {
                 viewModelScope.launch {
                     // 等待主线程监听启动
                     delay(100)
-                    _viewEvent.setEvent(LoginViewEvent.TransIntent)
+                    _viewEvent.setEvent(SearchResultViewEvent.TransIntent)
                 }
             } catch (e: JsonParseException) {
                 Log.e("ERROR!", "checkLoginInfo: 无法解析存储json\n json:${data}")
@@ -75,13 +75,13 @@ class LoginViewModel : ViewModel() {
                 loginLogic(sp)
                 emit("登陆成功")
             }.onStart {
-                _viewEvent.setEvent(LoginViewEvent.ShowLoadingDialog)
+                _viewEvent.setEvent(SearchResultViewEvent.ShowLoadingDialog)
             }.onEach {
-                _viewEvent.setEvent(LoginViewEvent.DismissLoadingDialog)
+                _viewEvent.setEvent(SearchResultViewEvent.DismissLoadingDialog)
             }.catch {
                 _viewEvent.setEvent(
-                    LoginViewEvent.DismissLoadingDialog,
-                    LoginViewEvent.ShowToast(it.message ?: "")
+                    SearchResultViewEvent.DismissLoadingDialog,
+                    SearchResultViewEvent.ShowToast(it.message ?: "")
                 )
             }.flowOn(Dispatchers.IO).collect()
         }
@@ -93,7 +93,7 @@ class LoginViewModel : ViewModel() {
 
         when (val result = repository.getAuth(email, md5(password))) {
             is NetworkState.Success -> {
-                _viewEvent.setEvent(LoginViewEvent.TransIntent)
+                _viewEvent.setEvent(SearchResultViewEvent.TransIntent)
 
                 //写入全局
                 AppContext.userData = result.data

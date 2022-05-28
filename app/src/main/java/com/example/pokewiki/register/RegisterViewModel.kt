@@ -2,9 +2,6 @@ package com.example.pokewiki.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pokewiki.login.LoginViewAction
-import com.example.pokewiki.login.LoginViewEvent
-import com.example.pokewiki.login.LoginViewState
 import com.example.pokewiki.repository.RegisterRepository
 import com.example.pokewiki.utils.NetworkState
 import com.example.pokewiki.utils.md5

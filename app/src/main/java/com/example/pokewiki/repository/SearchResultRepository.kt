@@ -6,15 +6,15 @@ import com.example.pokewiki.utils.NetworkState
 /**
  * created by DWF on 2022/5/21.
  */
-class SearchingRepository {
+class SearchResultRepository {
 
     companion object {
         @Volatile
-        private var instance: SearchingRepository? = null
+        private var instance: SearchResultRepository? = null
 
         fun getInstance() =
                 instance ?: synchronized(this) {
-                    instance ?: SearchingRepository().also { instance = it }
+                    instance ?: SearchResultRepository().also { instance = it }
                 }
     }
 

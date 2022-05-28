@@ -1,5 +1,6 @@
 package com.example.pokewiki.searching
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +8,12 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.size
 import com.example.pokewiki.R
 import com.example.pokewiki.customView.FlowLayout
+import com.example.pokewiki.main.searchResult.SearchResultActivity
 import com.example.pokewiki.utils.ColorDict
 import com.example.pokewiki.utils.dip2px
 import com.ruffian.library.widget.RTextView
@@ -20,7 +21,6 @@ import qiu.niorgai.StatusBarCompat
 
 class SearchingActivity : AppCompatActivity() {
 
-    private val viewModel by viewModels<SearchingViewModel>()
     lateinit var mHistoryContainer: ConstraintLayout
     lateinit var mHistoryTagContainer: FlowLayout
     lateinit var mAttrTagContainer: FlowLayout
@@ -56,9 +56,7 @@ class SearchingActivity : AppCompatActivity() {
         mBackBtn.setOnClickListener { finish() }
         mSearchBth = findViewById(R.id.search_tag_search_btn)
         mSearchBth.setOnClickListener {
-            mInput.setText("皮")
-            viewModel.dispatch(SearchingViewAction.UpdateKeyword(mInput.text.toString()))
-            viewModel.dispatch(SearchingViewAction.ClickSearching)
+
         }
 
         initTag()
@@ -68,23 +66,30 @@ class SearchingActivity : AppCompatActivity() {
     private fun initTag() {
         if (mAttrTagContainer.size > 0) mAttrTagContainer.removeAllViews()
         for (type in typeArray) {
-            mAttrTagContainer.addView(layout2View(type,"type"))
+            mAttrTagContainer.addView(layout2View(type, "type"))
         }
         if (mGenContainer.size > 0) mGenContainer.removeAllViews()
         for (gen in generationArray) {
-            mGenContainer.addView(layout2View(gen,"gen"))
+            mGenContainer.addView(layout2View(gen, "gen"))
         }
     }
 
-    private fun layout2View(content: String,type: String): View {
+    private fun layout2View(content: String, type: String): View {
         val attrView = LayoutInflater.from(this).inflate(R.layout.attr_item, null)
         val attrText = attrView.findViewById<RTextView>(R.id.attr_container)
         attrText.text = content
         attrText.setOnClickListener {
-            viewModel.dispatch(SearchingViewAction.UpdateKeyword(content))
-            when(type){
-                "type" -> viewModel.dispatch(SearchingViewAction.ClickSearchingType)
-                "gen" -> viewModel.dispatch(SearchingViewAction.ClickSearchingGen)
+            when (type) {
+                "type" -> {
+                    val intent = Intent(this, SearchResultActivity::class.java)
+                    intent.putExtra("type", "type").putExtra("keyword", content)
+                    startActivity(intent)
+                }
+                "gen" -> {
+                    val intent = Intent(this, SearchResultActivity::class.java)
+                    intent.putExtra("type", "gen").putExtra("keyword", content)
+                    startActivity(intent)
+                }
             }
         }
 
