@@ -36,7 +36,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setContentView(R.layout.login_activity)
         super.onCreate(savedInstanceState)
-
         StatusBarCompat.translucentStatusBar(this)
         initView()
         initViewModel()
@@ -121,14 +120,14 @@ class LoginActivity : AppCompatActivity() {
     private fun initViewEvent() {
         viewModel.viewEvent.observeEvent(this) {
             when (it) {
-                is SearchResultViewEvent.ShowToast -> ToastUtils.getInstance(this)?.showLongToast(it.msg)
-                is SearchResultViewEvent.TransIntent -> {
+                is LoginViewEvent.ShowToast -> ToastUtils.getInstance(this)?.showLongToast(it.msg)
+                is LoginViewEvent.TransIntent -> {
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
-                is SearchResultViewEvent.ShowLoadingDialog -> loading =
+                is LoginViewEvent.ShowLoadingDialog -> loading =
                     LoadingDialogUtils.show(this, "正在登录...")
-                is SearchResultViewEvent.DismissLoadingDialog -> loading.dismiss()
+                is LoginViewEvent.DismissLoadingDialog -> loading.dismiss()
             }
         }
     }

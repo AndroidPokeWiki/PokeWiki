@@ -8,7 +8,15 @@
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/community_main_fragment.xml" value="0.36614583333333334" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/cover_activity.xml" value="0.36614583333333334" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/loading_dialog.xml" value="0.36614583333333334" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/main_container.xml" value="0.2657407407407407" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/pokemon_detail_container.xml" value="0.1" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/pokemon_detail_info_fragment.xml" value="0.1" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/pokemon_detail_move_fragment.xml" value="0.2" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/profile_change_password_acticity.xml" value="0.36614583333333334" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/profile_collection.xml" value="0.2324074074074074" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/profile_edit_activity.xml" value="0.36614583333333334" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/profile_main_fragment.xml" value="0.36614583333333334" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/search_main_expand_bar.xml" value="0.2657407407407407" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/search_main_item.xml" value="0.12037037037037036" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/search_result_activity.xml" value="0.36614583333333334" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/search_result_item.xml" value="0.67" />

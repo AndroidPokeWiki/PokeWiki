@@ -112,7 +112,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             itemBtn = itemView.findViewById(R.id.search_result_item_btn);
             itemId = itemView.findViewById(R.id.search_result_item_id);
         }
-
-
     }
+
 }

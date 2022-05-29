@@ -33,8 +33,11 @@
             android:name=".searching.SearchingActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".detail.main.PokemonDetailActivity" />
-
         <activity android:name=".main.searchResult.SearchResultActivity" />
+        <activity android:name=".main.profile.information.InformationActivity" />
+        <activity android:name=".main.profile.resetpwd.ResetPwdActivity" />
+        <activity android:name=".main.profile.collection.CollectionActivity" />
+        <activity android:name=".main.profile.advice.AdviceActivity" />
 
     </application>
 

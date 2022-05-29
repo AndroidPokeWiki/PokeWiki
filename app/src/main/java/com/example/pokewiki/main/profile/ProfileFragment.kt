@@ -2,6 +2,7 @@ package com.example.pokewiki.main.profile
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,8 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.pokewiki.R
+import com.example.pokewiki.main.profile.information.InformationActivity
+import com.example.pokewiki.register.RegisterActivity
 import com.example.pokewiki.utils.*
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.ruffian.library.widget.RImageView
@@ -26,16 +29,16 @@ class ProfileFragment : Fragment() {
     private lateinit var mProverb: TextView
     private lateinit var mCollectionBtn: CardView
     private lateinit var mEditBtn: CardView
-    private lateinit var mAdvice: CardView
+    private lateinit var mAdviceBtn: CardView
     private lateinit var mAutoCacheSwitch: SwitchMaterial
     private lateinit var mLogoutBtn: Button
 
     private lateinit var sp: SharedPreferences
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.profile_main_fragment, container, false)
     }
@@ -53,10 +56,22 @@ class ProfileFragment : Fragment() {
         mNickname = view.findViewById(R.id.profile_main_nickname)
         mProverb = view.findViewById(R.id.profile_main_proverb)
         mCollectionBtn = view.findViewById(R.id.profile_main_collection)
+        mCollectionBtn.setOnClickListener {
+            TODO()
+        }
         mEditBtn = view.findViewById(R.id.profile_main_edit)
-        mAdvice = view.findViewById(R.id.profile_main_advice)
+        mEditBtn.setOnClickListener {
+            TODO()
+        }
+        mAdviceBtn = view.findViewById(R.id.profile_main_advice)
+        mAdviceBtn.setOnClickListener {
+            TODO()
+        }
         mAutoCacheSwitch = view.findViewById(R.id.profile_main_autoCache_switch)
         mLogoutBtn = view.findViewById(R.id.profile_main_logout)
+        mLogoutBtn.setOnClickListener {
+            TODO()
+        }
 
         sp = requireActivity().getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE)
         val autoCache = AppContext.autoSave
@@ -66,7 +81,7 @@ class ProfileFragment : Fragment() {
             Glide.with(this).load(AppContext.userData.profile_photo).into(mIcon)
         else
             mIcon.setImageDrawable(
-                resources.getDrawable(R.drawable.default_icon, requireActivity().theme)
+                    resources.getDrawable(R.drawable.default_icon, requireActivity().theme)
             )
 
         mNickname.text = AppContext.userData.username
@@ -80,9 +95,9 @@ class ProfileFragment : Fragment() {
                 mAutoCacheSwitch.isChecked = false
                 //获取权限
                 if (PermissionUtils.isGrantExternalRW(
-                        requireActivity(),
-                        PROFILE_GET_PERMISSION_FLAG
-                    )
+                                requireActivity(),
+                                PROFILE_GET_PERMISSION_FLAG
+                        )
                 ) {
                     mAutoCacheSwitch.isChecked = true
                     sp.edit().putBoolean(AUTO_SAVE, true).apply()
