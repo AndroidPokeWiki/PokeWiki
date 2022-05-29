@@ -1,4 +1,4 @@
-package com.example.pokewiki.main.profile.resetpwd
+package com.example.pokewiki.main.profile.resetPwd
 
 import android.content.SharedPreferences
 
@@ -8,7 +8,7 @@ import android.content.SharedPreferences
 data class ResetPwdViewState(
         val oldPassword: String = "",
         val newPassword: String = "",
-        val error: Boolean = false
+        val changeState: Boolean = false
 ) {
     val canReset: Boolean = oldPassword.isNotBlank() && newPassword.isNotBlank()
 }

@@ -187,6 +187,7 @@ class HomeSearchViewModel : ViewModel() {
         }
     }
 
+    // 写入内存 建立缩略图map以及大图map
     private fun writeToStorage(path: String, sp: SharedPreferences) {
         val page = _viewState.value.page
         viewModelScope.launch {
@@ -196,6 +197,18 @@ class HomeSearchViewModel : ViewModel() {
                     val fileName = link.split("/")[link.split("/").size - 1]
                     val dest = File(path, fileName)
                     writeToStorageLogic(dest, item)
+
+                    // 获取缩略图map
+                    val smallStr = sp.getString(POKEMON_SMALL_PIC, null)
+                    val smallMap: HashMap<Int, String> = try {
+                        if (smallStr == null) throw JsonParseException("JSON为空")
+                        Gson().fromJson(smallStr, object : TypeToken<HashMap<Int, String>>() {}.type)
+                    } catch (e: JsonParseException) {
+                        Log.e("ParseJson", "无法解析JSON: ${e.message}\n JSON: $smallStr")
+                        HashMap()
+                    }
+                    //记录缩略图位置
+                    smallMap[item.pokemon_id.toInt()] = dest.path
                 }
                 emit("下载完成")
             }.onEach {
@@ -211,17 +224,25 @@ class HomeSearchViewModel : ViewModel() {
         }
     }
 
-    private suspend fun writeToStorageLogic(dest: File, item: PokemonSearchBean) {
-        when (val result = repository.getImageFromUrl(item.img_url)) {
+    private suspend fun writeToStorageLogic(
+        dest: File,
+        item: PokemonSearchBean
+    ) {
+        // 下载缩略图
+        when (val result =
+            repository.getImageWithTypeAndID(
+                HomeSearchRepository.Companion.Type.Small,
+                item.pokemon_id.toInt()
+            )) {
             is NetworkState.Success -> {
-                flow{
+                flow {
                     val sink = Okio.sink(dest)
                     val bufferedSink = Okio.buffer(sink)
                     bufferedSink.writeAll(result.data.source())
                     bufferedSink.close()
 
                     //切换储存方式
-                    changeData.add(item.copy(img_url = "", img_path = dest.path))
+                    changeData.add(item.copy(img_path = dest.path))
                     emit("下载完成")
                 }.flowOn(Dispatchers.IO).collect()
             }

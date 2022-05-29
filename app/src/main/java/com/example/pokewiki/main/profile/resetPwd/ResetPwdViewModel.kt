@@ -1,4 +1,4 @@
-package com.example.pokewiki.main.profile.resetpwd
+package com.example.pokewiki.main.profile.resetPwd
 
 import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
@@ -8,6 +8,7 @@ import com.example.pokewiki.repository.ResetPwdRepository
 import com.example.pokewiki.utils.AppContext
 import com.example.pokewiki.utils.NetworkState
 import com.example.pokewiki.utils.USER_DATA
+import com.example.pokewiki.utils.md5
 import com.google.gson.Gson
 import com.zj.mvi.core.SharedFlowEvents
 import com.zj.mvi.core.setEvent
@@ -53,8 +54,8 @@ class ResetPwdViewModel : ViewModel() {
                 _viewEvent.setEvent(ResetPwdViewEvent.DismissLoadingDialog)
             }.catch {
                 _viewEvent.setEvent(
-                        ResetPwdViewEvent.DismissLoadingDialog,
-                        ResetPwdViewEvent.ShowToast(it.message ?: "")
+                    ResetPwdViewEvent.DismissLoadingDialog,
+                    ResetPwdViewEvent.ShowToast(it.message ?: "")
                 )
             }.flowOn(Dispatchers.IO).collect()
         }
@@ -65,8 +66,11 @@ class ResetPwdViewModel : ViewModel() {
         val token = AppContext.userData.token
         val oldPassword = _viewState.value.oldPassword
         val newPassword = _viewState.value.newPassword
-        when (val result: NetworkState<UserBean> = repository.updatePassword(oldPassword, newPassword, userID, token)) {
+        when (val result: NetworkState<UserBean> =
+            repository.updatePassword(md5(oldPassword), md5(newPassword), userID, token)) {
             is NetworkState.Success -> {
+                _viewEvent.setEvent(ResetPwdViewEvent.ShowToast("修改成功"))
+                _viewState.setState { copy(changeState = true) }
                 AppContext.userData = result.data
                 sp.edit().putString(USER_DATA, Gson().toJson(result.data)).apply()
             }

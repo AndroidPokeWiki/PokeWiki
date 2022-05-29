@@ -7,12 +7,13 @@ import java.io.File
  * created by DWF on 2022/5/28.
  */
 data class InformationViewState(
-        val icon: String = "",
+        val icon: String? = null,
         val name: String = "",
         val error: Boolean = false
 )
 
 sealed class InformationViewAction {
+    object InitData: InformationViewAction()
     data class ChangeIcon(val file: File) : InformationViewAction()
     data class UpdateUsername(val name: String) : InformationViewAction()
     data class ClickToChangeUsername(val sp: SharedPreferences) : InformationViewAction()

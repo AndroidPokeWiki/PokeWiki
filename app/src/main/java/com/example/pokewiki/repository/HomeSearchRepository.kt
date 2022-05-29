@@ -14,6 +14,10 @@ class HomeSearchRepository {
             instance ?: synchronized(this) {
                 instance ?: HomeSearchRepository().also { instance = it }
             }
+
+        enum class Type{
+            Big, Small
+        }
     }
 
     suspend fun getAllWithPage(page: Int): NetworkState<ArrayList<PokemonSearchBean>> {
@@ -32,9 +36,12 @@ class HomeSearchRepository {
         }
     }
 
-    suspend fun getImageFromUrl(url: String): NetworkState<ResponseBody> {
+    suspend fun getImageWithTypeAndID(type: Type, id: Int): NetworkState<ResponseBody> {
         val result = try {
-            ServerApi.create().downloadFromUrl(url)
+            when(type){
+                Type.Big -> DownloadApi.create().getBigPic(id)
+                Type.Small -> DownloadApi.create().getSmallPic(id)
+            }
         } catch (e: java.lang.Exception) {
             return NetworkState.Error(e)
         }

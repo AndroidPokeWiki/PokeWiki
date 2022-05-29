@@ -7,15 +7,19 @@ import com.example.pokewiki.bean.UserBean
 
 // 服务器地址
 const val SERVER_URL = "http://192.168.128.80:9457/"
+const val DOWNLOAD_URL = "http://114.116.49.217:9129/"
 
 // 信号
 const val NO_MORE_DATA = "NO_MORE_DATA"
+
+// 缓存
 const val SHARED_NAME = "USER_INFO"
 const val USER_DATA = "USER_DATA"
 const val POKEMON_LIST_CACHE = "POKEMON_LIST_CACHE"
 const val POKEMON_CACHE_PAGE = "POKEMON_CACHE_PAGE"
 const val AUTO_SAVE = "AUTO_SAVE"
 const val FIRST_ASK_AUTO_SAVE = "FIRST_ASK_AUTO_SAVE"
+const val POKEMON_SMALL_PIC = "POKEMON_SMALL_PIC"
 
 const val SEARCH_GET_PERMISSION_FLAG = 1
 const val PROFILE_GET_PERMISSION_FLAG = 2

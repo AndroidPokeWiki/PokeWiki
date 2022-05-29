@@ -50,12 +50,14 @@ class SearchMainAdapter(
     override fun onBindViewHolder(holder: SearchMainViewHolder, position: Int) {
         val item = itemList[position]
 
-        if (item.img_url.isNotBlank()) {
+        // 优先加载本地缓存
+        if (item.img_path.isNotBlank()) {
+            Glide.with(context).load(File(item.img_path)).into(holder.itemImg)
+        } else {
             Glide.with(context).load(item.img_url).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(holder.itemImg)
-        } else {
-            Glide.with(context).load(File(item.img_path)).into(holder.itemImg)
         }
+
         holder.itemName.text = item.pokemon_name
         holder.itemId.text = "#${item.pokemon_id}"
 

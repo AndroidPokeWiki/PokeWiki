@@ -15,6 +15,9 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.pokewiki.R
+import com.example.pokewiki.login.LoginActivity
+import com.example.pokewiki.main.profile.advice.AdviceActivity
+import com.example.pokewiki.main.profile.collection.CollectionActivity
 import com.example.pokewiki.main.profile.information.InformationActivity
 import com.example.pokewiki.register.RegisterActivity
 import com.example.pokewiki.utils.*
@@ -52,28 +55,30 @@ class ProfileFragment : Fragment() {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun initView(view: View) {
+        sp = requireActivity().getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE)
+
         mIcon = view.findViewById(R.id.profile_main_icon)
         mNickname = view.findViewById(R.id.profile_main_nickname)
         mProverb = view.findViewById(R.id.profile_main_proverb)
         mCollectionBtn = view.findViewById(R.id.profile_main_collection)
         mCollectionBtn.setOnClickListener {
-            TODO()
+            startActivity(Intent(requireContext(), CollectionActivity::class.java))
         }
         mEditBtn = view.findViewById(R.id.profile_main_edit)
         mEditBtn.setOnClickListener {
-            TODO()
+            startActivity(Intent(requireContext(), InformationActivity::class.java))
         }
         mAdviceBtn = view.findViewById(R.id.profile_main_advice)
         mAdviceBtn.setOnClickListener {
-            TODO()
+            startActivity(Intent(requireContext(), AdviceActivity::class.java))
         }
         mAutoCacheSwitch = view.findViewById(R.id.profile_main_autoCache_switch)
         mLogoutBtn = view.findViewById(R.id.profile_main_logout)
         mLogoutBtn.setOnClickListener {
-            TODO()
+            sp.edit().putString(USER_DATA, null).apply()
+            startActivity(Intent(requireContext(),LoginActivity::class.java))
+            requireActivity().finish()
         }
-
-        sp = requireActivity().getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE)
         val autoCache = AppContext.autoSave
 
         Log.e("TAG", "initView: ${AppContext.userData.profile_photo}")

@@ -30,11 +30,16 @@ class InformationViewModel : ViewModel() {
 
     fun dispatch(viewAction: InformationViewAction) {
         when (viewAction) {
+            is InformationViewAction.InitData -> initData()
             is InformationViewAction.ChangeIcon -> changeIcon(viewAction.file)
             is InformationViewAction.UpdateUsername -> updateUsername(viewAction.name)
             is InformationViewAction.ClickToChangeUsername -> clickToChangeUsername(viewAction.sp)
             is InformationViewAction.ChangeButtonToConfirm -> changeButtonToConfirm()
         }
+    }
+
+    private fun initData() {
+        _viewState.setState { copy(name = AppContext.userData.username) }
     }
 
     private fun changeIcon(file: File) {
@@ -56,8 +61,8 @@ class InformationViewModel : ViewModel() {
                 _viewEvent.setEvent(InformationViewEvent.DismissLoadingDialog)
             }.catch {
                 _viewEvent.setEvent(
-                        InformationViewEvent.DismissLoadingDialog,
-                        InformationViewEvent.ShowToast(it.message ?: "")
+                    InformationViewEvent.DismissLoadingDialog,
+                    InformationViewEvent.ShowToast(it.message ?: "")
                 )
             }.flowOn(Dispatchers.IO).collect()
         }
@@ -72,7 +77,8 @@ class InformationViewModel : ViewModel() {
         val userID = AppContext.userData.userId
         val token = AppContext.userData.token
         val username = _viewState.value.name
-        when (val result: NetworkState<UserBean> = repository.updateUsername(username, userID, token)) {
+        when (val result: NetworkState<UserBean> =
+            repository.updateUsername(username, userID, token)) {
             is NetworkState.Success -> {
                 AppContext.userData = result.data
                 sp.edit().putString(USER_DATA, Gson().toJson(result.data)).apply()
