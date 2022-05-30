@@ -2,6 +2,7 @@ package com.example.pokewiki.repository
 
 import com.example.pokewiki.bean.PokemonDetailBean
 import com.example.pokewiki.utils.NetworkState
+import okhttp3.ResponseBody
 
 class DetailRepository {
     companion object {
@@ -12,6 +13,10 @@ class DetailRepository {
             instance ?: synchronized(this) {
                 instance ?: DetailRepository().also { instance = it }
             }
+
+        enum class Type {
+            Big, Small
+        }
     }
 
     suspend fun getInitData(
@@ -47,6 +52,28 @@ class DetailRepository {
         return when (result.status) {
             200 -> NetworkState.Success(result.data)
             else -> NetworkState.Error(result.msg ?: "未知错误，请联系管理员")
+        }
+    }
+
+    suspend fun getImageWithTypeAndID(
+        type: Type,
+        id: Int
+    ): NetworkState<ResponseBody> {
+        val result = try {
+            when (type) {
+                Type.Big -> DownloadApi.create().getBigPic(id)
+                Type.Small -> DownloadApi.create().getSmallPic(id)
+            }
+        } catch (e: java.lang.Exception) {
+            return NetworkState.Error(e)
+        }
+
+        result.let {
+            if (it.body() != null) {
+                return NetworkState.Success(it.body()!!)
+            } else {
+                return NetworkState.Error("服务器无回应")
+            }
         }
     }
 }

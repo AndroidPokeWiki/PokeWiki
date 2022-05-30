@@ -1,4 +1,4 @@
-package com.example.pokewiki.detail.states
+package com.example.pokewiki.main.detail.states
 
 import android.os.Bundle
 import android.view.LayoutInflater

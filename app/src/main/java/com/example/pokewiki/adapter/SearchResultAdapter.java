@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.pokewiki.R;
 import com.example.pokewiki.bean.PokemonSearchBean;
-import com.example.pokewiki.detail.main.PokemonDetailActivity;
+import com.example.pokewiki.main.detail.main.PokemonDetailActivity;
 import com.example.pokewiki.utils.ColorDict;
 import com.ruffian.library.widget.RTextView;
 import com.ruffian.library.widget.helper.RBaseHelper;

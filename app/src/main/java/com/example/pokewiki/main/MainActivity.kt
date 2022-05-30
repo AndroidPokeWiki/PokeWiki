@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pokewiki.R
 import com.example.pokewiki.adapter.PageAdapter
-import com.example.pokewiki.main.community.CommunityFragment
+import com.example.pokewiki.main.about.AboutFragment
 import com.example.pokewiki.main.homeSearch.HomeSearchFragment
 import com.example.pokewiki.main.profile.ProfileFragment
 import com.example.pokewiki.utils.PROFILE_GET_PERMISSION_FLAG
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         mFab = findViewById(R.id.main_home_btn)
         mBottomNaviBar = findViewById(R.id.main_navigation)
 
-        fragmentList.add(CommunityFragment())
+        fragmentList.add(AboutFragment())
         fragmentList.add(HomeSearchFragment())
         fragmentList.add(ProfileFragment())
         val adapter = PageAdapter(supportFragmentManager, lifecycle, fragmentList)

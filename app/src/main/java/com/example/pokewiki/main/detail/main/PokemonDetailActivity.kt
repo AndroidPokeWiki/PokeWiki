@@ -1,7 +1,9 @@
-package com.example.pokewiki.detail.main
+package com.example.pokewiki.main.detail.main
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,15 +21,20 @@ import com.bumptech.glide.Glide
 import com.example.pokewiki.R
 import com.example.pokewiki.adapter.PageAdapter
 import com.example.pokewiki.bean.PokemonDetailBean
-import com.example.pokewiki.detail.info.PokemonDetailInfoFragment
-import com.example.pokewiki.detail.move.PokemonDetailMoveFragment
-import com.example.pokewiki.detail.states.PokemonDetailStatesFragment
+import com.example.pokewiki.main.detail.info.PokemonDetailInfoFragment
+import com.example.pokewiki.main.detail.move.PokemonDetailMoveFragment
+import com.example.pokewiki.main.detail.states.PokemonDetailStatesFragment
 import com.example.pokewiki.utils.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.Gson
+import com.google.gson.JsonParseException
+import com.google.gson.reflect.TypeToken
 import com.ruffian.library.widget.RTextView
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
 import qiu.niorgai.StatusBarCompat
+import java.io.File
+import java.lang.Thread.sleep
 
 class PokemonDetailActivity : AppCompatActivity() {
     private val viewModel by viewModels<PokemonDetailViewModel>()
@@ -42,6 +49,8 @@ class PokemonDetailActivity : AppCompatActivity() {
     private lateinit var mNavBar: BottomNavigationView
     private lateinit var mPageContainer: ViewPager2
 
+    private lateinit var sp: SharedPreferences
+    private lateinit var bigImgMap: HashMap<Int, String>
     private lateinit var loading: LoadingDialogUtils
     private val fragmentList = ArrayList<Fragment>()
 
@@ -63,6 +72,7 @@ class PokemonDetailActivity : AppCompatActivity() {
 
     @SuppressLint("RestrictedApi")
     private fun initView() {
+        sp = getSharedPreferences(SHARED_NAME, MODE_PRIVATE)
         loading = LoadingDialogUtils(this)
 
         mBg = findViewById(R.id.pokemon_detail_bg)
@@ -103,12 +113,25 @@ class PokemonDetailActivity : AppCompatActivity() {
             mPageContainer.currentItem = it.order
             true
         }
+
+        // 读取本地大图map
+        val bigImgStr = sp.getString(POKEMON_BIG_PIC, null)
+        bigImgMap = try {
+            if (bigImgStr == null) throw JsonParseException("大图JSON为空")
+            Gson().fromJson(
+                bigImgStr,
+                object : TypeToken<HashMap<Int, String>>() {}.type
+            )
+        } catch (e: JsonParseException) {
+            Log.e("ParseJson", "initView: fail to parse JSON: $e\n JSON: $bigImgStr")
+            HashMap()
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun initViewModel() {
         val id = intent.getStringExtra("id")
-        viewModel.dispatch(PokemonDetailViewAction.GetInitData(id))
+        viewModel.dispatch(PokemonDetailViewAction.GetInitData(id!!.toInt(), sp))
 
         viewModel.viewState.let { state ->
             state.observeState(this, PokemonDetailViewState::name) {
@@ -117,11 +140,21 @@ class PokemonDetailActivity : AppCompatActivity() {
             state.observeState(this, PokemonDetailViewState::id) {
                 mIdTag.text = it
                 // 刷新fragment的数据
-                if (it != "")
-                    infoFragment.refreshData()
+                if (it.isNotBlank()) {
+                    // 等待一段时间 确保fragment绑定
+                    Thread {
+                        sleep(100)
+                        infoFragment.refreshData()
+                    }.start()
+                }
             }
             state.observeState(this, PokemonDetailViewState::img) {
-                Glide.with(this).load(it).into(mPokeImV)
+                if (it == LOCAL_PIC) {
+                    Glide.with(this)
+                        .load(File(bigImgMap[AppContext.pokeDetail.pokemon_id.toInt()]!!))
+                        .into(mPokeImV)
+                } else
+                    Glide.with(this).load(it).into(mPokeImV)
             }
             state.observeState(this, PokemonDetailViewState::color) {
                 ColorDict.color[it]?.let { color ->
@@ -146,7 +179,7 @@ class PokemonDetailActivity : AppCompatActivity() {
                     mAttrContainer.addView(layout2View(attr))
                 }
             }
-            state.observeState(this, PokemonDetailViewState::likeError){
+            state.observeState(this, PokemonDetailViewState::likeError) {
                 if (it)
                     viewModel.dispatch(PokemonDetailViewAction.ResetError)
             }
@@ -161,6 +194,13 @@ class PokemonDetailActivity : AppCompatActivity() {
                 is PokemonDetailViewEvent.ShowLoadingDialog ->
                     loading = LoadingDialogUtils.show(this, "正在获取...")
                 is PokemonDetailViewEvent.DismissLoadingDialog -> loading.dismiss()
+                is PokemonDetailViewEvent.WriteDataIntoStorage -> viewModel.dispatch(
+                    PokemonDetailViewAction.WriteDataIntoStorage(
+                        getExternalFilesDir("pokemon_thumbnail")!!.path,
+                        getExternalFilesDir("pokemon_bigPic")!!.path,
+                        sp
+                    )
+                )
             }
         }
     }

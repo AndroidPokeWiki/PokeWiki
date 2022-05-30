@@ -1,4 +1,4 @@
-package com.example.pokewiki.detail.move
+package com.example.pokewiki.main.detail.move
 
 import android.os.Bundle
 import android.util.Log

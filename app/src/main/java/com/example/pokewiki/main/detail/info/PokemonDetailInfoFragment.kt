@@ -1,7 +1,10 @@
-package com.example.pokewiki.detail.info
+package com.example.pokewiki.main.detail.info
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +18,14 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.pokewiki.R
 import com.example.pokewiki.bean.PokemonIntroBean
-import com.example.pokewiki.detail.main.PokemonDetailActivity
+import com.example.pokewiki.main.detail.main.PokemonDetailActivity
 import com.example.pokewiki.utils.*
+import com.google.gson.Gson
+import com.google.gson.JsonParseException
+import com.google.gson.reflect.TypeToken
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
+import java.io.File
 
 class PokemonDetailInfoFragment : Fragment() {
     private val viewModel by viewModels<PokemonDetailInfoViewModel>()
@@ -32,6 +39,8 @@ class PokemonDetailInfoFragment : Fragment() {
     private lateinit var mLine2: View
     private lateinit var mCharContainer: LinearLayout
     private lateinit var loading: LoadingDialogUtils
+    private lateinit var sp: SharedPreferences
+    private lateinit var smallImgMap: HashMap<Int, String>
 
     private var pokeIntro = AppContext.pokeDetail.poke_intro
 
@@ -56,6 +65,7 @@ class PokemonDetailInfoFragment : Fragment() {
     }
 
     private fun initView(view: View) {
+        sp = requireActivity().getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE)
         loading = LoadingDialogUtils(requireContext())
 
         mEvolutionContainer = view.findViewById(R.id.pokemon_detail_evu_container)
@@ -67,6 +77,19 @@ class PokemonDetailInfoFragment : Fragment() {
         mShapeTv = view.findViewById(R.id.pokemon_detail_shape)
         mLine1 = view.findViewById(R.id.pokemon_detail_class_line1)
         mLine2 = view.findViewById(R.id.pokemon_detail_class_line2)
+
+        // 读取本地小图map
+        val smallImgStr = sp.getString(POKEMON_SMALL_PIC, null)
+        smallImgMap = try {
+            if (smallImgStr == null) throw JsonParseException("小图JSON为空")
+            Gson().fromJson(
+                smallImgStr,
+                object : TypeToken<HashMap<Int, String>>() {}.type
+            )
+        } catch (e: JsonParseException) {
+            Log.e("ParseJson", "initView: fail to parse JSON: $e\n JSON: $smallImgStr")
+            HashMap()
+        }
     }
 
     private fun initViewModel() {
@@ -110,6 +133,13 @@ class PokemonDetailInfoFragment : Fragment() {
                 is PokemonDetailInfoViewEvent.DismissLoadingDialog -> loading.dismiss()
                 is PokemonDetailInfoViewEvent.ShowToast ->
                     ToastUtils.getInstance(requireContext())?.showLongToast(it.msg)
+                is PokemonDetailInfoViewEvent.WriteDataIntoStorage -> viewModel.dispatch(
+                    PokemonDetailInfoViewAction.WriteDataIntoStorage(
+                        requireActivity().getExternalFilesDir("pokemon_thumbnail")!!.path,
+                        requireActivity().getExternalFilesDir("pokemon_bigPic")!!.path,
+                        sp
+                    )
+                )
             }
         }
     }
@@ -139,14 +169,20 @@ class PokemonDetailInfoFragment : Fragment() {
                 levelTv.text = "LV $pokeLevel"
             else
                 levelTv.text = "特殊进化"
-            Glide.with(requireActivity()).load(imgUrl).into(imgIv)
+
+            // 有本地缓存则读取本地缓存
+            if (AppContext.autoSave && smallImgMap[pokeId] != null) {
+                Glide.with(requireActivity()).load(File(smallImgMap[pokeId]!!)).into(imgIv)
+            } else
+                Glide.with(requireActivity()).load(imgUrl).into(imgIv)
+
             if (pokeId != AppContext.pokeDetail.pokemon_id.toInt()) {
                 bgSelected.visibility = View.GONE
                 bgUnselect.visibility = View.VISIBLE
 
                 // 设置点击事件
                 imgIv.setOnClickListener {
-                    viewModel.dispatch(PokemonDetailInfoViewAction.ChangeData(pokeId))
+                    viewModel.dispatch(PokemonDetailInfoViewAction.ChangeData(pokeId, sp))
                 }
             }
             if (i != pokeEvo.size - 1)

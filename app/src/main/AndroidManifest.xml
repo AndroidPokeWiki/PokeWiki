@@ -32,7 +32,7 @@
         <activity
             android:name=".searching.SearchingActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".detail.main.PokemonDetailActivity" />
+        <activity android:name="com.example.pokewiki.main.detail.main.PokemonDetailActivity" />
         <activity
             android:name=".main.searchResult.SearchResultActivity"
             android:windowSoftInputMode="adjustPan" />

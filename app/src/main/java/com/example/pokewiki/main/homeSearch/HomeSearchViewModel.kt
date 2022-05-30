@@ -44,7 +44,7 @@ class HomeSearchViewModel : ViewModel() {
         // 判断自动存储
         if (AppContext.autoSave) {
             // 获取缓存
-            val listData = sp.getString(POKEMON_LIST_CACHE, null)
+            val listData = sp.getString(POKEMON_HOME_CACHE, null)
             val page = sp.getInt(POKEMON_CACHE_PAGE, 0)
             // 缓存不为空
             if (!listData.isNullOrBlank()) {
@@ -153,7 +153,7 @@ class HomeSearchViewModel : ViewModel() {
             // 刷新
             // 如果启动自动缓存
             if (AppContext.autoSave) {
-                val cacheStr = sp.getString(POKEMON_LIST_CACHE, null)
+                val cacheStr = sp.getString(POKEMON_HOME_CACHE, null)
                 // 读取本地
                 try {
                     val cacheList = Gson().fromJson<ArrayList<PokemonSearchBean>>(
@@ -187,26 +187,26 @@ class HomeSearchViewModel : ViewModel() {
         }
     }
 
-    // 写入内存 建立缩略图map以及大图map
+    // 写入内存 建立小图map
     private fun writeToStorage(path: String, sp: SharedPreferences) {
         val page = _viewState.value.page
         viewModelScope.launch {
+            // 获取缩略图map
+            val smallStr = sp.getString(POKEMON_SMALL_PIC, null)
+            val smallMap: HashMap<Int, String> = try {
+                if (smallStr == null) throw JsonParseException("小图JSON为空")
+                Gson().fromJson(smallStr, object : TypeToken<HashMap<Int, String>>() {}.type)
+            } catch (e: JsonParseException) {
+                Log.e("ParseJson", "无法解析JSON: ${e.message}\n JSON: $smallStr")
+                HashMap()
+            }
+
             flow {
                 for (item in pageData) {
-                    val link = item.img_url
-                    val fileName = link.split("/")[link.split("/").size - 1]
+                    val fileName = "${item.pokemon_id.toInt()}.png"
                     val dest = File(path, fileName)
                     writeToStorageLogic(dest, item)
 
-                    // 获取缩略图map
-                    val smallStr = sp.getString(POKEMON_SMALL_PIC, null)
-                    val smallMap: HashMap<Int, String> = try {
-                        if (smallStr == null) throw JsonParseException("JSON为空")
-                        Gson().fromJson(smallStr, object : TypeToken<HashMap<Int, String>>() {}.type)
-                    } catch (e: JsonParseException) {
-                        Log.e("ParseJson", "无法解析JSON: ${e.message}\n JSON: $smallStr")
-                        HashMap()
-                    }
                     //记录缩略图位置
                     smallMap[item.pokemon_id.toInt()] = dest.path
                 }
@@ -214,8 +214,9 @@ class HomeSearchViewModel : ViewModel() {
             }.onEach {
                 // 写入内存
                 sp.edit()
-                    .putString(POKEMON_LIST_CACHE, Gson().toJson(changeData))
+                    .putString(POKEMON_HOME_CACHE, Gson().toJson(changeData))
                     .putInt(POKEMON_CACHE_PAGE, page)
+                    .putString(POKEMON_SMALL_PIC, Gson().toJson(smallMap))
                     .apply()
             }.catch { e ->
                 e.printStackTrace()

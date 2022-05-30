@@ -1,4 +1,6 @@
-package com.example.pokewiki.detail.main
+package com.example.pokewiki.main.detail.main
+
+import android.content.SharedPreferences
 
 
 data class PokemonDetailViewState(
@@ -13,9 +15,15 @@ data class PokemonDetailViewState(
 
 sealed class PokemonDetailViewAction {
     object SwitchLikeState : PokemonDetailViewAction()
-    data class GetInitData<T>(val id: T) : PokemonDetailViewAction()
+    data class GetInitData(val id: Int, val sp: SharedPreferences) : PokemonDetailViewAction()
     object RefreshData : PokemonDetailViewAction()
     object ResetError : PokemonDetailViewAction()
+    data class WriteDataIntoStorage(
+        val smallPath: String,
+        val bigPath: String,
+        val sp: SharedPreferences
+    ) :
+        PokemonDetailViewAction()
 }
 
 
@@ -23,4 +31,5 @@ sealed class PokemonDetailViewEvent {
     object ShowLoadingDialog : PokemonDetailViewEvent()
     object DismissLoadingDialog : PokemonDetailViewEvent()
     data class ShowToast(val msg: String) : PokemonDetailViewEvent()
+    object WriteDataIntoStorage : PokemonDetailViewEvent()
 }
