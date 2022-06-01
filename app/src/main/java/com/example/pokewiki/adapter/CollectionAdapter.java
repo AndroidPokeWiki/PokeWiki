@@ -92,6 +92,12 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
             );
         });
 
+        if (position == mData.size() - 1) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) holder.itemBtn.getLayoutParams();
+            p.bottomMargin = dip2px(mContext, 20.0);
+            holder.itemBtn.setLayoutParams(p);
+        }
+
         int pokemonID = Integer.parseInt(mData.get(position).getPokemon_id());
         holder.unlike.setOnClickListener(view -> mViewModel.dispatch(new CollectionViewAction.CancelCollection(pokemonID)));
     }

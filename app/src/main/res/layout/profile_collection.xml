@@ -48,9 +48,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/profile_collection_recylerView"
-        android:layout_width="409dp"
-        android:layout_height="685dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_collection_background" />

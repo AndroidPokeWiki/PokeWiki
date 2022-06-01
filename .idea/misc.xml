@@ -5,9 +5,11 @@
       <map>
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/attr_item.xml" value="0.36614583333333334" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/character_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/collection_item.xml" value="0.33" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/community_main_fragment.xml" value="0.36614583333333334" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/cover_activity.xml" value="0.36614583333333334" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/loading_dialog.xml" value="0.36614583333333334" />
+        <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/profile_collection.xml" value="0.33" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/profile_main_fragment.xml" value="0.36614583333333334" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/search_main_item.xml" value="0.12037037037037036" />
         <entry key="..\:/_/androidSDk/PokeWiki/app/src/main/res/layout/search_result_activity.xml" value="0.36614583333333334" />
@@ -25,7 +27,6 @@
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/activity_main.xml" value="0.3578125" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/attr_item.xml" value="0.2937152629328773" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/character_item.xml" value="0.33" />
-        <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/collection_item.xml" value="0.1517094017094017" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/community_main_fragment.xml" value="0.2937152629328773" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/cover_activity.xml" value="0.33" />
         <entry key="..\:/program_study/AndroidStudy/PokeWiki/app/src/main/res/layout/hint_dialog.xml" value="0.2899957788096243" />

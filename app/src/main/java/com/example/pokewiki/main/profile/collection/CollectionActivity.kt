@@ -54,7 +54,6 @@ class CollectionActivity : AppCompatActivity() {
         val collectionAdapter = CollectionAdapter(this, collection, viewModel)
         mItemContainer.adapter = collectionAdapter
         mItemContainer.layoutManager = LinearLayoutManager(this)
-
     }
 
     private fun initViewModel() {
@@ -63,7 +62,7 @@ class CollectionActivity : AppCompatActivity() {
                 collection.clear()
                 collection.addAll(it)
                 (mItemContainer.adapter as CollectionAdapter)
-                    .notifyItemRangeChanged(0, collection.size)
+                    .notifyItemRangeChanged(0, collection.size+1)
             }
         }
     }
