@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pokewiki.R
 import com.example.pokewiki.main.searchResult.SearchResultViewModel
+import qiu.niorgai.StatusBarCompat
 
 /**
  * created by DWF on 2022/5/29.
@@ -16,6 +17,11 @@ class CollectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_collection)
+
+        StatusBarCompat.setStatusBarColor(
+            this,
+            resources.getColor(R.color.poke_ball_red, theme)
+        )
 
         initView()
         initViewModel()

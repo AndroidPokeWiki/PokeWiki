@@ -153,7 +153,8 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="25dp"
-                android:src="@drawable/edit_icon"
+                android:padding="3dp"
+                android:src="@drawable/edit_item_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

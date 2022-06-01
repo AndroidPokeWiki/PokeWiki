@@ -27,4 +27,11 @@
 
     <dimen name="design_bottom_navigation_margin" tools:override="true">5dp</dimen>
 
+    <!-- ActionSheet进出动画 -->
+    <style name="DialogAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out</item>
+    </style>
+
+
 </resources>

@@ -1,19 +1,24 @@
 package com.example.pokewiki.main.profile.resetPwd
 
+import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.widget.addTextChangedListener
 import com.example.pokewiki.R
-import com.example.pokewiki.utils.LoadingDialogUtils
-import com.example.pokewiki.utils.SHARED_NAME
-import com.example.pokewiki.utils.ToastUtils
+import com.example.pokewiki.utils.*
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
+import qiu.niorgai.StatusBarCompat
+import java.io.FileNotFoundException
 
 /**
  * created by DWF on 2022/5/28.
@@ -33,16 +38,22 @@ class ResetPwdActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.profile_change_password_acticity)
 
+        StatusBarCompat.setStatusBarColor(
+            this,
+            resources.getColor(R.color.poke_ball_red, theme)
+        )
+
         initView()
         initViewModel()
         initViewEvent()
     }
 
+
     private fun initView() {
         sp = getSharedPreferences(SHARED_NAME, MODE_PRIVATE)
         loading = LoadingDialogUtils(this)
 
-        mBackBtn = findViewById(R.id.profile_change_password_back_btn)
+        mBackBtn = findViewById(R.id.profile_edit_back_btn)
         mBackBtn.setOnClickListener { finish() }
 
         mOldPassword = findViewById(R.id.profile_change_password_old_password_text)

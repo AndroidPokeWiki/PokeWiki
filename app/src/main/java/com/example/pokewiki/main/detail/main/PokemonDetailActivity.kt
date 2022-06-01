@@ -143,7 +143,7 @@ class PokemonDetailActivity : AppCompatActivity() {
                 if (it.isNotBlank()) {
                     // 等待一段时间 确保fragment绑定
                     Thread {
-                        sleep(100)
+                        while (!infoFragment.isResumed){}
                         infoFragment.refreshData()
                     }.start()
                 }

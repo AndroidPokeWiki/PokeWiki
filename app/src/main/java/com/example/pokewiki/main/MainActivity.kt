@@ -1,6 +1,7 @@
 package com.example.pokewiki.main
 
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +50,16 @@ class MainActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 mBottomNaviBar.menu.getItem(position).isChecked = true
+                when (position) {
+                    1 -> StatusBarCompat.setStatusBarColor(
+                        this@MainActivity,
+                        resources.getColor(R.color.poke_ball_red, theme)
+                    )
+                    else -> StatusBarCompat.setStatusBarColor(
+                        this@MainActivity,
+                        Color.TRANSPARENT
+                    )
+                }
             }
         })
 
@@ -81,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                         this, "拒绝了相关权限，无法自动缓存，请尝试重新授权",
                         Toast.LENGTH_LONG
                     ).show()
-                }else
+                } else
                     (fragmentList[2] as ProfileFragment).getPermission()
             }
         }

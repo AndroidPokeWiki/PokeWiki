@@ -49,5 +49,7 @@
     <string name="add_feedback">请添加反馈内容......</string>
     <string name="add_pic">添加图片</string>
     <string name="mycollection">我的收藏</string>
+    <string name="take_photo">拍照</string>
+    <string name="from_album">从相册中选择</string>
 
 </resources>

@@ -49,7 +49,6 @@ class PokemonDetailMoveFragment : Fragment() {
             for (item in AppContext.pokeDetail.poke_moves.moves) {
                     mLevelMoveList.add(item)
             }
-            Log.e("TAG", "refreshData: ${AppContext.pokeDetail.poke_moves.moves}", )
             (mLevelMoveContainer.adapter as MoveAdapter)
                 .notifyItemRangeChanged(0, mLevelMoveList.size)
         }

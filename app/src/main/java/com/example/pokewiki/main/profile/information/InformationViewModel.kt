@@ -7,6 +7,7 @@ import com.example.pokewiki.bean.UserBean
 import com.example.pokewiki.repository.InformationRepository
 import com.example.pokewiki.utils.AppContext
 import com.example.pokewiki.utils.NetworkState
+import com.example.pokewiki.utils.TOKEN_OUT_OF_DATE
 import com.example.pokewiki.utils.USER_DATA
 import com.google.gson.Gson
 import com.zj.mvi.core.SharedFlowEvents
@@ -31,19 +32,57 @@ class InformationViewModel : ViewModel() {
     fun dispatch(viewAction: InformationViewAction) {
         when (viewAction) {
             is InformationViewAction.InitData -> initData()
-            is InformationViewAction.ChangeIcon -> changeIcon(viewAction.file)
+            is InformationViewAction.ChangeIcon -> changeIcon(viewAction.file, viewAction.sp)
             is InformationViewAction.UpdateUsername -> updateUsername(viewAction.name)
             is InformationViewAction.ClickToChangeUsername -> clickToChangeUsername(viewAction.sp)
-            is InformationViewAction.ChangeButtonToConfirm -> changeButtonToConfirm()
+            is InformationViewAction.SwitchState -> switchState()
         }
     }
 
-    private fun initData() {
-        _viewState.setState { copy(name = AppContext.userData.username) }
+    private fun switchState() {
+        _viewState.setState { copy(changeState = !changeState) }
     }
 
-    private fun changeIcon(file: File) {
-        TODO("更改头像")
+    private fun initData() {
+        _viewState.setState {
+            copy(
+                name = AppContext.userData.username,
+                icon = AppContext.userData.profile_photo
+            )
+        }
+    }
+
+    private fun changeIcon(file: File, sp: SharedPreferences) {
+        viewModelScope.launch {
+            flow {
+                changeIconLogic(file, sp)
+                emit("修改成功")
+            }.onStart {
+                _viewEvent.setEvent(InformationViewEvent.ShowLoadingDialog)
+            }.onEach {
+                _viewEvent.setEvent(InformationViewEvent.DismissLoadingDialog)
+                _viewState.setState { copy(changeState = true) }
+            }.catch { e ->
+                _viewEvent.setEvent(
+                    InformationViewEvent.DismissLoadingDialog,
+                    InformationViewEvent.ShowToast(e.message ?: "未知错误,请联系管理员")
+                )
+                _viewState.setState { copy(state = InformationViewState.FAIL) }
+            }.flowOn(Dispatchers.IO).collect()
+        }
+    }
+
+    private suspend fun changeIconLogic(file: File, sp: SharedPreferences) {
+        val userID = AppContext.userData.userId
+
+        when (val result = repository.updateUserIcon(userID, file)) {
+            is NetworkState.Success -> {
+                AppContext.userData.profile_photo = result.data
+                _viewState.setState { copy(icon = AppContext.userData.profile_photo) }
+                sp.edit().putString(USER_DATA, Gson().toJson(AppContext.userData)).apply()
+            }
+            is NetworkState.Error -> throw Exception(result.msg)
+        }
     }
 
     private fun updateUsername(name: String) {
@@ -60,17 +99,20 @@ class InformationViewModel : ViewModel() {
             }.onEach {
                 _viewEvent.setEvent(InformationViewEvent.DismissLoadingDialog)
             }.catch {
-                _viewEvent.setEvent(
-                    InformationViewEvent.DismissLoadingDialog,
-                    InformationViewEvent.ShowToast(it.message ?: "")
-                )
+                if (it.message == TOKEN_OUT_OF_DATE) {
+                    _viewEvent.setEvent(
+                        InformationViewEvent.DismissLoadingDialog
+                    )
+                    _viewState.setState { copy(state = InformationViewState.TOKEN_OUT_OF_DATE) }
+                } else {
+                    _viewEvent.setEvent(
+                        InformationViewEvent.DismissLoadingDialog,
+                        InformationViewEvent.ShowToast(it.message ?: "")
+                    )
+                    _viewState.setState { copy(state = InformationViewState.FAIL) }
+                }
             }.flowOn(Dispatchers.IO).collect()
         }
-    }
-
-
-    private fun changeButtonToConfirm() {
-        TODO("将按钮更改为确定")
     }
 
     private suspend fun changeNameLogic(sp: SharedPreferences) {

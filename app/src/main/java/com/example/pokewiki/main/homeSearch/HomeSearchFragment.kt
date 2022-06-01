@@ -73,10 +73,6 @@ class HomeSearchFragment : Fragment(R.layout.search_main_fragment) {
         super.onViewCreated(view, savedInstanceState)
         askAutoSave(view)
 
-        StatusBarCompat.setStatusBarColor(
-            requireActivity(),
-            resources.getColor(R.color.poke_ball_red, requireActivity().theme)
-        )
         // 避免阻塞主线程
         Thread {
             // 第一次先等待用户授权再进行初始化

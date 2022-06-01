@@ -6,14 +6,18 @@ import com.example.pokewiki.bean.PokemonSearchBean
 import com.example.pokewiki.bean.UserBean
 
 // 服务器地址
-const val SERVER_URL = "http://192.168.128.80:9457/"
+const val SERVER_URL = "http://114.116.49.217:9457/"
 const val DOWNLOAD_URL = "http://114.116.49.217:9129/"
 
 // 信号
 const val NO_MORE_DATA = "NO_MORE_DATA"
 const val SEARCH_GET_PERMISSION_FLAG = 1
 const val PROFILE_GET_PERMISSION_FLAG = 2
+const val PROFILE_EDIT_GET_PERMISSION_FLAG = 3
 const val LOCAL_PIC = "LOCAL_PIC"
+const val STATE_CHANGE = 0
+const val NEED_RELOGIN = -9999
+const val TOKEN_OUT_OF_DATE = "TOKEN_OUT_OF_DATE"
 
 // 缓存
 const val SHARED_NAME = "USER_INFO"
