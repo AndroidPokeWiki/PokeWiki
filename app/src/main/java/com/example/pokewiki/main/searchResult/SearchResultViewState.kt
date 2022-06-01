@@ -19,7 +19,6 @@ sealed class SearchResultViewAction {
     object ClickSearching : SearchResultViewAction()
     object ClickSearchingGen : SearchResultViewAction()
     object ClickSearchingType : SearchResultViewAction()
-
 }
 
 sealed class SearchResultViewEvent {

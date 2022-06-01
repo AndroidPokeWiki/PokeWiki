@@ -42,7 +42,7 @@ class SearchResultViewModel : ViewModel() {
         viewModelScope.launch {
             flow {
                 searchingLogic(keyword, type)
-                emit("sb")
+                emit("搜索成功")
             }.onStart {
                 _viewEvent.setEvent(SearchResultViewEvent.ShowLoadingDialog)
             }.onEach {

@@ -106,6 +106,12 @@ interface ServerApi {
         @Body multipartBody: MultipartBody
     ): ResponseData<String>
 
+    @POST("getUserFavorite")
+    @FormUrlEncoded
+    suspend fun getMyCollection(
+            @Field("userId") userId: String
+    ):ResponseData<ArrayList<PokemonSearchBean>>
+
     companion object {
         /**
          * 获取接口实例用于调用对接方法
