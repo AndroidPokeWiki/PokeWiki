@@ -3,6 +3,8 @@ package com.example.pokewiki.main.profile.collection
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pokewiki.main.profile.collection.CollectionViewState.Companion.FAIL
+import com.example.pokewiki.main.profile.collection.CollectionViewState.Companion.SUCCESS
 import com.example.pokewiki.repository.CollectionRepository
 import com.example.pokewiki.utils.AppContext
 import com.example.pokewiki.utils.NetworkState
@@ -18,7 +20,6 @@ import kotlinx.coroutines.launch
  * created by DWF on 2022/5/29.
  */
 class CollectionViewModel : ViewModel() {
-
     private val repository = CollectionRepository.getInstance()
     private val _viewState = MutableStateFlow(CollectionViewState())
     val viewState = _viewState.asStateFlow()
@@ -43,8 +44,8 @@ class CollectionViewModel : ViewModel() {
                 _viewEvent.setEvent(CollectionViewEvent.DismissLoadingDialog)
             }.catch {
                 _viewEvent.setEvent(
-                        CollectionViewEvent.DismissLoadingDialog,
-                        CollectionViewEvent.ShowToast(it.message ?: "")
+                    CollectionViewEvent.DismissLoadingDialog,
+                    CollectionViewEvent.ShowToast(it.message ?: "")
                 )
             }.flowOn(Dispatchers.IO).collect()
         }
@@ -59,12 +60,17 @@ class CollectionViewModel : ViewModel() {
             }.onStart {
                 _viewEvent.setEvent(CollectionViewEvent.ShowLoadingDialog)
             }.onEach {
-                _viewEvent.setEvent(CollectionViewEvent.DismissLoadingDialog)
+                _viewEvent.setEvent(
+                    CollectionViewEvent.DismissLoadingDialog,
+                    CollectionViewEvent.NeedChange
+                )
+                Log.e("TAG", "getMyCollection: ${_viewState.value.data}")
             }.catch {
                 _viewEvent.setEvent(
-                        CollectionViewEvent.DismissLoadingDialog,
-                        CollectionViewEvent.ShowToast(it.message ?: "")
+                    CollectionViewEvent.DismissLoadingDialog,
+                    CollectionViewEvent.ShowToast(it.message ?: "")
                 )
+                _viewState.setState { copy(refreshState = FAIL) }
             }.flowOn(Dispatchers.IO).collect()
         }
     }
@@ -73,8 +79,8 @@ class CollectionViewModel : ViewModel() {
         val userID = AppContext.userData.userId
         when (val data = repository.getMyCollection(userID)) {
             is NetworkState.Success -> {
-                _viewState.setState { copy(data = data.data) }
-                Log.e("TAG", "getCollections: ${viewState.value.data}")
+                _viewState.setState { copy(data = data.data, refreshState = SUCCESS) }
+                Log.e("TAG", "getCollections: ${_viewState.value.data}")
             }
             is NetworkState.Error -> throw Exception(data.msg)
         }

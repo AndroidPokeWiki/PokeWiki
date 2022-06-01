@@ -34,13 +34,15 @@ class CollectionActivity : AppCompatActivity() {
         setContentView(R.layout.profile_collection)
 
         StatusBarCompat.setStatusBarColor(
-                this,
-                resources.getColor(R.color.poke_ball_red, theme)
+            this,
+            resources.getColor(R.color.poke_ball_red, theme)
         )
 
         initView()
         initViewModel()
         initViewEvent()
+
+        viewModel.dispatch(CollectionViewAction.GetMyCollection)
     }
 
     private fun initView() {
@@ -56,16 +58,12 @@ class CollectionActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel.dispatch(CollectionViewAction.GetMyCollection)
         viewModel.viewState.let { states ->
-            {
-                states.observeState(this, CollectionViewState::data) {
-                    Log.e("TAG", "initViewModel: 12345", )
-                    collection.clear()
-                    collection.addAll(it)
-                    (mItemContainer.adapter as CollectionAdapter)
-                            .notifyItemRangeChanged(0, collection.size)
-                }
+            states.observeState(this, CollectionViewState::data) {
+                collection.clear()
+                collection.addAll(it)
+                (mItemContainer.adapter as CollectionAdapter)
+                    .notifyItemRangeChanged(0, collection.size)
             }
         }
     }
@@ -74,10 +72,17 @@ class CollectionActivity : AppCompatActivity() {
         viewModel.viewEvent.observeEvent(this) {
             when (it) {
                 is CollectionViewEvent.ShowToast -> ToastUtils.getInstance(this)
-                        ?.showLongToast(it.msg)
+                    ?.showLongToast(it.msg)
                 is CollectionViewEvent.ShowLoadingDialog -> loading =
-                        LoadingDialogUtils.show(this, "...")
+                    LoadingDialogUtils.show(this, "正在获取")
                 is CollectionViewEvent.DismissLoadingDialog -> loading.dismiss()
+                is CollectionViewEvent.NeedChange -> {
+                    Log.e("TAG", "initViewEvent: ${viewModel.viewState.value.data}")
+                    collection.clear()
+                    collection.addAll(viewModel.viewState.value.data)
+                    (mItemContainer.adapter as CollectionAdapter)
+                        .notifyItemRangeChanged(0, collection.size)
+                }
             }
         }
     }

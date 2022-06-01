@@ -61,6 +61,8 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
             RTextView attrContent = attrView.findViewById(R.id.attr_container);
             RBaseHelper helper = attrContent.getHelper();
 
+            attrContent.setText(attr);
+
             int color = ColorDict.INSTANCE.getColor().get(attr);
             helper.setBackgroundColorNormal(mContext.getColor(color));
 
@@ -113,6 +115,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
             name = itemView.findViewById(R.id.collection_item_name);
             attribute = itemView.findViewById(R.id.collection_item_attribute);
             unlike = itemView.findViewById(R.id.collection_item_unlike);
+            itemBtn = itemView.findViewById(R.id.profile_main_collection);
         }
     }
 
