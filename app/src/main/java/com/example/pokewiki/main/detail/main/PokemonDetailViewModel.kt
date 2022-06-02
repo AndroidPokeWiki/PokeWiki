@@ -31,7 +31,7 @@ class PokemonDetailViewModel : ViewModel() {
         when (viewAction) {
             is PokemonDetailViewAction.GetInitData -> getInitData(viewAction.id, viewAction.sp)
             is PokemonDetailViewAction.RefreshData -> refreshData()
-            is PokemonDetailViewAction.SwitchLikeState -> switchLike()
+            is PokemonDetailViewAction.SwitchLikeState -> switchLike(viewAction.sp)
             is PokemonDetailViewAction.ResetError -> resetError()
             is PokemonDetailViewAction.WriteDataIntoStorage -> writeData(
                 viewAction.smallPath,
@@ -47,13 +47,13 @@ class PokemonDetailViewModel : ViewModel() {
         _viewState.setState { copy(is_like = !isLike) }
     }
 
-    private fun switchLike() {
+    private fun switchLike(sp: SharedPreferences) {
         val isLike = _viewState.value.is_like
         viewModelScope.launch {
             _viewState.setState { copy(is_like = !isLike) }
             if (!isLike)
                 flow {
-                    likeLogic()
+                    likeLogic(sp)
                     emit("收藏成功")
                 }.catch {
                     _viewState.setState { copy(likeError = true) }
@@ -61,7 +61,7 @@ class PokemonDetailViewModel : ViewModel() {
                 }.flowOn(Dispatchers.IO).collect()
             else
                 flow {
-                    unlikeLogic()
+                    unlikeLogic(sp)
                     emit("取消收藏成功")
                 }.catch {
                     _viewState.setState { copy(likeError = true) }
@@ -70,20 +70,64 @@ class PokemonDetailViewModel : ViewModel() {
         }
     }
 
-    private suspend fun likeLogic() {
+    private suspend fun likeLogic(sp: SharedPreferences) {
         val userId = AppContext.userData.userId
         val pokeId = AppContext.pokeDetail.pokemon_id
         when (val result = repository.like(pokeId.toInt(), userId)) {
-            is NetworkState.Success -> {}
+            is NetworkState.Success -> {
+                AppContext.pokeDetail.is_star = 1
+                // 缓存收藏信息
+                if (AppContext.autoSave) {
+                    // 读取本地缓存
+                    val detailStr = sp.getString(POKEMON_DETAIL_CACHE, null)
+                    val detailMap = try {
+                        if (detailStr == null) throw JsonParseException("详情JSON为空")
+                        Gson().fromJson<HashMap<Int, PokemonDetailBean>>(
+                            detailStr,
+                            object : TypeToken<HashMap<Int, PokemonDetailBean>>() {}.type
+                        )
+                    } catch (e: JsonParseException) {
+                        Log.e("ParseJson", "getInitData: fail to parse JSON: $e\n JSON: $detailStr")
+                        HashMap()
+                    }
+
+                    if (detailMap[pokeId.toInt()] != null) {
+                        detailMap[pokeId.toInt()]!!.is_star = 1
+                        sp.edit().putString(POKEMON_DETAIL_CACHE, Gson().toJson(detailMap)).apply()
+                    }
+                }
+            }
             is NetworkState.Error -> throw Exception(result.msg)
         }
     }
 
-    private suspend fun unlikeLogic() {
+    private suspend fun unlikeLogic(sp: SharedPreferences) {
         val userId = AppContext.userData.userId
         val pokeId = AppContext.pokeDetail.pokemon_id
         when (val result = repository.unlike(pokeId.toInt(), userId)) {
-            is NetworkState.Success -> {}
+            is NetworkState.Success -> {
+                AppContext.pokeDetail.is_star = 0
+                // 缓存收藏信息
+                if (AppContext.autoSave) {
+                    // 读取本地缓存
+                    val detailStr = sp.getString(POKEMON_DETAIL_CACHE, null)
+                    val detailMap = try {
+                        if (detailStr == null) throw JsonParseException("详情JSON为空")
+                        Gson().fromJson<HashMap<Int, PokemonDetailBean>>(
+                            detailStr,
+                            object : TypeToken<HashMap<Int, PokemonDetailBean>>() {}.type
+                        )
+                    } catch (e: JsonParseException) {
+                        Log.e("ParseJson", "getInitData: fail to parse JSON: $e\n JSON: $detailStr")
+                        HashMap()
+                    }
+
+                    if (detailMap[pokeId.toInt()] != null) {
+                        detailMap[pokeId.toInt()]!!.is_star = 0
+                        sp.edit().putString(POKEMON_DETAIL_CACHE, Gson().toJson(detailMap)).apply()
+                    }
+                }
+            }
             is NetworkState.Error -> throw Exception(result.msg)
         }
     }
@@ -142,14 +186,16 @@ class PokemonDetailViewModel : ViewModel() {
         else {
             AppContext.pokeDetail = detailMap[id]!!
 
-            _viewState.setState { copy(
-                id = "#${AppContext.pokeDetail.pokemon_id}",
-                img = LOCAL_PIC,
-                name = AppContext.pokeDetail.pokemon_name,
-                color = AppContext.pokeDetail.pokemon_color,
-                attrs = AppContext.pokeDetail.pokemon_type,
-                is_like = AppContext.pokeDetail.is_star != 0
-            ) }
+            _viewState.setState {
+                copy(
+                    id = "#${AppContext.pokeDetail.pokemon_id}",
+                    img = LOCAL_PIC,
+                    name = AppContext.pokeDetail.pokemon_name,
+                    color = AppContext.pokeDetail.pokemon_color,
+                    attrs = AppContext.pokeDetail.pokemon_type,
+                    is_like = AppContext.pokeDetail.is_star != 0
+                )
+            }
         }
     }
 
@@ -231,13 +277,17 @@ class PokemonDetailViewModel : ViewModel() {
                 }.flowOn(Dispatchers.IO).collect()
 
                 // 判断小图是否下载
-                for (item in AppContext.pokeDetail.poke_intro.poke_evolution){
-                    if (smallImgMap[item.id] == null){
+                for (item in AppContext.pokeDetail.poke_intro.poke_evolution) {
+                    if (smallImgMap[item.id] == null) {
                         val smallFileName = "${item.id}.png"
                         val smallDest = File(smallPath, smallFileName)
                         // 下载小图
                         flow {
-                            writeDataLogic(DetailRepository.Companion.Type.Small, smallDest, item.id)
+                            writeDataLogic(
+                                DetailRepository.Companion.Type.Small,
+                                smallDest,
+                                item.id
+                            )
                             emit("缓存成功")
                         }.onEach {
                             // 存入小图图缓存
@@ -259,7 +309,11 @@ class PokemonDetailViewModel : ViewModel() {
         }
     }
 
-    private suspend fun writeDataLogic(type: DetailRepository.Companion.Type, dest: File, id: Int? = null) {
+    private suspend fun writeDataLogic(
+        type: DetailRepository.Companion.Type,
+        dest: File,
+        id: Int? = null
+    ) {
         when (val result = when (type) {
             DetailRepository.Companion.Type.Big -> repository.getImageWithTypeAndID(
                 DetailRepository.Companion.Type.Big,

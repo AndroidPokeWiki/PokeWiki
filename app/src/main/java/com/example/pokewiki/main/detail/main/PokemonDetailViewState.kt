@@ -14,7 +14,7 @@ data class PokemonDetailViewState(
 )
 
 sealed class PokemonDetailViewAction {
-    object SwitchLikeState : PokemonDetailViewAction()
+    data class SwitchLikeState(val sp: SharedPreferences) : PokemonDetailViewAction()
     data class GetInitData(val id: Int, val sp: SharedPreferences) : PokemonDetailViewAction()
     object RefreshData : PokemonDetailViewAction()
     object ResetError : PokemonDetailViewAction()

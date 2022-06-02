@@ -1,5 +1,6 @@
 package com.example.pokewiki.adapter;
 
+import static com.example.pokewiki.utils.ConstValueUtilsKt.SHARED_NAME;
 import static com.example.pokewiki.utils.StaticFunctionUtilsKt.dip2px;
 
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,11 +38,13 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
     private Context mContext;
     private ArrayList<PokemonSearchBean> mData;
     private CollectionViewModel mViewModel;
+    private ActivityResultLauncher<Intent> mLauncher;
 
-    public CollectionAdapter(Context mContext, ArrayList<PokemonSearchBean> mData, CollectionViewModel viewModel) {
+    public CollectionAdapter(Context mContext, ArrayList<PokemonSearchBean> mData, CollectionViewModel mViewModel, ActivityResultLauncher<Intent> mLauncher) {
         this.mContext = mContext;
         this.mData = mData;
-        this.mViewModel = viewModel;
+        this.mViewModel = mViewModel;
+        this.mLauncher = mLauncher;
     }
 
     @NonNull
@@ -86,20 +90,23 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
             holder.attribute.addView(view);
         }
 
-        holder.itemBtn.setOnClickListener(view -> {
-            mContext.startActivity(
-                    new Intent(mContext, PokemonDetailActivity.class).putExtra("id", mData.get(position).getPokemon_id())
-            );
-        });
+        holder.itemBtn.setOnClickListener(view ->
+                mLauncher.launch(new Intent(mContext, PokemonDetailActivity.class)
+                        .putExtra("id", mData.get(position).getPokemon_id())));
 
-        if (position == mData.size() - 1) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) holder.itemBtn.getLayoutParams();
+        ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) holder.itemBtn.getLayoutParams();
+        if (position == mData.size() - 1)
             p.bottomMargin = dip2px(mContext, 20.0);
-            holder.itemBtn.setLayoutParams(p);
-        }
+        else
+            p.bottomMargin = dip2px(mContext, 0.0);
+        holder.itemBtn.setLayoutParams(p);
 
         int pokemonID = Integer.parseInt(mData.get(position).getPokemon_id());
-        holder.unlike.setOnClickListener(view -> mViewModel.dispatch(new CollectionViewAction.CancelCollection(pokemonID)));
+        holder.unlike.setOnClickListener(view -> mViewModel.dispatch(
+                new CollectionViewAction.CancelCollection(pokemonID,
+                        mContext.getSharedPreferences(SHARED_NAME, Context.MODE_PRIVATE)
+                )
+        ));
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.example.pokewiki.bean
 
 data class PokemonDetailBean(
     val img_url: String = "",
-    val is_star: Int = 0,
+    var is_star: Int = 0,
     val pokemon_color: String = "",
     val pokemon_id : String = "",
     val pokemon_name : String = "",

@@ -34,7 +34,6 @@ import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
 import qiu.niorgai.StatusBarCompat
 import java.io.File
-import java.lang.Thread.sleep
 
 class PokemonDetailActivity : AppCompatActivity() {
     private val viewModel by viewModels<PokemonDetailViewModel>()
@@ -94,7 +93,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         val adapter = PageAdapter(supportFragmentManager, lifecycle, fragmentList)
         mPageContainer.adapter = adapter
 
-        mLikeBtn.setOnClickListener { viewModel.dispatch(PokemonDetailViewAction.SwitchLikeState) }
+        mLikeBtn.setOnClickListener { viewModel.dispatch(PokemonDetailViewAction.SwitchLikeState(sp)) }
 
         mPageContainer.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -143,7 +142,8 @@ class PokemonDetailActivity : AppCompatActivity() {
                 if (it.isNotBlank()) {
                     // 等待一段时间 确保fragment绑定
                     Thread {
-                        while (!infoFragment.isResumed){}
+                        while (!infoFragment.isResumed) {
+                        }
                         infoFragment.refreshData()
                     }.start()
                 }
@@ -164,14 +164,18 @@ class PokemonDetailActivity : AppCompatActivity() {
                 }
             }
             state.observeState(this, PokemonDetailViewState::is_like) {
-                if (!it)
+                // 返回给收藏界面
+                setResult(CHANGE_LIKE)
+                if (!it) {
                     mLikeBtn.setImageDrawable(
                         resources.getDrawable(R.drawable.pokemon_love, theme)
                     )
-                else
+                }
+                else {
                     mLikeBtn.setImageDrawable(
                         resources.getDrawable(R.drawable.pokemon_love_select, theme)
                     )
+                }
             }
             state.observeState(this, PokemonDetailViewState::attrs) {
                 if (mAttrContainer.size > 0) mAttrContainer.removeAllViews()

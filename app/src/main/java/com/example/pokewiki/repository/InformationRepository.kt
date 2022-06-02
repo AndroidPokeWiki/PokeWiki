@@ -37,7 +37,7 @@ class InformationRepository {
         result.let {
             return when (it.status) {
                 200 -> NetworkState.Success(result.data)
-                201 -> NetworkState.Error(TOKEN_OUT_OF_DATE)
+                403 -> NetworkState.Error(TOKEN_OUT_OF_DATE)
                 else -> NetworkState.Error(result.msg ?: "未知错误，请联系管理员")
             }
         }

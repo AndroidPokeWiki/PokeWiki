@@ -15,6 +15,7 @@ const val SEARCH_GET_PERMISSION_FLAG = 1
 const val PROFILE_GET_PERMISSION_FLAG = 2
 const val PROFILE_EDIT_GET_PERMISSION_FLAG = 3
 const val LOCAL_PIC = "LOCAL_PIC"
+const val CHANGE_LIKE = 0
 const val STATE_CHANGE = 0
 const val NEED_RELOGIN = -9999
 const val TOKEN_OUT_OF_DATE = "TOKEN_OUT_OF_DATE"
@@ -78,6 +79,6 @@ object ColorDict {
 object AppContext {
     var userData: UserBean = UserBean()
     var autoSave: Boolean = false
-    var pokeDetail : PokemonDetailBean = PokemonDetailBean()
+    var pokeDetail: PokemonDetailBean = PokemonDetailBean()
     var searchData: ArrayList<PokemonSearchBean> = ArrayList()
 }

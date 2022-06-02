@@ -137,18 +137,27 @@ class InformationActivity : AppCompatActivity() {
                 mUsernameEt.setText(it)
             }
             state.observeState(this, InformationViewState::isChanged) {
-                if (it) {
+                if (it)
                     setResult(STATE_CHANGE)
-                }
             }
-            state.observeState(this, InformationViewState::state){
-                when(it){
+            state.observeState(this, InformationViewState::state) {
+                when (it) {
                     InformationViewState.TOKEN_OUT_OF_DATE -> {
                         setResult(NEED_RELOGIN)
                         finish()
                     }
-                    InformationViewState.FAIL ->{
-                        viewModel.dispatch(InformationViewAction.InitData)
+                    InformationViewState.FAIL -> {
+                        // 修改失败返回
+                        mUsernameEt.setText(AppContext.userData.username)
+                        if (AppContext.userData.profile_photo.isNullOrBlank()) {
+                            mIconIv.setImageDrawable(
+                                resources.getDrawable(
+                                    R.drawable.default_icon,
+                                    theme
+                                )
+                            )
+                        } else
+                            Glide.with(this).load(it).into(mIconIv)
                     }
                 }
             }

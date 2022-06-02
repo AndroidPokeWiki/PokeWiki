@@ -1,8 +1,11 @@
 package com.example.pokewiki.main.profile.collection
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokewiki.R
 import com.example.pokewiki.adapter.CollectionAdapter
 import com.example.pokewiki.bean.PokemonSearchBean
-import com.example.pokewiki.utils.LoadingDialogUtils
-import com.example.pokewiki.utils.ToastUtils
+import com.example.pokewiki.utils.*
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
 import qiu.niorgai.StatusBarCompat
@@ -24,6 +26,7 @@ class CollectionActivity : AppCompatActivity() {
 
     private lateinit var mItemContainer: RecyclerView
     private lateinit var mBackBtn: ImageButton
+    private lateinit var mDetailArl : ActivityResultLauncher<Intent>
 
     private val collection = ArrayList<PokemonSearchBean>()
 
@@ -38,11 +41,21 @@ class CollectionActivity : AppCompatActivity() {
             resources.getColor(R.color.poke_ball_red, theme)
         )
 
+        initRegister()
         initView()
         initViewModel()
         initViewEvent()
 
         viewModel.dispatch(CollectionViewAction.GetMyCollection)
+    }
+
+    private fun initRegister(){
+        // 注册返回
+        mDetailArl =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == CHANGE_LIKE)
+                    viewModel.dispatch(CollectionViewAction.GetMyCollection)
+            }
     }
 
     private fun initView() {
@@ -51,7 +64,7 @@ class CollectionActivity : AppCompatActivity() {
         mBackBtn = findViewById(R.id.profile_collection_back_btn)
         mBackBtn.setOnClickListener { finish() }
 
-        val collectionAdapter = CollectionAdapter(this, collection, viewModel)
+        val collectionAdapter = CollectionAdapter(this, collection, viewModel, mDetailArl)
         mItemContainer.adapter = collectionAdapter
         mItemContainer.layoutManager = LinearLayoutManager(this)
     }

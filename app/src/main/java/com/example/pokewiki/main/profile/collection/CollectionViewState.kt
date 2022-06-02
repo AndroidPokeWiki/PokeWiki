@@ -1,5 +1,6 @@
 package com.example.pokewiki.main.profile.collection
 
+import android.content.SharedPreferences
 import com.example.pokewiki.bean.PokemonSearchBean
 
 /**
@@ -17,7 +18,7 @@ data class CollectionViewState(
 }
 
 sealed class CollectionViewAction {
-    data class CancelCollection(val pokemonID: Int) : CollectionViewAction()
+    data class CancelCollection(val pokemonID: Int, val sp: SharedPreferences) : CollectionViewAction()
     object GetMyCollection : CollectionViewAction()
 }
 

@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokewiki.bean.UserBean
+import com.example.pokewiki.main.profile.information.InformationViewState.Companion.NORMAL
+import com.example.pokewiki.main.profile.information.InformationViewState.Companion.SUCCESS
 import com.example.pokewiki.repository.InformationRepository
 import com.example.pokewiki.utils.AppContext
 import com.example.pokewiki.utils.NetworkState
@@ -58,10 +60,11 @@ class InformationViewModel : ViewModel() {
                 changeIconLogic(file, sp)
                 emit("修改成功")
             }.onStart {
+                _viewState.setState { copy(state = NORMAL) }
                 _viewEvent.setEvent(InformationViewEvent.ShowLoadingDialog)
             }.onEach {
                 _viewEvent.setEvent(InformationViewEvent.DismissLoadingDialog)
-                _viewState.setState { copy(changeState = true) }
+                _viewState.setState { copy(state = SUCCESS) }
             }.catch { e ->
                 _viewEvent.setEvent(
                     InformationViewEvent.DismissLoadingDialog,
@@ -95,8 +98,10 @@ class InformationViewModel : ViewModel() {
                 changeNameLogic(sp)
                 emit("修改成功")
             }.onStart {
+                _viewState.setState { copy(state = NORMAL) }
                 _viewEvent.setEvent(InformationViewEvent.ShowLoadingDialog)
             }.onEach {
+                _viewState.setState { copy(state = SUCCESS) }
                 _viewEvent.setEvent(InformationViewEvent.DismissLoadingDialog)
             }.catch {
                 if (it.message == TOKEN_OUT_OF_DATE) {
