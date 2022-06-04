@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profile_suggestion_feedback_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/profile_suggestion_feedback_background"
+        android:id="@+id/profile_suggestion_feedback_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:cardBackgroundColor="@color/poke_ball_red"
@@ -80,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.22"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_suggestion_feedback_background"
+        app:layout_constraintTop_toBottomOf="@+id/profile_suggestion_feedback_title"
         app:layout_constraintWidth_percent="0.91">
 
         <EditText
@@ -100,15 +102,17 @@
     </androidx.cardview.widget.CardView>
 
 
-    <com.example.pokewiki.customView.FlowLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/profile_suggestion_feedback_pic_container"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
+        android:layout_marginEnd="17dp"
         android:layout_marginTop="21dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_suggestion_feedback_info">
-
-    </com.example.pokewiki.customView.FlowLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_suggestion_feedback_info"
+        android:orientation="horizontal"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

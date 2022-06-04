@@ -17,13 +17,13 @@
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <!--注册内容提供器-->
         <provider
-            android:authorities="edu.example.pokewiki.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="edu.example.pokewiki.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity

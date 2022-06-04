@@ -1,5 +1,6 @@
 package com.example.pokewiki.main.searchResult
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
@@ -16,6 +17,7 @@ import com.example.pokewiki.utils.LoadingDialogUtils
 import com.example.pokewiki.utils.ToastUtils
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
+import kotlin.math.max
 
 /**
  * created by DWF on 2022/5/25.
@@ -65,6 +67,7 @@ class SearchResultActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initViewModel() {
         viewModel.dispatch(SearchResultViewAction.UpdateKeyword(keyword))
         Log.e("TAG", "initViewModel: $keyword, $type")
@@ -78,8 +81,7 @@ class SearchResultActivity : AppCompatActivity() {
             states.observeState(this, SearchResultViewState::result) {
                 data.clear()
                 data.addAll(it)
-                (mItemContainer.adapter as SearchResultAdapter)
-                    .notifyItemRangeChanged(0, data.size)
+                (mItemContainer.adapter as SearchResultAdapter).notifyDataSetChanged()
             }
         }
 
