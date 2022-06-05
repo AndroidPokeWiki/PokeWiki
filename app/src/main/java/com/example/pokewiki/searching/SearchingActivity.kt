@@ -1,10 +1,14 @@
 package com.example.pokewiki.searching
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -15,21 +19,28 @@ import androidx.core.widget.addTextChangedListener
 import com.example.pokewiki.R
 import com.example.pokewiki.customView.FlowLayout
 import com.example.pokewiki.main.searchResult.SearchResultActivity
-import com.example.pokewiki.utils.ColorDict
-import com.example.pokewiki.utils.dip2px
+import com.example.pokewiki.utils.*
+import com.google.gson.Gson
+import com.google.gson.JsonParseException
+import com.google.gson.reflect.TypeToken
 import com.ruffian.library.widget.RTextView
 import qiu.niorgai.StatusBarCompat
 
 class SearchingActivity : AppCompatActivity() {
 
-    lateinit var mHistoryContainer: ConstraintLayout
-    lateinit var mHistoryTagContainer: FlowLayout
-    lateinit var mAttrTagContainer: FlowLayout
-    lateinit var mGenContainer: FlowLayout
-    lateinit var mInput: EditText
-    lateinit var mBackBtn: ImageButton
-    lateinit var mSearchBth: ImageButton
+    private lateinit var mHistoryContainer: ConstraintLayout
+    private lateinit var mHistoryTagContainer: FlowLayout
+    private lateinit var mAttrTagContainer: FlowLayout
+    private lateinit var mGenContainer: FlowLayout
+    private lateinit var mInput: EditText
+    private lateinit var mBackBtn: ImageButton
+    private lateinit var mSearchBtn: ImageButton
+    private lateinit var mHistoryClrBtn: ImageButton
+    private lateinit var sp: SharedPreferences
+    private lateinit var hint: HintDialogUtils
 
+    private var historyMap = HashMap<String, ArrayList<String>>()
+    private val mHistoryList = ArrayList<String>()
     private var keyword = ""
     private val typeArray =
         arrayOf(
@@ -49,22 +60,62 @@ class SearchingActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        sp = getSharedPreferences(SHARED_NAME, MODE_PRIVATE)
+
         mHistoryContainer = findViewById(R.id.search_tag_history_container)
         mHistoryTagContainer = findViewById(R.id.search_tag_history_tag_container)
+        mHistoryClrBtn = findViewById(R.id.search_tag_history_clr)
+        mHistoryClrBtn.setOnClickListener {
+            hint = HintDialogUtils.show(this, "是否删除全部历史记录") {
+                when (it.id) {
+                    R.id.hint_cancel_btn -> hint.dismiss()
+                    R.id.hint_ok_btn -> {
+                        hint.dismiss()
+                        // 清除历史记录
+                        mHistoryList.clear()
+                        historyMap[AppContext.userData.userId] = mHistoryList
+                        sp.edit().putString(USER_HISTORY, Gson().toJson(historyMap)).apply()
+                        mHistoryContainer.visibility = View.GONE
+                    }
+                }
+            }
+        }
         mAttrTagContainer = findViewById(R.id.search_tag_attr_container)
         mGenContainer = findViewById(R.id.search_tag_generation_container)
         mInput = findViewById(R.id.search_tag_input)
         mInput.addTextChangedListener { keyword = it.toString() }
+        mInput.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                //隐藏键盘
+                (getSystemService (INPUT_METHOD_SERVICE) as InputMethodManager)
+                    .hideSoftInputFromWindow(
+                        this.currentFocus!!.windowToken,
+                        InputMethodManager.HIDE_NOT_ALWAYS
+                    );
+                //搜索
+                mSearchBtn.performClick()
+            }
+            false
+        }
         mBackBtn = findViewById(R.id.search_tag_back_btn)
         mBackBtn.setOnClickListener { finish() }
-        mSearchBth = findViewById(R.id.search_tag_search_btn)
-        mSearchBth.setOnClickListener {
+        mSearchBtn = findViewById(R.id.search_tag_search_btn)
+        mSearchBtn.setOnClickListener {
             val intent = Intent(this, SearchResultActivity::class.java)
             intent.putExtra("type", "name").putExtra("keyword", keyword)
+
+            // 记录历史记录
+            if (mHistoryList.contains(keyword))
+                mHistoryList.remove(keyword)
+            mHistoryList.add(0, keyword)
+            historyMap[AppContext.userData.userId] = mHistoryList
+            sp.edit().putString(USER_HISTORY, Gson().toJson(historyMap)).apply()
+
             startActivity(intent)
             finish()
         }
         initTag()
+        initHistory()
     }
 
     private fun initTag() {
@@ -78,29 +129,58 @@ class SearchingActivity : AppCompatActivity() {
         }
     }
 
+    private fun initHistory() {
+        val historyStr = sp.getString(USER_HISTORY, null)
+        try {
+            if (historyStr == null) throw JsonParseException("历史记录为空")
+            historyMap = Gson().fromJson(
+                historyStr,
+                object : TypeToken<HashMap<String, ArrayList<String>>>() {}.type
+            )
+
+            mHistoryList.addAll(historyMap.getOrDefault(AppContext.userData.userId, ArrayList()))
+            for (history in mHistoryList) {
+                mHistoryTagContainer.addView(layout2View(history, "name"))
+            }
+
+            if (mHistoryTagContainer.size > 0)
+                mHistoryContainer.visibility = View.VISIBLE
+
+        } catch (e: JsonParseException) {
+            Log.e("JSON ERROR!!", "initHistory: JSON PARSE ERROR!! ${e.message}")
+        }
+    }
+
     private fun layout2View(content: String, type: String): View {
         val attrView = LayoutInflater.from(this).inflate(R.layout.attr_item, null)
         val attrText = attrView.findViewById<RTextView>(R.id.attr_container)
         attrText.text = content
         attrText.setOnClickListener {
+            val intent = Intent(this, SearchResultActivity::class.java)
             when (type) {
-                "type" -> {
-                    val intent = Intent(this, SearchResultActivity::class.java)
+                "name" -> {
+                    intent.putExtra("type", "name").putExtra("keyword", content)
+                    // 更新历史记录
+                    mHistoryList.remove(content)
+                    mHistoryList.add(0, content)
+                    historyMap[AppContext.userData.userId] = mHistoryList
+                    sp.edit().putString(USER_HISTORY, Gson().toJson(historyMap)).apply()
+                }
+                "type" ->
                     intent.putExtra("type", "type").putExtra("keyword", content)
-                    startActivity(intent)
-                    finish()
-                }
-                "gen" -> {
-                    val intent = Intent(this, SearchResultActivity::class.java)
+                "gen" ->
                     intent.putExtra("type", "gen").putExtra("keyword", content)
-                    startActivity(intent)
-                    finish()
-                }
             }
+            startActivity(intent)
+            finish()
         }
 
         val helper = attrText.helper
-        helper.backgroundColorNormal = resources.getColor(ColorDict.color[content]!!, null)
+        val color = ColorDict.color[content]
+        if (color != null && type != "name")
+            helper.backgroundColorNormal = resources.getColor(color, theme)
+        else
+            helper.backgroundColorNormal = resources.getColor(ColorDict.color["第六世代"]!!, theme)
 
         val p = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,

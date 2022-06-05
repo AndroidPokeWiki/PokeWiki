@@ -1,8 +1,11 @@
 package com.example.pokewiki.main.searchResult
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.activity.viewModels
@@ -13,11 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pokewiki.R
 import com.example.pokewiki.adapter.SearchResultAdapter
 import com.example.pokewiki.bean.PokemonSearchBean
-import com.example.pokewiki.utils.LoadingDialogUtils
-import com.example.pokewiki.utils.ToastUtils
+import com.example.pokewiki.utils.*
+import com.google.gson.Gson
+import com.google.gson.JsonParseException
+import com.google.gson.reflect.TypeToken
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
-import kotlin.math.max
 
 /**
  * created by DWF on 2022/5/25.
@@ -35,6 +39,10 @@ class SearchResultActivity : AppCompatActivity() {
     private var keyword: String = ""
     private var type: String = ""
 
+    private var historyMap = HashMap<String, ArrayList<String>>()
+    private val mHistoryList = ArrayList<String>()
+
+    private lateinit var sp: SharedPreferences
     private lateinit var loading: LoadingDialogUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +55,8 @@ class SearchResultActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        sp = getSharedPreferences(SHARED_NAME, MODE_PRIVATE)
+
         loading = LoadingDialogUtils(this)
         mInput = findViewById(R.id.search_result_input)
         mSearchBtn = findViewById(R.id.search_result_search_btn)
@@ -54,17 +64,54 @@ class SearchResultActivity : AppCompatActivity() {
         mBackBtn = findViewById(R.id.search_result_back_btn)
         mBackBtn.setOnClickListener { finish() }
         mInput.addTextChangedListener { keyword = it.toString() }
+        mInput.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                //隐藏键盘
+                (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager)
+                    .hideSoftInputFromWindow(
+                        this.currentFocus!!.windowToken,
+                        InputMethodManager.HIDE_NOT_ALWAYS
+                    );
+                //搜索
+                mSearchBtn.performClick()
+            }
+            false
+        }
         mSearchBtn.setOnClickListener {
             viewModel.dispatch(SearchResultViewAction.UpdateKeyword(keyword))
             viewModel.dispatch(SearchResultViewAction.ClickSearching)
+
+            // 记录历史记录
+            if (mHistoryList.contains(keyword))
+                mHistoryList.remove(keyword)
+            mHistoryList.add(0, keyword)
+            historyMap[AppContext.userData.userId] = mHistoryList
+            sp.edit().putString(USER_HISTORY, Gson().toJson(historyMap)).apply()
         }
         keyword = intent.getStringExtra("keyword").toString()
         type = intent.getStringExtra("type").toString()
+        mInput.setText(keyword)
 
         val searchResultAdapter = SearchResultAdapter(this, data)
         mItemContainer.adapter = searchResultAdapter
         mItemContainer.layoutManager = GridLayoutManager(this, 2)
 
+        initHistory()
+    }
+
+    private fun initHistory() {
+        val historyStr = sp.getString(USER_HISTORY, null)
+        try {
+            if (historyStr == null) throw JsonParseException("历史记录为空")
+            historyMap = Gson().fromJson(
+                historyStr,
+                object : TypeToken<HashMap<String, ArrayList<String>>>() {}.type
+            )
+            mHistoryList.addAll(historyMap.getOrDefault(AppContext.userData.userId, ArrayList()))
+
+        } catch (e: JsonParseException) {
+            Log.e("JSON ERROR!!", "initHistory: JSON PARSE ERROR!! ${e.message}")
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

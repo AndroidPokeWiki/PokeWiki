@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_container)
 
-        StatusBarCompat.translucentStatusBar(this)
+        StatusBarCompat.setStatusBarColor(this, resources.getColor(R.color.poke_ball_red, theme))
         initView()
     }
 

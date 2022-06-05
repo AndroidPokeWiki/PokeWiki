@@ -61,14 +61,6 @@ class HomeSearchFragment : Fragment(R.layout.search_main_fragment) {
     private val syncList = ArrayList<PokemonSearchBean>()
     val countDown = CountDownLatch(1)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.search_main_fragment, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         askAutoSave(view)

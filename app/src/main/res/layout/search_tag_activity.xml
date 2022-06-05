@@ -33,8 +33,8 @@
                 android:layout_height="0dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:textSize="16sp"
                 android:textColor="#8A8A8A"
+                android:textSize="16sp"
 
                 app:background_normal="@color/white"
                 app:corner_radius="100dp"
@@ -50,18 +50,20 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@null"
+                android:hint="@string/search_by_name"
+                android:imeOptions="actionSearch"
+                android:maxLength="10"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:textColor="#8A8A8A"
                 android:singleLine="true"
-                android:maxLength="10"
-                android:imeOptions="actionSearch"
+                android:textColor="#8A8A8A"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.6"
                 app:layout_constraintStart_toEndOf="@+id/search_tag_back_btn"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.78"/>
+                app:layout_constraintWidth_percent="0.78" />
 
             <ImageButton
                 android:id="@+id/search_tag_search_btn"
@@ -99,6 +101,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:id="@+id/search_tag_history_clr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="30dp"
