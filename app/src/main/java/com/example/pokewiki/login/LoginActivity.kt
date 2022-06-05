@@ -66,11 +66,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        // 检查是否留存用户信息，自动登录
-        viewModel.dispatch(
-            LoginViewAction.CheckLoginInfo(getSharedPreferences(SHARED_NAME, MODE_PRIVATE))
-        )
-
         viewModel.viewState.let { states ->
             states.observeState(this, LoginViewState::canLogin) {
                 if (it)

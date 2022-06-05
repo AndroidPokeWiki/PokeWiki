@@ -30,30 +30,10 @@ class LoginViewModel : ViewModel() {
 
     fun dispatch(viewAction: LoginViewAction) {
         when (viewAction) {
-            is LoginViewAction.CheckLoginInfo -> checkLoginInfo(viewAction.sp)
             is LoginViewAction.UpdateUsername -> updateEmail(viewAction.email)
             is LoginViewAction.UpdatePassword -> updatePassword(viewAction.password)
             is LoginViewAction.ChangeErrorState -> updateErrorState(viewAction.error)
             is LoginViewAction.ClickLogin -> login(viewAction.sp)
-        }
-    }
-
-    private fun checkLoginInfo(sp: SharedPreferences) {
-        val data = sp.getString(USER_DATA, null)
-        if (!data.isNullOrBlank()) {
-            try {
-                val userInfo =
-                    Gson().fromJson<UserBean>(data, object : TypeToken<UserBean>() {}.type)
-                AppContext.userData = userInfo
-                // 自动跳转
-                viewModelScope.launch {
-                    // 等待主线程监听启动
-                    delay(100)
-                    _viewEvent.setEvent(LoginViewEvent.TransIntent)
-                }
-            } catch (e: JsonParseException) {
-                Log.e("ERROR!", "checkLoginInfo: 无法解析存储json\n json:${data}")
-            }
         }
     }
 
