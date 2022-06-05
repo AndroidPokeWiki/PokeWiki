@@ -5,16 +5,37 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
+    <com.ruffian.library.widget.RTextView
+        android:id="@+id/cover_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp"
+        android:text="@string/skip"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:border_color_normal="@color/white"
+        app:border_width_normal="1dp"
+        app:corner_radius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/cover_cover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/cover"
-        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@id/cover_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/cover_logo"/>
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <ImageView
         android:id="@+id/cover_logo"

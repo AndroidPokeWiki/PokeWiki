@@ -52,5 +52,13 @@
     <string name="take_photo">拍照</string>
     <string name="from_album">从相册中选择</string>
     <string name="search_by_name">按名字搜索</string>
+    <string name="current_version">当前版本0.0.0.1</string>
+    <string name="check_update">检查更新</string>
+    <string name="like_pokewiki">给PokeWiki好评</string>
+    <string name="welcome_page">欢迎页</string>
+    <string name="contact_us">联系我们</string>
+    <string name="law">用户服务协议 | 隐私政策 | 投诉指引 | 社区自律公约</string>
+    <string name="copyright">Copyright@2022–2022 PokeWiki-Inc.All Rights Reserved</string>
+    <string name="skip">跳过 3s</string>
 
 </resources>

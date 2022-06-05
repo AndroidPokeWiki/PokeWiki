@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/main_community"
-        android:icon="@drawable/community"
+        android:id="@+id/main_about"
+        android:icon="@drawable/about"
         android:orderInCategory="0"
         android:title="" />
 
