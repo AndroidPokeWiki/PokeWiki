@@ -1,10 +1,15 @@
 package com.example.pokewiki.register
 
+import android.content.SharedPreferences
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokewiki.repository.RegisterRepository
+import com.example.pokewiki.utils.AppContext
 import com.example.pokewiki.utils.NetworkState
+import com.example.pokewiki.utils.USER_DATA
 import com.example.pokewiki.utils.md5
+import com.google.gson.Gson
 import com.zj.mvi.core.SharedFlowEvents
 import com.zj.mvi.core.setEvent
 import com.zj.mvi.core.setState
@@ -29,7 +34,7 @@ class RegisterViewModel : ViewModel() {
             is RegisterViewAction.UpdatePassword -> updatePassword(viewAction.password)
             is RegisterViewAction.UpdateConfirm -> updateConfirm(viewAction.confirm)
             is RegisterViewAction.ChangeErrorState -> updateErrorState(viewAction.error)
-            is RegisterViewAction.ClickRegister -> register()
+            is RegisterViewAction.ClickRegister -> register(viewAction.sp)
         }
     }
 
@@ -49,10 +54,10 @@ class RegisterViewModel : ViewModel() {
         _viewState.setState { copy(confirm = confirm) }
     }
 
-    private fun register() {
+    private fun register(sp: SharedPreferences) {
         viewModelScope.launch {
             flow {
-                registerLogic()
+                registerLogic(sp)
                 emit("注册成功")
             }.onStart {
                 _viewEvent.setEvent(RegisterViewEvent.ShowLoadingDialog)
@@ -60,19 +65,28 @@ class RegisterViewModel : ViewModel() {
                 _viewEvent.setEvent(RegisterViewEvent.DismissLoadingDialog)
             }.catch {
                 _viewEvent.setEvent(
-                        RegisterViewEvent.DismissLoadingDialog,
-                        RegisterViewEvent.ShowToast(it.message ?: "")
+                    RegisterViewEvent.DismissLoadingDialog,
+                    RegisterViewEvent.ShowToast(it.message ?: "")
                 )
             }.flowOn(Dispatchers.IO).collect()
         }
     }
 
-    private suspend fun registerLogic() {
+    private suspend fun registerLogic(sp: SharedPreferences) {
         val email = _viewState.value.email
         val password = _viewState.value.password
 
         when (val result = repository.register(email, md5(password))) {
-            is NetworkState.Success -> _viewEvent.setEvent(RegisterViewEvent.TransIntent)
+            is NetworkState.Success -> {
+                _viewEvent.setEvent(RegisterViewEvent.TransIntent)
+
+                Log.e("TAG", "registerLogic: ${result.data}")
+
+                //写入全局
+                AppContext.userData = result.data
+                //写入内存
+                sp.edit().putString(USER_DATA, Gson().toJson(result.data)).apply()
+            }
             is NetworkState.Error -> throw Exception(result.msg)
         }
     }

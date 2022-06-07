@@ -17,6 +17,7 @@ import com.example.pokewiki.R
 import com.example.pokewiki.login.LoginActivity
 import com.example.pokewiki.main.MainActivity
 import com.example.pokewiki.utils.LoadingDialogUtils
+import com.example.pokewiki.utils.SHARED_NAME
 import com.example.pokewiki.utils.ToastUtils
 import com.zj.mvi.core.observeEvent
 import com.zj.mvi.core.observeState
@@ -72,7 +73,13 @@ class RegisterActivity : AppCompatActivity() {
         viewModel.viewState.let { states ->
             states.observeState(this, RegisterViewState::canRegister) {
                 if (it == RegisterViewState.SUCCESS)
-                    mRegisterBtn.setOnClickListener { viewModel.dispatch(RegisterViewAction.ClickRegister) }
+                    mRegisterBtn.setOnClickListener {
+                        viewModel.dispatch(
+                            RegisterViewAction.ClickRegister(
+                                getSharedPreferences(SHARED_NAME, MODE_PRIVATE)
+                            )
+                        )
+                    }
                 else
                     mRegisterBtn.setOnClickListener {
                         viewModel.dispatch(RegisterViewAction.ChangeErrorState(true))
@@ -126,7 +133,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             startActivity(Intent(this, LoginActivity::class.java))
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
